@@ -1,0 +1,101 @@
+/* ------------------------------------------------------------- */
+/* BASIC SETUP */
+/* ------------------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: #fff;
+    color: rgb(50, 50, 50);
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+    /* Don't allow text to go beyond screen width */
+    overflow-x: hidden;
+}
+
+.clearfix { zoom: 1 }
+.clearfix:after {
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+/* ------------------------------------------------------------- */
+/* REUSABLE COMPONENTS */
+/* ------------------------------------------------------------- */
+
+.row {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+section {
+    padding: 80px 0;
+}
+
+.box {
+    padding: 1%;
+}
+
+
+
+.main-nav {
+    float: right;
+    margin-top: 20px;
+}
+
+.main-nav-items {
+    display: inline-block;
+}
+
+.main-nav-items li {
+    list-style: none; /* Gets rid of the bullet points in <ul> */
+    display: inline-block;
+    margin-left: 40px;
+    margin-right: 10px;
+}
+
+.main-section {
+    height: 100vh;
+    /* min-height: 500px; */
+    background-image: url(/resources/img/mesh_bluegreen.jpg);
+    /* , linear-gradient(rgb(71, 108, 143) 0%, rgb(64, 101, 134) 13%, rgb(67, 107, 141) 50%, rgb(43, 74, 102) 100%); */
+    background-size: cover;
+}
+
+
+.search-bar {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    text-align: left;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 24px;
+    border: 1px solid rgb(218, 224, 230);
+    padding: 13.5px 20px;
+    max-height: 48px;
+    background-color: rgb(252, 254, 255);
+}
+
+input {
+    border: none;
+    background: none;
+    appearance: none;
+    width: 100%;
+    line-height: 22px;
+    letter-spacing: 0.15px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
