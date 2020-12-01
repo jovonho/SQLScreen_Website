@@ -2,35 +2,53 @@
 <html lang="en">
 
 <head>
-    <title>TMXScreen</title>
+    <title>TMX Screen</title>
     <meta charset="utf-8">
-    <meta name="description" content="A simple stock screener for the TSX">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple stock screener for the TSX.">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;1,300&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+
+    <link rel="stylesheet" type="text/css" href="vendors/css/bootstrap-3.3.7.min.css">
+    <link rel="stylesheet" href="./dist/css/query-builder.default.css" id="qb-theme" />
+
     <link rel="stylesheet" type="text/css" href="./vendors/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="./vendors/css/grid.css">
     <link rel="stylesheet" type="text/css" href="./resources/css/style.css">
+    <link rel="stylesheet" type="text/css" href="./resources/css/queries.css">
 </head>
 
 <body>
+    <header>
+        <nav>
+            <div class="row">
+                <div class="main-nav">
+                    <ul class="main-nav-items">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#steps">How it works</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <nav>
+    <section class="main-section">
         <div class="row">
-            <div class="main-nav">
-                <ul class="main-nav-items">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#steps">How it works</a></li>
-                </ul>
+            <div class="title">
+                <object type="image/svg+xml" data="resources/icons/tmx_logo_white.svg" class="tmx-icon"></object>
+                <svg width="350px">
+                    <text class="text" x="0" y="110px" font-family="Verdana" font-size="95px" stroke="#a1a6ab"
+                        stroke-width=".7" fill="#fff">Screen</text>
+                </svg>
             </div>
         </div>
-    </nav>
-    <div class="main-section">
         <div class="row">
-
-            <!-- <div class="outer">
+            <!-- <div class="search-bar-outer">
                 <div class="search-bar">
-                    <input class="search-input" placeholder="Search...">
+                    <input class="search-input" placeholder="Search stocks...">
                     <div class="search-icon">
                         <svg width="19" height="20" viewBox="0 0 19 20" fill="none">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -41,9 +59,26 @@
                     </div>
                 </div>
             </div> -->
+            <div id="builder"></div>
+            <button class="btn btn-primary parse-json">Apply</button>
         </div>
+    </section>
 
-    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+        </script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script> -->
+
+    <script src="./dist/js/query-builder.standalone.js"></script>
+
+    <script src="app.js"></script>
+    <script type="text/javascript" src="vendors/js/moment.min.js"></script>
+    <script type="text/javascript" src="vendors/js/query-builder.standalone.min.js"></script>
+    <script type="text/javascript" src="vendors/js/jquery.waypoints.min.js"></script>
+    <script type="text/javascript" src="resources/js/scripts.js"></script>
 </body>
 
 </html>

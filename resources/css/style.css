@@ -5,6 +5,12 @@
 * {
     margin: 0;
     padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
 }
 
 html {
@@ -37,7 +43,7 @@ html {
 }
 
 section {
-    padding: 80px 0;
+    padding: 10px 0;
 }
 
 .box {
@@ -45,47 +51,151 @@ section {
 }
 
 
+/* -------- HEADINGS --------- */
+
+h1, h2, h3 {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 250%; /* relative to parent's size, in this case the html style info. */
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #000;
+    word-spacing: 3px;
+}
+
+h2 {
+    font-size: 150%;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+h3 {    
+    font-size: 110%;
+    margin-bottom: 6%;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+
+/* --------- LINKS ---------- */
+
+a {
+    /* color: #f5efef;  */
+    color: #a899ac; 
+    text-decoration: none;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #9d99a0;
+}
+
+li {
+    list-style: none; 
+    color: rgb(152, 89, 194);
+}
+
+
+
+/* ------------------------------------------------------------- */
+/* HEADER */
+/* ------------------------------------------------------------- */
+
+
+
+.main-section::after {
+    /* background-image: linear-gradient(rgba(112, 48, 197, 0.274),rgba(255, 255, 255, 0)), url(img/BlueWaveform2.svg); */
+    /* background-image: linear-gradient(180deg, rgba(114,34,195,0.58) 0%, rgba(227,225,232,.4) 32%, rgba(255,255,255,0) 100%), url(img/BlueWaveform2.svg); */
+    background-image: linear-gradient(180deg, rgba(249, 244, 253, 0.59) 0%, rgba(127, 70, 202, 0.486) 30%, rgba(227,225,232,0.45) 66%, rgba(255,255,255,.1) 100%), url(img/BlueWaveform2.svg);
+    background-size: 120%;
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+    background-position: center;
+    /* background-position-y: 10px; */
+    height: 100vh; 
+    content: "";
+    width: 100%;
+    opacity: .9;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+  }
+
+.hero-text-box {
+    position: absolute;
+    width: 1140px;
+    top: 50%;
+    left: 50%;
+    margin-top: 15px;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tmx-icon {
+    height: 280px;
+    width: auto;
+    float: center; 
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
+}
+
+
+
+/* Main navigation bar */
 
 .main-nav {
-    float: right;
     margin-top: 20px;
 }
 
 .main-nav-items {
-    display: inline-block;
-}
-
-.main-nav-items li {
-    list-style: none; /* Gets rid of the bullet points in <ul> */
-    display: inline-block;
-    margin-left: 40px;
+    float: right;
     margin-right: 10px;
 }
 
-.main-section {
-    height: 100vh;
-    /* min-height: 500px; */
-    background-image: url(/resources/img/mesh_bluegreen.jpg);
-    /* , linear-gradient(rgb(71, 108, 143) 0%, rgb(64, 101, 134) 13%, rgb(67, 107, 141) 50%, rgb(43, 74, 102) 100%); */
-    background-size: cover;
+.main-nav-items li {
+    display: inline-block;
+    margin-left: 30px;
 }
 
+.main-nav li a:link, 
+.main-nav li a:visited {
+    padding: 4px 0;
+    font-size: 95%;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.15s;
+}
+
+.main-nav li a:hover, 
+.main-nav li a:active {
+    border-bottom: 1px solid #777777d8;
+}
+
+/* Search bar */
+
+.search-bar-outer {
+    display: flex;
+    justify-content: center;
+}
 
 .search-bar {
-    font-size: 14px;
-    color: rgb(0, 0, 0);
-    text-align: left;
-    box-sizing: border-box;
-    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    width: 60%;
     border-radius: 24px;
-    border: 1px solid rgb(218, 224, 230);
+    /* border: 1px solid #dae0e6; */
+    border: 1px solid #b2b7bd;
     padding: 13.5px 20px;
-    max-height: 48px;
-    background-color: rgb(252, 254, 255);
+    max-height: 50px;
+    background-color: #fcfeff;
 }
 
 input {
@@ -95,7 +205,7 @@ input {
     width: 100%;
     line-height: 22px;
     letter-spacing: 0.15px;
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center; */
     font-size: 16px;
 }
