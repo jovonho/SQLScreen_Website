@@ -43,7 +43,8 @@ html {
 }
 
 section {
-    padding: 10px 0;
+    padding-top: 10px;
+    padding-bottom: 0px;
 }
 
 .box {
@@ -107,13 +108,15 @@ li {
 .main-section::after {
     /* background-image: linear-gradient(rgba(112, 48, 197, 0.274),rgba(255, 255, 255, 0)), url(img/BlueWaveform2.svg); */
     /* background-image: linear-gradient(180deg, rgba(114,34,195,0.58) 0%, rgba(227,225,232,.4) 32%, rgba(255,255,255,0) 100%), url(img/BlueWaveform2.svg); */
-    background-image: linear-gradient(180deg, rgba(249, 244, 253, 0.59) 0%, rgba(127, 70, 202, 0.486) 30%, rgba(227,225,232,0.45) 66%, rgba(255,255,255,.1) 100%), url(img/BlueWaveform2.svg);
+    background-image: linear-gradient(180deg, rgba(249, 244, 253, 0.59) 0%, rgba(127, 70, 202, 0.486) 30%, rgba(227,225,232,0.45) 66%, rgba(255,255,255,.1) 100%), 
+                    /* linear-gradient(0deg, rgba(235,215,255,0.58) 0%, rgba(105,70,202,0.73) 0%, rgba(227,225,232,0.5) 67%, rgba(255,255,255,1) 100%), */
+                    url(img/BlueWaveform2.svg);
     background-size: 120%;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     /* background-size: cover; */
     background-position: center;
     /* background-position-y: 10px; */
-    height: 100vh; 
+    height: 100%; 
     content: "";
     width: 100%;
     opacity: .9;
@@ -198,14 +201,20 @@ li {
     background-color: #fcfeff;
 }
 
-input {
+/* input {
     border: none;
     background: none;
     appearance: none;
     width: 100%;
     line-height: 22px;
     letter-spacing: 0.15px;
-    /* display: flex; */
-    /* align-items: center; */
+    display: flex;
+    align-items: center;
     font-size: 16px;
-}
+} */
+
+/* .page-bottom {
+    height: 100px;
+    overflow-x: hidden;
+    background-image: linear-gradient(360deg, rgba(114,34,195,0.58) 0%, rgba(227,225,232,.4) 32%, rgba(255,255,255,0) 100%)
+} */
