@@ -2,31 +2,6 @@
 
 $(document).ready(function () {
 
-    // var options = {
-    //     allow_empty: true,
-
-    //     filters: [
-    //         {
-    //             id: 'name',
-    //             label: 'Name',
-    //             type: 'string',
-    //             default_value: 'gaur',
-    //             size: 30,
-    //             unique: true
-    //         }
-    //     ]
-    // };
-
-
-    // $('#builder').queryBuilder(options);     
-
-    $('.parse-json').on('click', function () {
-        console.log(JSON.stringify(
-            $('#builder').queryBuilder('getMongo'),
-            undefined, 2
-        ));
-    });
-
     var rules_basic = {
         condition: 'AND',
         rules: [{
@@ -38,7 +13,7 @@ $(document).ready(function () {
             rules: [{
                 id: 'category',
                 operator: 'equal',
-                value: 2
+                value: 'movies'
             }]
         }]
     };
@@ -60,12 +35,8 @@ $(document).ready(function () {
                 type: 'integer',
                 input: 'select',
                 values: {
-                    1: 'Books',
-                    2: 'Movies',
-                    3: 'Music',
-                    4: 'Tools',
-                    5: 'Goodies',
-                    6: 'Clothes'
+                    'books': 'Books',
+                    'movies': 'Movies'
                 },
                 operators: ['equal', 'not_equal', 'in', 'not_in']
             }, {
@@ -98,5 +69,18 @@ $(document).ready(function () {
             }],
 
         rules: rules_basic
+    });
+
+    $('.submit-query').on('click', function () {
+        var payload = $('#builder').queryBuilder('getSQL')
+        console.log(payload)
+
+       $.ajax({
+          type: 'POST',
+          url: "/submit-query",
+          data: payload,
+          datatype: 'json',
+          success: (response) => { document.write(response); }
+       })
     });
 });
