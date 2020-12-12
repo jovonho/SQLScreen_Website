@@ -1,0 +1,220 @@
+/* ------------------------------------------------------------- */
+/* BASIC SETUP */
+/* ------------------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+html {
+    background-color: #fff;
+    color: rgb(50, 50, 50);
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+    /* Don't allow text to go beyond screen width */
+    overflow-x: hidden;
+}
+
+.clearfix { zoom: 1 }
+.clearfix:after {
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+/* ------------------------------------------------------------- */
+/* REUSABLE COMPONENTS */
+/* ------------------------------------------------------------- */
+
+.row {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+section {
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+
+.box {
+    padding: 1%;
+}
+
+
+/* -------- HEADINGS --------- */
+
+h1, h2, h3 {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 250%; /* relative to parent's size, in this case the html style info. */
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #000;
+    word-spacing: 3px;
+}
+
+h2 {
+    font-size: 150%;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+h3 {    
+    font-size: 110%;
+    margin-bottom: 6%;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+
+/* --------- LINKS ---------- */
+
+a {
+    /* color: #f5efef;  */
+    color: #a899ac; 
+    text-decoration: none;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #9d99a0;
+}
+
+li {
+    list-style: none; 
+    color: rgb(152, 89, 194);
+}
+
+
+
+/* ------------------------------------------------------------- */
+/* HEADER */
+/* ------------------------------------------------------------- */
+
+
+
+.main-section::after {
+    /* background-image: linear-gradient(rgba(112, 48, 197, 0.274),rgba(255, 255, 255, 0)), url(img/BlueWaveform2.svg); */
+    /* background-image: linear-gradient(180deg, rgba(114,34,195,0.58) 0%, rgba(227,225,232,.4) 32%, rgba(255,255,255,0) 100%), url(img/BlueWaveform2.svg); */
+    background-image: linear-gradient(180deg, rgba(249, 244, 253, 0.59) 0%, rgba(127, 70, 202, 0.486) 30%, rgba(227,225,232,0.45) 66%, rgba(255,255,255,.1) 100%), 
+                    /* linear-gradient(0deg, rgba(235,215,255,0.58) 0%, rgba(105,70,202,0.73) 0%, rgba(227,225,232,0.5) 67%, rgba(255,255,255,1) 100%), */
+                    url(img/BlueWaveform2.svg);
+    background-size: 120%;
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+    background-position: center;
+    /* background-position-y: 10px; */
+    height: 100%; 
+    content: "";
+    width: 100%;
+    opacity: .9;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+  }
+
+.hero-text-box {
+    position: absolute;
+    width: 1140px;
+    top: 50%;
+    left: 50%;
+    margin-top: 15px;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tmx-icon {
+    height: 280px;
+    width: auto;
+    float: center; 
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
+}
+
+
+
+/* Main navigation bar */
+
+.main-nav {
+    margin-top: 20px;
+}
+
+.main-nav-items {
+    float: right;
+    margin-right: 10px;
+}
+
+.main-nav-items li {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.main-nav li a:link, 
+.main-nav li a:visited {
+    padding: 4px 0;
+    font-size: 95%;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.15s;
+}
+
+.main-nav li a:hover, 
+.main-nav li a:active {
+    border-bottom: 1px solid #777777d8;
+}
+
+/* Search bar */
+
+.search-bar-outer {
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    display: flex;
+    width: 60%;
+    border-radius: 24px;
+    /* border: 1px solid #dae0e6; */
+    border: 1px solid #b2b7bd;
+    padding: 13.5px 20px;
+    max-height: 50px;
+    background-color: #fcfeff;
+}
+
+/* input {
+    border: none;
+    background: none;
+    appearance: none;
+    width: 100%;
+    line-height: 22px;
+    letter-spacing: 0.15px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+} */
+
+/* .page-bottom {
+    height: 100px;
+    overflow-x: hidden;
+    background-image: linear-gradient(360deg, rgba(114,34,195,0.58) 0%, rgba(227,225,232,.4) 32%, rgba(255,255,255,0) 100%)
+} */

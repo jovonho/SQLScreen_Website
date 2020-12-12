@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>TMX Screen</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple stock screener for the TSX.">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;1,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/query-builder.default.css" />
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="/static/resources/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/resources/css/queries.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="row">
+                <div class="main-nav">
+                    <ul class="main-nav-items">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#steps">How it works</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="main-section">
+        <div class="row">
+            <div class="title">
+                <object type="image/svg+xml" data="/static/resources/icons/tmx_logo_white.svg" class="tmx-icon"></object>
+                <svg width="350px">
+                    <text class="text" x="0" y="110px" font-family="Verdana" font-size="95px" stroke="#a1a6ab"
+                        stroke-width=".7" fill="#fff">Screen</text>
+                </svg>
+            </div>
+        </div>
+        <div class="row">
+            <!-- <div class="search-bar-outer">
+                <div class="search-bar">
+                    <input class="search-input" placeholder="Search stocks...">
+                    <div class="search-icon">
+                        <svg width="19" height="20" viewBox="0 0 19 20" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M7.35714 0.825012C3.29391 0.825012 0 4.11892 0 8.18216C0 12.2454 3.29391 15.5393 7.35714 15.5393C9.20878 15.5393 10.9007 14.8553 12.1939 13.7261L17.2892 18.8215L17.6428 19.175L18.3499 18.4679L17.9963 18.1144L12.901 13.019C14.0302 11.7258 14.7143 10.0339 14.7143 8.18216C14.7143 4.11892 11.4204 0.825012 7.35714 0.825012ZM11.9332 12.595C13.036 11.4517 13.7143 9.89613 13.7143 8.18216C13.7143 4.6712 10.8681 1.82501 7.35714 1.82501C3.84619 1.82501 1 4.6712 1 8.18216C1 11.6931 3.84619 14.5393 7.35714 14.5393C9.07112 14.5393 10.6267 13.861 11.77 12.7582L11.9332 12.595Z"
+                                fill="black">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </div> -->
+            <div id="builder"></div>
+            <button class="btn btn-primary parse-json">Query</button>
+        </div>
+        <!-- <footer>
+            <div class="page-bottom">
+                
+            </div>
+        </footer> -->
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+        </script>
+    <script type="text/javascript" src="/static/vendors/js/moment.min.js"></script>
+    <script type="text/javascript" src="/static/vendors/js/query-builder.standalone.min.js"></script>
+    <script type="text/javascript" src="/static/vendors/js/jquery.waypoints.min.js"></script>
+    <script type="text/javascript" src="/static/resources/js/scripts.js"></script>
+</body>
+
+</html>
