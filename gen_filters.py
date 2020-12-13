@@ -31,10 +31,10 @@ label_dict = {
     "exDividendDate": "Ex-Dividend Date",
     "shortDescription": "Short Description",
     "longDescription": "Description",
-    "website": "Website",
-    "email": "Email",
-    "phoneNumber": "Phone Number",
-    "fullAddress": "Full Address",
+    "website": "Company Website",
+    "email": "Company Email Address",
+    "phoneNumber": "Company Phone Number",
+    "fullAddress": "Company Address",
     "employees": "Employees",
     "shareOutStanding": "Shares Outstanding",
     "totalDebtToEquity": "Total Debt to Equity",
@@ -63,7 +63,7 @@ label_dict = {
 
 # Used to create the draft label dictionary which is then manually enhanced
 def generate_label_dict(filename):
-    with open("./fields", "r") as infile, open(filename, "w") as outfile:
+    with open("./stuff/fields", "r") as infile, open(filename, "w") as outfile:
         outfile.write("{\n\t")
 
         key_vals = []
@@ -86,7 +86,9 @@ def gen_filters():
     db = DbHandler()
     conn = db.create_connection()
 
-    with open("./fields", "r") as infile, open("./static/resources/js/filters.js", "w") as outfile:
+    with open("./stuff/fields", "r") as infile, open(
+        "./static/resources/js/filters.js", "w"
+    ) as outfile:
         outfile.write("var tmx_filters = [\n")
         filter_list = []
         for line in infile:
@@ -105,54 +107,44 @@ def gen_filters():
             field_label = label_dict[field]
             print(field + ": " + field_label)
 
+            if field == "longDescription":
+                filter_list.append(
+                    f"{{\n\tid: '{field}',\n\tlabel: '{field_label}',\n\ttype: 'string',\n\toperators: [ 'contains' ] \n}}"
+                )
+                continue
+
             # Output filter template depending on field type
             if ftype == "numeric" or ftype == "bigint" or ftype == "int":
                 filter_list.append(
                     f"{{\n\tid: '{field}',\n\tlabel: '{field_label}',\n\ttype: 'double',\n\toperators: numeric_ops\n}}"
                 )
-                # outfile.write(
-                #     f"{{\n\tid: '{field}',\n\tlabel: '{field_label}',\n\ttype: 'double',\n\toperators: numeric_ops\n}},\n"
-                # )
 
             elif ftype == "timestamp":
-                # outfile.write(
                 filter_list.append(
                     f"{{\n\tid: '{field}',\n\tlabel: '{field_label}',\n\ttype: 'datetime',\n\tplaceholder: 'YYYY-MM-DD',\n\tvalidation: {{\n\t\tformat: 'YYYY-MM-DD'\n\t}},\n\toperators: datetime_ops\n}}"
                 )
 
             elif ftype == "text":
 
-                values = db.execute(conn, f"select distinct {field} from quotes;")
+                values = db.execute(conn, f"select distinct {field} from quotes order by {field};")
 
-                if len(values) < 54:
+                if len(values) < 60:
                     values = {x[0]: x[0] for x in values if x[0] is not None}
 
                     if len(values) != 0:
-                        # print(values)
-                        # outfile.write(
                         filter_list.append(
                             f"{{\n\tid: '{field}',\n\tlabel: '{field_label}',\n\ttype: 'string',\n\tinput: 'select',\n\tvalues: {values},\n\t operators: select_string_ops\n}}"
                         )
 
                 else:
                     filter_list.append(
-                        # outfile.write(
                         f"{{\n\tid: '{field}',\n\tlabel: '{field_label}',\n\ttype: 'string',\n\toperators: string_ops\n}}"
                     )
-
+        filter_list.sort()
         outfile.write(",\n".join(filter_list))
         outfile.write("]\n")
 
 
 if __name__ == "__main__":
-
-    # db = DbHandler()
-    # conn = db.create_connection()
-    # field = "exchangeCode"
-    # num_values = db.execute(conn, f"select count(distinct {field}) from quotes;")
-    # print(num_values[0][0])
-    # values = db.execute(conn, "select distinct exchangeCode from quotes;")
-
-    # print(values)
 
     gen_filters()

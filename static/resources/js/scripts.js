@@ -48,10 +48,15 @@ $(document).ready(function () {
     var rules_basic = {
         condition: 'AND',
         rules: [{
-            id: 'price',
-            operator: 'less',
-            value: 10.25
-        }]
+            id: 'datatype',
+            operator: 'equal',
+            value: 'etf'
+        },
+        {
+            id: 'industry',
+            operator: 'equal'
+        }
+        ]
     };
 
 

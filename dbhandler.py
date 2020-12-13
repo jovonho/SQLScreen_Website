@@ -51,6 +51,7 @@ class DbHandler:
         finally:
             cursor.close()
             conn.commit()
+            conn.close()
             return result
 
     def insert_quote(self, conn, quote_info):
