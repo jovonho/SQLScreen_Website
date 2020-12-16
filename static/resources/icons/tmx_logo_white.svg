@@ -1,48 +1,34 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 358.357 320" style="enable-background:new 0 0 358.357 320;" xml:space="preserve">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 358.4 320" style="enable-background:new 0 0 358.4 320;" xml:space="preserve">
 <style type="text/css">
-	.t {
-		stroke: #a1a6ab;
-		fill:#ffffff;
-	}
-	.m {
-		stroke: #a1a6ab;
-		fill: #ffffff;
-	}
-	.x1 {
-		stroke: #a1a6ab;
-		fill: #ffffff;
-		fill: url(#gradient);
-	}
-	.x2 {
-		<!-- stroke: #dae0e6; light grey -->
-		<!-- stroke: #b6bcc2; A bit darker -->
-		stroke: #a1a6ab;
-		fill: #ffffff;
-	}
+	.st0{fill:#FFFFFF;stroke:#585858;stroke-width:0.8;stroke-linejoin:bevel;}
+	.st1{fill:url(#SVGID_1_);stroke:#585858;stroke-width:0.8;stroke-linejoin:bevel;stroke-miterlimit:3.4;}
+	.st2{fill:#FFFFFF;stroke:#585858;stroke-width:0.8;}
 </style>
-      <defs>
-<linearGradient spreadMethod="pad" id="gradient" x1="0%" y1="86%" x2="50%" y2="0%">
-<!-- <stop offset="0%" style="stop-color:rgb(188, 144, 246);stop-opacity:1;" /> -->
-<!-- <stop offset="0%" style="stop-color:rgb(92, 0, 153);stop-opacity:.3;" /> -->
-<stop offset="0%" style="stop-color:rgb(152, 89, 194);stop-opacity:1;" />
-<!-- <stop offset="0%" style="stop-color:rgb(118, 53, 161);stop-opacity:.8;" /> -->
-	<stop offset="69%" style="stop-color:rgb(255, 255, 255);stop-opacity:1;" />
-	<stop offset="100" style="stop-color:rgb(255, 255, 255);stop-opacity:1;" />
-</linearGradient>
-</defs>
 <g>
 	<g>
 		<g>
-			<polygon class="t" points="32.014,210.332 59.43,204.226 59.43,121.956 89.141,121.956 89.141,109.756 0,109.756
-				3.042,121.956 32.014,121.956"/>
-			<path class="m" d="M179.313,109.773c-6.609,17.425-13.038,35.052-21.34,50.771c-7.237-16.785-13.785-34.27-21.314-50.771
-				h-29.298v97.499h15.564v-64.626l28.49,63.585l27.889-62.189v1.311c0.009-0.013,0.009-0.026,0.009-0.043v61.961h27.425v-97.499
-				H179.313z"/>
-			<path  transform="translate(126, 134) scale(0.85, 0.85) translate(-102, -127)" class="x1" d="M358.357,82.254h-36.664C328.216,55.913,331.68,28.355,331.68,0l-22.982,9.194
-				c-4.194,148.262-109.722,271.174-249.793,301.937L55.992,320c62.008-12.659,117.614-42.899,161.419-85.29h26.634l35.071-50.294
-				l35.039,50.294h44.201l-58.39-76.189L358.357,82.254z"/>
-			<path class="x2" d="M269.543,133.941l-18.16-24.185h-30.465l36.318,47.359C261.962,150.141,266.475,141.843,269.543,133.941"/>
+			<polygon class="st0" points="32,210.3 59.4,204.2 59.4,122 89.1,122 89.1,109.8 0,109.8 3,122 32,122 			"/>
+			<path class="st0" d="M179.3,109.8c-6.6,17.4-13,35.1-21.3,50.8c-7.2-16.8-13.8-34.3-21.3-50.8h-29.3v97.5h15.6v-64.6l28.5,63.6
+				l27.9-62.2v1.3c0,0,0,0,0,0v62h27.4v-97.5L179.3,109.8L179.3,109.8z"/>
+			
+			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-776.6151" y1="698.4874" x2="-776.3956" y2="698.8651" gradientTransform="matrix(257.0103 0 0 -272 199774.8906 190319.0625)">
+				<stop  offset="7.872523e-03" style="stop-color:#8748C2"/>
+				<stop  offset="4.006382e-02" style="stop-color:#9964CB"/>
+				<stop  offset="9.011302e-02" style="stop-color:#B188D7"/>
+				<stop  offset="0.1464" style="stop-color:#C6A8E2"/>
+				<stop  offset="0.2086" style="stop-color:#D8C4EB"/>
+				<stop  offset="0.2789" style="stop-color:#E6DAF3"/>
+				<stop  offset="0.361" style="stop-color:#F2EBF8"/>
+				<stop  offset="0.4625" style="stop-color:#F9F6FC"/>
+				<stop  offset="0.6048" style="stop-color:#FEFDFE"/>
+				<stop  offset="1" style="stop-color:#FFFFFF"/>
+			</linearGradient>
+			<path class="st1" d="M343.9,96h-31.2c5.5-22.4,8.5-45.8,8.5-69.9l-19.5,7.8c-3.6,126-93.3,230.5-212.3,256.6l-2.5,7.5
+				c52.7-10.8,100-36.5,137.2-72.5h22.6l29.8-42.7l29.8,42.7h37.6l-49.6-64.8L343.9,96z"/>
+			<path class="st2" d="M269.5,133.9l-18.2-24.2h-30.5l36.3,47.4C262,150.1,266.5,141.8,269.5,133.9"/>
 		</g>
 	</g>
 </g>

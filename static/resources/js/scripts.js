@@ -22,7 +22,7 @@ var string_ops = [
     "not_begins_with",
     "contains",
     "is_empty",
-    "is_null",
+    "is_null"
 ]
 
 var select_string_ops = [
@@ -46,16 +46,27 @@ var datetime_ops = [
 $(document).ready(function () {
 
     var rules_basic = {
-        condition: 'AND',
-        rules: [{
-            id: 'datatype',
-            operator: 'equal',
-            value: 'etf'
-        },
-        {
-            id: 'industry',
-            operator: 'equal'
-        }
+        condition: 'OR',
+        rules: [
+            {
+                id: 'symbol',
+                operator: 'equal',
+                value: 'BBD.A'
+            },
+            {
+                id: 'symbol',
+                operator: 'equal',
+                value: 'BBD.B'
+            }
+            // , {
+            //     id: 'datatype',
+            //     operator: 'equal',
+            //     value: 'equity'
+            // },
+            // {
+            //     id: 'industry',
+            //     operator: 'equal'
+            // }
         ]
     };
 

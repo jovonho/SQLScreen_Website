@@ -145,6 +145,15 @@ def gen_filters():
         outfile.write("]\n")
 
 
+# def gen_sqlalchemy():
+
+#     with open("./stuff/fields", "r") as infile, open("./stuff/sqlalchemy", "w") as outfile:
+#         class_props = []
+#         for line in infile:
+#             field, ftype = line.replace(",", "").rstrip().split(" ")
+#             outfile.write(field)
+
+
 if __name__ == "__main__":
 
     gen_filters()

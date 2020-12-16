@@ -43,7 +43,7 @@ class DbHandler:
 
         result = None
         try:
-            cursor = conn.cursor()
+            cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
             cursor.execute(sql_statement)
             result = cursor.fetchall()
         except Exception as e:
