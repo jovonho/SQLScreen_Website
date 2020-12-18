@@ -76,10 +76,15 @@ h3 {
 /* Results */
 /* ------------------------------------------------------------- */
 
+.row {
+    margin-bottom: 15px;
+}
+
 .result-container {
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 24px;
     border: 1px solid #4d4d4d;
+    margin-top: 15px;
 }
 
 .result-line {

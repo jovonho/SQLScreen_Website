@@ -8,10 +8,9 @@
     <meta name="description" content="A simple stock screener for the TSX.">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;1,300&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" /> -->
     <link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/query-builder.default.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="/static/vendors/css/query-builder.default.css" /> -->
     <link rel="stylesheet" type="text/css" href="/static/vendors/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/static/vendors/css/grid.css">
     <link rel="stylesheet" type="text/css" href="/static/resources/css/results_style.css">
@@ -32,11 +31,65 @@
         </nav>
     </header>
 
+    <section class="query-section">
+        <div class="row">
+            <h1>Query was: {{ query }}</h1>
+        </div>
+    </section>
+
     <section class="main-section">
         {% for result in query_result %}
         <div class="row">
-            <div class="result">
-                <h2 class="symbol">{{ result['symbol'] }}</h2>
+            <div class="result-container">
+                <div class="result-line">
+                    <div class="result-id-info">
+                        <a href="https://money.tmx.com/en/quote/{{ result['symbol'] }}"><span
+                                class="empty-span"></span></a>
+                        <h2 class="symbol">{{ result['symbol'] }}</h2>
+                        <div class="sep">&mdash;</div>
+                        <h3 class="name">{{ result['name'] }}</h3>
+                    </div>
+                </div>
+                <div class="result-line">
+                    <div class="result-class-info">
+                        <div class="class-info-sector sector-info">
+                            <div class="class-info-label label-sector">Sector:</div>
+                            <div class="class-info-value sector">{{ result['sector'] }}</div>
+                        </div>
+                        <div class="class-info-sector industry-info">
+                            <div class="class-info-label label-industry">Industry:</div>
+                            <div class="class-info-value industry">{{ result['industry'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-line">
+                    <!-- <div class="result-price-info"> -->
+                    <div class="col span-1-of-10 info-block price-block">
+                        <div class="label">Price</div>
+                        <div class="price">$ {{ result['price'] }}</div>
+                    </div>
+                    <div class="col span-1-of-10 info-block percent-block">
+                        <div class="label">Change</div>
+                        <div class="percentChange">{{ result['percentchange'] }} %</div>
+                    </div>
+                    <div class="col span-1-of-10 info-block volume-block">
+                        <div class="label">Volume</div>
+                        <div class="volume">{{ result['volume'] }}</div>
+                    </div>
+                    <div class="col span-1-of-11"></div>
+                    <div class="col span-1-of-8 info-block marketcap-block">
+                        <div class="label">Market Cap</div>
+                        <div class="marketcap">$ {{ result['marketcap'] }}</div>
+                    </div>
+                </div>
+                <!-- </div> -->
+
+                <div class="result-line">
+                    <div class="info-block marketcap-block">
+                        <div class="label">Market Cap</div>
+                        <div class="marketcap">$ {{ result['marketcap'] }}</div>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}

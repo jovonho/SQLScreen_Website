@@ -19,12 +19,15 @@ def submit_query():
     query = "select * from quotes where " + query_where_clause + ";"
     print(query)
 
+    # TODO: Not generating a connection for each query is probably a tiny bit faster
     query_result = app.db.execute_self_contained(query)
+
+    # TODO: See ways to speed up large queries
 
     # TODO: how to best present results? Take into account the terms the user looked for and display these first, order by what?
     for res in query_result:
-        print(type(res))
+        #     print(type(res))
         for k, v in res.items():
             print(f" {k}: {v}")
 
-    return render_template("query-result.html", query_result=query_result)
+    return render_template("query-result.html", query=query, query_result=query_result)
