@@ -1,5 +1,6 @@
 /* ------------------------------------------------------------- */
 /* BASIC SETUP */
+/* HELLO WHY IS THIS NOT UPDATED? */
 /* ------------------------------------------------------------- */
 
 * {
@@ -36,8 +37,9 @@ html {
 
 body {
     background: url(img/BW_vert_2_sides_60op.svg);
+    background-attachment: fixed;
     background-size: 100% auto;
-    background-repeat: repeat-y;
+    /* background-repeat: repeat-y; */
     min-height: 100vh; 
 }
 
@@ -76,24 +78,34 @@ h3 {
 /* Results */
 /* ------------------------------------------------------------- */
 
-.row {
-    margin-bottom: 15px;
+.section-results {
+    margin-bottom: 20px;
 }
 
 .result-container {
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 24px;
     border: 1px solid #4d4d4d;
-    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .result-line {
     display: flex;
-    justify-content: left;
+    /* justify-content: left; */
     align-items: center;
     margin-left: 15px;
+    margin-right: 10px;
     margin-bottom: 5px;
 }
+
+.line-price-name {
+    justify-content: left;
+}
+
+.line-info {
+    justify-content: space-between;
+}
+
 
 .result-id-info {
     display: flex;
@@ -117,6 +129,56 @@ h3 {
     margin-right: 15px;
 }
 
+.price-n-change {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+
+.price {
+    font-weight: 400;
+    font-size: 200%;
+    /* font-size: 2.5vw; */
+    margin-right: 10px;
+}
+
+.divider {
+    font-size: 200%;
+}
+
+.change {
+    display: flex;
+    flex-direction: column;
+    font-weight: 400;
+    font-size: 85%;
+    margin-right: 5px;
+}
+
+.ch-percent {
+    display: inline-block;
+}
+
+
+.ch-pos {
+    color: green;
+}
+
+.ch-neg {
+    color: red;
+}
+
+.symbol {
+    font-size: 190%;
+}
+
+.sep2 {
+    margin: 0 5px;
+    font-weight: 300;
+}
+
 .class-info-label {
     margin-right: 7px;
 }
@@ -134,13 +196,61 @@ h3 {
     display: flex;
 }
 
+.result-block {
+    display: flex;
+    flex-direction: column;
+    margin-top: 7px;
+    margin-right: 50px;
+}
+
+.block-subline {
+    display: flex;
+    justify-content: center;
+}
+
+.block-title {
+    display: flex;
+    justify-content: left;
+}
+
+.label-dividend {
+    font-size: 80%;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+    margin-bottom: 5px;
+    border-bottom: 1px solid;
+}
+
+.result-block-col {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    margin-right: 12px;
+}
+
 .info-block {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-right: 15px;
+    margin-bottom: 7px;
 }
 
+.info-block-line {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+
+.value {
+    text-align: center;
+    font-size: 85%;
+}
+
+
+/* For making a whole element a link */
 .empty-span {
     position:absolute; 
     width:100%;

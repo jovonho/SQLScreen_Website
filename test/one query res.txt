@@ -1,0 +1,72 @@
+ symbol: ZDC
+ name: Zedcor Inc.
+ sector: Energy
+ industry: Oil & Gas
+
+ price: 0.135
+ pricechange: 0.005
+ percentchange: 3.846154
+ exchangename: TSX Venture Exchange
+ exshortname: TSXV
+ exchangecode: CDX
+ marketplace: None
+
+ openprice: 0.165
+ prevclose: 0.13
+ dayhigh: 0.165
+ daylow: 0.135
+ weeks52high: 0.18
+ weeks52low: 0.015
+
+ day21movingavg: 0.09714
+ day50movingavg: 0.0953
+ day200movingavg: 0.1124
+
+ volume: 68766
+ averagevolume10d: 26178
+ averagevolume30d: 13270
+ averagevolume50d: 11633
+
+ shareoutstanding: 55280495
+ marketcap: 7462867
+ totalsharesoutstanding: 57280495
+ marketcapallclasses: 7732867
+ sharesescrow: 0
+ 
+ alpha: -0.00194
+ beta: 2.176161
+ eps: -0.119999997
+ peratio: -1.1
+ pricetobook: 2.7
+ pricetocashflow: 1.7
+ returnonequity: -103.76
+ returnonassets: -14.9
+ totaldebttoequity: 9.88
+ vwap: 0.159452554
+
+ employees: 43
+ 
+ dividendfrequency: None
+ dividendyield: None
+ dividendamount: None
+ 
+ dividendcurrency: None
+ exdividenddate: None
+ dividendpaydate: None
+
+ dividend3years: None
+ dividend5years: None
+
+
+ shortdescription: Zedcor Inc is engaged in providing security & surveillance services, and rental of surface equipment & accommodations in Western Canada.
+ longdescription: Zedcor Inc is engaged in providing security & surveillance services, and rental of surface equipment & accommodations in Western Canada. It operates in two segments namely, Security & Surveillance and Rentals.
+ website: http://www.zedcor.ca
+ email: kcotter@zedcor.ca
+ phonenumber: +1 403 519-9355
+ fulladdress: 500 - 4th Avenue SW, Suite 3000, Calgary, AB, CA
+
+
+
+
+
+ 

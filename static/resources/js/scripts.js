@@ -43,38 +43,35 @@ var datetime_ops = [
     "not_between",
 ]
 
+var default_rules = {
+    condition: 'OR',
+    rules: [
+        // {
+        //     id: 'symbol',
+        //     operator: 'equal',
+        //     value: 'BBD.A'
+        // },
+        // {
+        //     id: 'symbol',
+        //     operator: 'equal',
+        //     value: 'BBD.B'
+        // }
+        {
+            id: 'industry',
+            operator: 'equal',
+            value: 'Oil & Gas'
+        }
+    ]
+};
+
+
+
 $(document).ready(function () {
-
-    var rules_basic = {
-        condition: 'OR',
-        rules: [
-            {
-                id: 'symbol',
-                operator: 'equal',
-                value: 'BBD.A'
-            },
-            {
-                id: 'symbol',
-                operator: 'equal',
-                value: 'BBD.B'
-            }
-            // , {
-            //     id: 'datatype',
-            //     operator: 'equal',
-            //     value: 'equity'
-            // },
-            // {
-            //     id: 'industry',
-            //     operator: 'equal'
-            // }
-        ]
-    };
-
 
     $('#builder').queryBuilder({
         allow_empty: false,
         filters: tmx_filters,
-        rules: rules_basic
+        rules: default_rules
     });
 
     $('.submit-query').on('click', function () {
