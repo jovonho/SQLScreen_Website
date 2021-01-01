@@ -1,6 +1,5 @@
 /* ------------------------------------------------------------- */
 /* BASIC SETUP */
-/* HELLO WHY IS THIS NOT UPDATED? */
 /* ------------------------------------------------------------- */
 
 * {
@@ -39,7 +38,6 @@ body {
     background: url(img/BW_vert_2_sides_60op.svg);
     background-attachment: fixed;
     background-size: 100% auto;
-    /* background-repeat: repeat-y; */
     min-height: 100vh; 
 }
 
@@ -61,15 +59,11 @@ h1 {
 
 h2 {
     font-size: 150%;
-    /* text-align: center; */
-    /* margin-bottom: 30px; */
     text-transform: uppercase;
 }
 
 h3 {    
     font-size: 110%;
-    /* margin-bottom: 6%; */
-    /* text-transform: uppercase; */
     letter-spacing: .5px;
 }
 
@@ -83,7 +77,7 @@ h3 {
 }
 
 .result-container {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.75);
     border-radius: 24px;
     border: 1px solid #4d4d4d;
     margin-bottom: 15px;
@@ -91,19 +85,11 @@ h3 {
 
 .result-line {
     display: flex;
-    /* justify-content: left; */
+    justify-content: left;
     align-items: center;
     margin-left: 15px;
     margin-right: 10px;
     margin-bottom: 5px;
-}
-
-.line-price-name {
-    justify-content: left;
-}
-
-.line-info {
-    justify-content: space-between;
 }
 
 
@@ -132,7 +118,6 @@ h3 {
 .price-n-change {
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     margin-top: 10px;
     margin-right: 10px;
 }
@@ -141,7 +126,6 @@ h3 {
 .price {
     font-weight: 400;
     font-size: 200%;
-    /* font-size: 2.5vw; */
     margin-right: 10px;
 }
 
@@ -161,7 +145,6 @@ h3 {
     display: inline-block;
 }
 
-
 .ch-pos {
     color: green;
 }
@@ -174,7 +157,7 @@ h3 {
     font-size: 190%;
 }
 
-.sep2 {
+.result-class-info div.sep {
     margin: 0 5px;
     font-weight: 300;
 }
@@ -211,42 +194,43 @@ h3 {
 .block-title {
     display: flex;
     justify-content: left;
+    border-bottom: 1px solid;
 }
 
-.label-dividend {
+.block-title div.label {
     font-size: 80%;
     padding-left: 0;
     padding-right: 0;
     border-radius: 0;
     margin-bottom: 5px;
-    border-bottom: 1px solid;
 }
 
 .result-block-col {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-evenly; */
-    margin-right: 12px;
+    margin-right: 17px;
 }
 
 .info-block {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: baseline;
     margin-bottom: 7px;
 }
 
-.info-block-line {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-bottom: 7px;
-}
-
+/* .info-block-line div.label {
+    padding-bottom: 0;
+} */
 
 .value {
-    text-align: center;
+    display: flex;
+    align-items: baseline;
     font-size: 85%;
+}
+
+.value-curr {
+    margin-left: 5px;
+    font-size: 75%;
 }
 
 

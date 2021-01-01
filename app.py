@@ -1,8 +1,13 @@
 from flask import Flask, render_template, request
 from dbhandler import DbHandler
 
+# from babel import Locale
+import babel
+import babel.dates
+
 app = Flask(__name__)
 app.db = DbHandler()
+# babel.dates.LC_TIME = Locale.parse("en_US")
 
 
 @app.route("/")
@@ -36,6 +41,15 @@ def submit_query():
     #         print(f" {k}: {v}")
 
     return render_template("query-result.html", query=query, query_result=query_result)
+
+
+@app.template_filter()
+def format_datetime(value, format="date_only"):
+    if format == "date_only":
+        format = "y-MM-dd"
+    elif format == "all":
+        format = "EE dd.MM.y HH:mm"
+    return babel.dates.format_datetime(value, format, locale="en_US")
 
 
 @app.context_processor
@@ -78,7 +92,13 @@ def utility_processor():
     def format_financial(x):
         if x is None:
             return "-"
-        return round(x, 4)
+        # return str(round(x, 4))
+        return "{:.4f}".format(x).rstrip("0").rstrip(".")
+
+    def format_divi_date(date):
+        if date is not None:
+            return date.strftime("%Y-%m-%d")
+        return date
 
     return dict(
         format_change=format_change,
@@ -88,4 +108,5 @@ def utility_processor():
         not_none=not_none,
         abbreviate=abbreviate,
         format_financial=format_financial,
+        format_divi_date=format_divi_date,
     )

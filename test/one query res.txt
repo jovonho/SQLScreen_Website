@@ -2,15 +2,18 @@
  name: Zedcor Inc.
  sector: Energy
  industry: Oil & Gas
-
- price: 0.135
- pricechange: 0.005
- percentchange: 3.846154
  exchangename: TSX Venture Exchange
  exshortname: TSXV
  exchangecode: CDX
  marketplace: None
 
+
+ price: 0.135
+ pricechange: 0.005
+ percentchange: 3.846154
+
+ Price
+ price: 0.135
  openprice: 0.165
  prevclose: 0.13
  dayhigh: 0.165
@@ -33,6 +36,7 @@
  marketcapallclasses: 7732867
  sharesescrow: 0
  
+ Financials
  alpha: -0.00194
  beta: 2.176161
  eps: -0.119999997
@@ -44,8 +48,9 @@
  totaldebttoequity: 9.88
  vwap: 0.159452554
 
- employees: 43
+
  
+ Dividend
  dividendfrequency: None
  dividendyield: None
  dividendamount: None
@@ -57,7 +62,8 @@
  dividend3years: None
  dividend5years: None
 
-
+ Misc
+ employees: 43
  shortdescription: Zedcor Inc is engaged in providing security & surveillance services, and rental of surface equipment & accommodations in Western Canada.
  longdescription: Zedcor Inc is engaged in providing security & surveillance services, and rental of surface equipment & accommodations in Western Canada. It operates in two segments namely, Security & Surveillance and Rentals.
  website: http://www.zedcor.ca

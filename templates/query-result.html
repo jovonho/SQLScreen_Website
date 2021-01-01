@@ -30,9 +30,9 @@
     </header>
 
     <section class="query-section">
-        <div class="row">
+        <!-- <div class="row">
             <h1>Query was: {{ query }}</h1>
-        </div>
+        </div> -->
         <div class="row">
             <h3>Data as of 2020-12-25</h3>
             <h3>All prices in CAD</h3>
@@ -65,7 +65,7 @@
                 <div class="result-line line-ex-sector">
                     <div class="result-class-info">
                         <div class="exchange"> {{ result['exshortname'] }}</div>
-                        <div class="sep2">&mdash;</div>
+                        <div class="sep">&mdash;</div>
                         <div class="class-info-sector sector-info">
                             <div class="class-info-label label-sector">Sector:</div>
                             <div class="class-info-value sector">{{ not_none(result['sector']) }}</div>
@@ -79,17 +79,25 @@
 
                 <div class="result-line line-info">
                     <div class="result-block price-info-block">
+                        <div class="block-subline block-title">
+                            <div class="label">Price</div>
+                        </div>
                         <div class="block-subline">
                             <div class="result-block-col">
+                                <div class="info-block">
+                                    <div class="label">Close</div>
+                                    <div class="value">{{ format_price(result['price']) }}</div>
+                                </div>
                                 <div class="info-block">
                                     <div class="label">Open</div>
                                     <div class="value">{{ format_price(result['openprice']) }}</div>
                                 </div>
                                 <div class="info-block">
-                                    <div class="label">Prev. Close</div>
+                                    <div class="label">Prv. Close</div>
                                     <div class="value">{{ format_price(result['prevclose']) }}</div>
                                 </div>
                             </div>
+
                             <div class="result-block-col">
                                 <div class="info-block">
                                     <div class="label">Day Range</div>
@@ -102,11 +110,38 @@
                                         format_price(result['weeks52high']) }}
                                     </div>
                                 </div>
+                                <div class="info-block">
+                                    <div class="label">VWAP</div>
+                                    <div class="value">{{ format_financial(result['vwap']) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-block price-avg-block">
+                        <div class="block-subline block-title">
+                            <div class="label">Avg Price</div>
+                        </div>
+                        <div class="result-block-col">
+                            <div class="info-block">
+                                <div class="label">21d</div>
+                                <div class="value">{{ format_2_decimals(result['day21movingavg']) }}</div>
+                            </div>
+                            <div class="info-block">
+                                <div class="label">50d</div>
+                                <div class="value">{{ format_2_decimals(result['day50movingavg']) }}</div>
+                            </div>
+                            <div class="info-block">
+                                <div class="label">200d</div>
+                                <div class="value">{{ format_2_decimals(result['day200movingavg']) }}</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="result-block shares-info-block">
+                        <div class="block-subline block-title">
+                            <div class="label">Shares</div>
+                        </div>
                         <div class="block-subline">
                             <div class="result-block-col">
                                 <div class="info-block">
@@ -114,71 +149,58 @@
                                     <div class="value">{{ format_comma(result['volume']) }}</div>
                                 </div>
                                 <div class="info-block">
-                                    <div class="label">Escrowed</div>
-                                    <div class="value">{{ format_comma(result['sharesescrow']) }}</div>
-                                </div>
-                            </div>
-                            <div class="result-block-col">
-                                <div class="info-block">
-                                    <div class="label">Shares Out.</div>
+                                    <div class="label">Outstanding</div>
                                     <div class="value">{{ format_comma(result['shareoutstanding']) }}</div>
                                 </div>
                                 <div class="info-block">
-                                    <div class="label">Total Shares Out.</div>
-                                    <div class="value">{{ format_comma(result['totalsharesoutstanding']) }}</div>
-                                </div>
-                            </div>
-                            <div class="result-block-col">
-                                <div class="info-block">
                                     <div class="label">Market Cap</div>
                                     <div class="value">{{ format_comma(result['marketcap']) }}</div>
+                                </div>
+                            </div>
+
+                            <div class="result-block-col">
+                                <div class="info-block">
+                                    <div class="label">Escrowed</div>
+                                    <div class="value">{{ format_comma(result['sharesescrow']) }}</div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="label">Total Outstanding</div>
+                                    <div class="value">{{ format_comma(result['totalsharesoutstanding']) }}</div>
                                 </div>
                                 <div class="info-block">
                                     <div class="label">Market Cap (all classes)</div>
                                     <div class="value">{{ format_comma(result['marketcapallclasses']) }}</div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-
-                    <div class="result-block dividend-block">
+                    <div class="result-block vol-avg-block">
                         <div class="block-subline block-title">
-                            <div class="label label-dividend">Dividend</div>
+                            <div class="label">Avg Volume</div>
                         </div>
-                        <div class="block-subline">
-                            <div class="result-block-col">
-                                <div class="info-block-line">
-                                    <div class="label">Frequency: </div>
-                                    <div class="value">{{ result['dividendfrequency'] }}</div>
-                                </div>
-                                <div class="info-block-line">
-                                    <div class="label">Amount: </div>
-                                    <div class="value">{{ result['dividendamount'] }}({{
-                                        result['dividendamount']}})</div>
-                                </div>
-                                <div class="info-block-line">
-                                    <div class="label">Yield: </div>
-                                    <div class="value">{{ result['dividendyield'] }}</div>
-                                </div>
+                        <div class="result-block-col">
+                            <div class="info-block">
+                                <div class="label">10d</div>
+                                <div class="value">{{ format_comma(result['averagevolume10d']) }}</div>
                             </div>
-                            <div class="result-block-col">
-                                <div class="info-block-line">
-                                    <div class="label">Ex date: </div>
-                                    <div class="value">{{ result['exdividenddate'] }}</div>
-                                </div>
-                                <div class="info-block-line">
-                                    <div class="label">Paydate: </div>
-                                    <div class="value">{{ result['dividendpaydate'] }}</div>
-                                </div>
+                            <div class="info-block">
+                                <div class="label">30d</div>
+                                <div class="value">{{ format_comma(result['averagevolume30d']) }}</div>
+                            </div>
+                            <div class="info-block">
+                                <div class="label">50d</div>
+                                <div class="value">{{ format_comma(result['averagevolume50d']) }}</div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <div class="result-line line-info">
                     <div class="result-block financial-block">
+                        <div class="block-subline block-title">
+                            <div class="label">Financials</div>
+                        </div>
                         <div class="block-subline">
                             <div class="result-block-col">
                                 <div class="info-block">
@@ -189,70 +211,99 @@
                                     <div class="label">Beta</div>
                                     <div class="value">{{ format_financial(result['beta']) }}</div>
                                 </div>
-                            </div>
-                            <div class="result-block-col">
                                 <div class="info-block">
                                     <div class="label">EPS</div>
                                     <div class="value">{{ format_financial(result['eps']) }}</div>
                                 </div>
-                                <div class="info-block">
-                                    <div class="label">P/E</div>
-                                    <div class="value">{{ format_financial(result['peratio']) }}</div>
-                                </div>
+
                             </div>
                             <div class="result-block-col">
                                 <div class="info-block">
-                                    <div class="label">P/B</div>
+                                    <div class="label">Price / Earnings</div>
+                                    <div class="value">{{ format_financial(result['peratio']) }}</div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="label">Price / Book</div>
                                     <div class="value">{{ format_financial(result['pricetobook']) }}</div>
                                 </div>
                                 <div class="info-block">
-                                    <div class="label">P/CF</div>
+                                    <div class="label">Price / Cashflow</div>
                                     <div class="value">{{ format_financial(result['pricetocashflow']) }}</div>
                                 </div>
                             </div>
                             <div class="result-block-col">
                                 <div class="info-block">
-                                    <div class="label">ROE</div>
+                                    <div class="label">Return on Equity</div>
                                     <div class="value">{{ format_financial(result['returnonequity']) }}</div>
                                 </div>
                                 <div class="info-block">
-                                    <div class="label">ROA</div>
+                                    <div class="label">Return on Assets</div>
                                     <div class="value">{{ format_financial(result['returnonassets']) }}</div>
                                 </div>
-                            </div>
-                            <div class="result-block-col">
                                 <div class="info-block">
-                                    <div class="label">Total D/E</div>
+                                    <div class="label">Debt / Equity</div>
                                     <div class="value">{{ format_financial(result['totaldebttoequity']) }}</div>
                                 </div>
-                                <div class="info-block">
-                                    <div class="label">VWAP</div>
-                                    <div class="value">{{ format_financial(result['vwap']) }}</div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
-                    <div class="result-block avgs-info-block">
+
+                    <div class="result-block dividend-block">
+                        <div class="block-subline block-title">
+                            <div class="label">Dividend</div>
+                        </div>
                         <div class="block-subline">
+                            {% if result['dividendfrequency'] is not none %}
                             <div class="result-block-col">
                                 <div class="info-block">
-                                    <div class="label">21/50/200d Avg Price</div>
-                                    <div class="value">{{ format_2_decimals(result['day21movingavg']) }}/{{
-                                        format_2_decimals(result['day50movingavg'])
-                                        }}/{{ format_2_decimals(result['day200movingavg']) }}</div>
+                                    <div class="label">Frequency</div>
+                                    <div class="value">{{ result['dividendfrequency'] }}</div>
                                 </div>
                                 <div class="info-block">
-                                    <div class="label">10/30/50d Avg Volume</div>
-                                    <div class="value">{{ format_comma(result['averagevolume10d']) }}/{{
-                                        format_comma(result['averagevolume30d'])
-                                        }}/{{ format_comma(result['averagevolume50d']) }}</div>
-                                    <!-- <div class="value">{{ abbreviate(result['averagevolume10d']) }}/{{
-                                        abbreviate(result['averagevolume30d'])
-                                        }}/{{ abbreviate(result['averagevolume50d']) }}</div> -->
+                                    <div class="label">Amount</div>
+                                    <div class="value">
+                                        <div class="value-amt">
+                                            {{ format_financial(result['dividendamount']) }}
+                                        </div>
+                                        <div class="value-curr">{{result['dividendcurrency']}}</div>
+                                    </div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="label">Yield </div>
+                                    <div class="value">{{ result['dividendyield'] }}%</div>
                                 </div>
                             </div>
+                            <div class="result-block-col">
+                                <div class="info-block">
+                                    <div class="label">Ex date </div>
+                                    <div class="value">{{ format_divi_date(result['exdividenddate']) }}</div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="label">Paydate </div>
+                                    <div class="value">{{ format_divi_date(result['dividendpaydate'])}}</div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="result-block-col">
+                                <div class="info-block">
+                                    <div class="label">&nbsp;</div>
+                                    <div class="value">-</div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="label">&nbsp;</div>
+                                    <div class="value">&nbsp;</div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="label">&nbsp;</div>
+                                    <div class="value">&nbsp;</div>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
+
+
 
                 </div>
             </div>
