@@ -21,7 +21,7 @@ html {
     font-weight: 300;
     text-rendering: optimizeLegibility;
     overflow-y: overlay;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 .clearfix { zoom: 1 }
@@ -37,10 +37,38 @@ html {
 body {
     /* background: url(img/BW_vert_2_sides_60op.svg); */
     background: url(img/Results_bg2.svg);
+    /* background-color: black ; */
     background-attachment: fixed;
     background-size: 100% auto;
     min-height: 100vh; 
 }
+
+/* Table */
+
+section.result {
+    display: flex;
+    align-items: center;
+}
+
+table {
+    background-color:rgba(255, 255, 255, 0.5);
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+thead {
+    background-color:rgb(238, 238, 238, 0.5);
+    /* color:black */
+    font-weight: bold;
+    cursor: default;
+}
+
+td,
+th {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 7px;
+}
+
 
 
 /* -------- HEADINGS --------- */
@@ -59,13 +87,13 @@ h1 {
 }
 
 h2 {
-    font-size: 150%;
-    text-transform: uppercase;
+    font-size: 120%;
+    /* text-transform: uppercase; */
 }
 
 h3 {    
-    font-size: 110%;
-    letter-spacing: .5px;
+    font-size: 100%;
+    letter-spacing: .3px;
 }
 
 

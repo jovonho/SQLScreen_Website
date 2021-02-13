@@ -12,3 +12,12 @@ How can I profile the code to find the bottlenecks? How can I speed it up by a f
 --> Should try to implement Quicksort instead of the basic sorting function I'm currently using.
 --> Try to leverage the existing sort() function in array
 --> Tryusing a html table instead, but will lose the design.
+
+Possible avenues to optimize:
+- no more data processing in jinja, do that stuff upstream so it's correctly stored in the DB.
+- use less classes 
+
+
+Links:
+https://samdutton.wordpress.com/2015/04/02/high-performance-html/
+https://stackoverflow.com/questions/13529503/dom-penalty-of-using-html-attributes
