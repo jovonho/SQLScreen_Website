@@ -58,7 +58,7 @@ def utility_processor():
         return "{:,}".format(amount)
 
     def format_price(price):
-        if price is None:
+        if price is None:   
             return "-"
         return "{:.2f}".format(price)
 

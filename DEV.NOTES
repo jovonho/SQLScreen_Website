@@ -2,3 +2,13 @@ For sorting results see:
 https://jinja.palletsprojects.com/en/2.11.x/templates/#sort
 https://stackoverflow.com/questions/54701959/sort-dynamically-rendered-table-from-python-flask-in-html-using-javascript
 https://datatables.net/manual/installation
+
+
+Feb 13 2021:
+
+Sorting takes way too long (like 30-40sec for price and pricechange on a 260 item result). 
+How can I profile the code to find the bottlenecks? How can I speed it up by a factor of 10 ?? 
+
+--> Should try to implement Quicksort instead of the basic sorting function I'm currently using.
+--> Try to leverage the existing sort() function in array
+--> Tryusing a html table instead, but will lose the design.

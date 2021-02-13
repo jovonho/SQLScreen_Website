@@ -120,25 +120,14 @@ $(document).ready(function () {
     console.log($('.result-info-lines').length)
 
     $('#sort-by').change((e) => {
+
+        // Select the sorting key from the currently selected value in the drop-down
         var key = $(e.currentTarget).val();
 
         var t0 = performance.now()
-        // sortList(key);
-
-        // list = Array.from(document.getElementsByClassName('result-list-item'));
-        list = $("#result-list > li").get();
-        list.sort(compareFunctions[key]);
-
-        // console.log(list)
-        listParent = $('#result-list').get()
-        listParent.textContent = ''
-
-        for (var i = 0; i < list.length; i++) {
-            // console.log(list[i].parentNode)
-            // list[i].parentNode.appendChild(list[i]);
-            $('#result-list').append(list[i])
-        }
+        sortList(key);
         var t1 = performance.now()
+
         console.log("Sorted by " + key + " in " + (t1 - t0) + " milliseconds.")
     });
 
