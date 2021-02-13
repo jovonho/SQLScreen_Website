@@ -3,6 +3,22 @@ import psycopg2.extras
 from dbconfig import config
 
 
+def NoneHandlerStr(value, cur):
+    if value is None:
+        return "-"
+    return value
+
+
+# def NoneHandlerNum(value, cur):
+#     if value is None:
+#         return 0
+#     return value
+
+
+NoneHandlerStrType = psycopg2.extensions.new_type((25, 114), "NoneHandlerStr", NoneHandlerStr)
+# NoneHandlerNumType = psycopg2.extensions.new_type((20, 23, 1700), "NoneHandlerNum", NoneHandlerNum)
+
+
 class DbHandler:
     def __init__(self):
         super()
@@ -19,6 +35,9 @@ class DbHandler:
             cur.execute("SELECT version()")
             db_version = cur.fetchone()
             print(f"PostgreSQL version {db_version}")
+
+            psycopg2.extensions.register_type(NoneHandlerStrType)
+            psycopg2.extensions.register_type(NoneHandlerNumType)
             cur.close()
 
         except (Exception, psycopg2.DatabaseError) as error:

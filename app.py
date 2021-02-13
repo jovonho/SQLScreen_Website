@@ -1,13 +1,8 @@
 from flask import Flask, render_template, request
 from dbhandler import DbHandler
 
-# from babel import Locale
-import babel
-import babel.dates
-
 app = Flask(__name__)
 app.db = DbHandler()
-# babel.dates.LC_TIME = Locale.parse("en_US")
 
 
 @app.route("/")
@@ -15,41 +10,36 @@ def index():
     return render_template("index.html")
 
 
-# @app.route("/submit-query", methods=["POST"])
-@app.route("/submit")
+@app.route("/submit-query", methods=["POST"])
+# @app.route("/submit")
 def submit_query():
     print(request.form)
 
-    # query_where_clause = "symbol in ('MRG.DB.A', 'NWH.DB.G', 'IAF.PR.I', 'XIT')"
-    query_where_clause = "industry = 'Oil & Gas'"
+    query_where_clause = request.form["sql"]
 
-    query = "select * from quotes where " + query_where_clause + ";"
+    # query_where_clause = "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS')"
+    # query_where_clause = (
+    #     "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS', 'RBX', 'TAL', 'VCI',  'AAB', 'AAV', 'AC', 'ACB')"
+    # )
 
-    # TODO: Not generating a connection for each query is probably a tiny bit faster
+    # query_where_clause = "industry = 'REITs'"
+
+    fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh, 
+        daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
+        averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
+        alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
+        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
+
+    query = f"select {fields} from quotes where {query_where_clause};"
+
+    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
     query_result = app.db.execute_self_contained(query)
 
     # TODO: See ways to speed up large queries
-
-    for k, v in query_result[0].items():
-        print(f" {k}: {v}")
-
-    # TODO: how to best present results? Take into account the terms the user looked for and display these first, order by what?
-    # for res in query_result:
-    # if res["percentchange"][0] == "-":
-    #     #     print(type(res))
-    #     for k, v in res.items():
-    #         print(f" {k}: {v}")
+    # for k, v in query_result[0].items():
+    #     print(f" {k}: {v}")
 
     return render_template("query-result.html", query=query, query_result=query_result)
-
-
-@app.template_filter()
-def format_datetime(value, format="date_only"):
-    if format == "date_only":
-        format = "y-MM-dd"
-    elif format == "all":
-        format = "EE dd.MM.y HH:mm"
-    return babel.dates.format_datetime(value, format, locale="en_US")
 
 
 @app.context_processor

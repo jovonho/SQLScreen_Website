@@ -1,0 +1,15 @@
+ 
+ FIELDS USED IN DISPLAY
+
+ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh, 
+ daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
+ averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
+ alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
+ dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate
+
+
+
+
+
+
+ 

@@ -1,0 +1,4 @@
+For sorting results see:
+https://jinja.palletsprojects.com/en/2.11.x/templates/#sort
+https://stackoverflow.com/questions/54701959/sort-dynamically-rendered-table-from-python-flask-in-html-using-javascript
+https://datatables.net/manual/installation

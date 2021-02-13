@@ -74,16 +74,16 @@ $(document).ready(function () {
         rules: default_rules
     });
 
-    $('.submit-query').on('click', function () {
-        var payload = $('#builder').queryBuilder('getSQL')
-        console.log(payload)
+    // $('#builder').queryBuilder('setRulesFromSQL', 'name LIKE "%T%"');
 
-        $.ajax({
-            type: 'POST',
-            url: "/submit-query",
-            data: payload,
-            datatype: 'json',
-            success: (response) => { document.write(response); }
-        })
+    $('.submit-query').on('click', function (e) {
+        e.preventDefault();
+
+        var query = $('#builder').queryBuilder('getSQL');
+        console.log(query.sql)
+
+        var form = $("#form");
+        form.append('<input type="hidden" name="sql" value="' + query.sql + '">');
+        form.submit();
     });
 });
