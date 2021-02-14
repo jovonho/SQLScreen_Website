@@ -9,7 +9,7 @@ function resizeNames() {
 
 }
 
-
+// TODO: Use vanilla js and requestAnimationFrame 
 function collapseResult(elem) {
 
     $(elem).find('.line-info').slideToggle(200, function () {
@@ -73,14 +73,14 @@ $(document).ready(function () {
 
     resizeNames();
 
-    console.log($('.result-info-lines').length)
+    console.log($('.result__info').length)
 
     $('#sort-by').change((e) => {
         var key = $(e.currentTarget).val();
 
         var t0 = performance.now()
 
-        var list = document.querySelector('#result-list');
+        var list = document.querySelector('#results');
 
         var fragment = document.createDocumentFragment();
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
 
     });
 
-    $('.result-info-lines').click((e) => {
+    $('.result__info').click((e) => {
         e.stopPropagation();
         e.preventDefault();
         collapseResult($(e.currentTarget))
@@ -105,7 +105,7 @@ $(document).ready(function () {
         e.stopPropagation();
         e.preventDefault();
 
-        items = $('.result-info-lines')
+        items = $('.result__info')
 
         // If collapse all, collapse only those currently opened
         if ($(e.currentTarget).text().trim() == "Collapse All") {

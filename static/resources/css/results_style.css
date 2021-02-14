@@ -45,7 +45,7 @@ body {
 
 /* -------- HEADINGS --------- */
 
-h1, h2, h3 {
+h1, .h2, .h3 {
     font-weight: 400;
     letter-spacing: 1px;
 }
@@ -58,15 +58,47 @@ h1 {
     word-spacing: 3px;
 }
 
-h2 {
+.h2 {
     font-size: 150%;
     text-transform: uppercase;
 }
 
-h3 {    
+.h3 {    
     font-size: 110%;
     letter-spacing: .5px;
 }
+
+/* Stolen from Bootstrap.css */
+
+.label{
+    padding-right:0.6em;
+    font-size:75%;
+    font-weight:700;
+}
+
+.btn-primary{color:#fff;background-color:#337ab7;border-color:#2e6da4}
+.btn-primary:hover{color:#fff;background-color:#286090;border-color:#204d74}
+
+.btn{
+    padding:6px 12px;
+    font-size:14px;
+    font-weight:400;
+    line-height:1.42857143;
+    text-align:center;
+    white-space:nowrap;
+    vertical-align:middle;
+    -ms-touch-action:manipulation;
+    touch-action:manipulation;
+    cursor:pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    border:1px solid transparent;
+    border-radius:4px
+}
+
+
 
 
 /* ------------------------------------------------------------- */
@@ -116,48 +148,49 @@ h3 {
     padding-right: 2px;
     padding-left: 2px;
 }
-.result-container {
+
+.result {
+    user-select: none;
     background-color: rgba(255, 255, 255, 0.75);
     border-radius: 24px;
     border: 1px solid #4d4d4d;
     margin-bottom: 15px;
-    color:#444444
+    color:#444444;
+    padding-top: 10px;
 }
 
 
-.result-line {
+.result__line {
     display: flex;
     justify-content: left;
     align-items: center;
     margin-left: 15px;
     margin-right: 10px;
     margin-bottom: 5px;
+    font-weight: 400;
 }
 
-.result-line.line-info {
+.result__line.line-info {
     flex-wrap: wrap;
 }
 
-.result-info-lines {
+.result__info {
     display: flex;
     flex-direction: column;
 }
 
-.result-line.see-more {
+.result__line.see-more {
     justify-content: center;
     margin-bottom: 5px;
 }
 
-.multi-block {
-    display: flex;
-}
+
 
 .result-id-info {
     display: flex;
     justify-content: left;
     align-items: center;
     position: relative;
-    margin-top: 10px;
 }
 
 .sep {
@@ -170,27 +203,22 @@ h3 {
 }
 
 .class-info-sector {
-    display: flex;
+    /* display: flex; */
     margin-right: 15px;
 }
 
 .price-n-change {
     display: flex;
     align-items: center;
-    margin-top: 10px;
     margin-right: 10px;
 }
 
-.price-container
+.price
 {
+    display: flex;
     font-weight: 400;
     font-size: 200%;
     margin-right: 10px;
-    display: flex;
-}
-
-.divider {
-    font-size: 200%;
 }
 
 .change {
@@ -208,11 +236,6 @@ h3 {
     font-size: 190%;
 }
 
-.result-class-info div.sep {
-    margin: 0 5px;
-    font-weight: 300;
-}
-
 .class-info-label {
     margin-right: 7px;
 }
@@ -227,6 +250,10 @@ h3 {
 }
 
 .result-price-info {
+    display: flex;
+}
+
+.multi-block {
     display: flex;
 }
 
@@ -287,6 +314,7 @@ h3 {
 .value {
     display: flex;
     align-items: baseline;
+    font-weight: 300;
     font-size: 85%;
 }
 
