@@ -22,3 +22,6 @@ Possible avenues to optimize:
 Links:
 https://samdutton.wordpress.com/2015/04/02/high-performance-html/
 https://stackoverflow.com/questions/13529503/dom-penalty-of-using-html-attributes
+
+https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations
+https://www.hongkiat.com/blog/writing-better-css/

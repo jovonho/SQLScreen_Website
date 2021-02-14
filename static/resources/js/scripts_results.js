@@ -9,68 +9,6 @@ function resizeNames() {
 
 }
 
-var isSortKeyNumeric = {
-    "price": true,
-    "pricechange": true,
-    "exdividenddate": false,
-    "symbol": false
-}
-
-// var operators = {
-//     'asc': (a, b) => { return a < b },
-//     'desc': (a, b) => { return a > b }
-// };
-
-function sortList(key) {
-    //TODO: Try to implement quicksort instead
-    //TODO: Maybe I can speed this up by giving each row a bunch of data attributes!
-    var list, i, switching, items, shouldSwitch;
-    list = document.getElementById("result-list");
-    switching = true;
-
-    while (switching) {
-        switching = false;
-
-        // var items = list.querySelectorAll('.' + key);
-        var items = list.getElementsByClassName('result-list-item');
-
-        for (i = 0; i < (items.length - 1); i++) {
-
-            shouldSwitch = false;
-
-            // var symbol1 = items[i].closest('.result-container').querySelector('.symbol').innerHTML
-            // var symbol2 = items[i + 1].closest('.result-container').querySelector('.symbol').innerHTML
-
-            // console.log(symbol1 + " and " + symbol2)
-            // console.log(items[i].textContent + " " + items[i + 1].textContent);
-
-            if (isSortKeyNumeric[key]) {
-
-                // if (parseFloat(items[i].textContent) > parseFloat(items[i + 1].textContent)) {
-                if (parseFloat(items[i].getAttribute(key)) > parseFloat(items[i + 1].getAttribute(key))) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-            else {
-                // if (items[i].textContent > items[i + 1].textContent) {
-                if (items[i].getAttribute(key) > items[i + 1].getAttribute(key)) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-
-        }
-        if (shouldSwitch) {
-            // var item1 = items[i].closest('.result-list-item')
-            // var item2 = items[i + 1].closest('.result-list-item')
-            // list.insertBefore(item2, item1);
-
-            list.insertBefore(items[i + 1], items[i]);
-            switching = true;
-        }
-    }
-}
 
 function collapseResult(elem) {
 
@@ -98,32 +36,36 @@ function openResult(elem) {
     });
 }
 
-var compareFunctions = {
-    "price": function (a, b) {
-        n1 = parseFloat(a.getAttribute("price"))
-        n2 = parseFloat(b.getAttribute("price"))
-        return n1 == n2 ? 0 : (n1 > n2 ? 1 : -1);
-    },
-    "pricechange": function (a, b) {
-        // console.log("comparing " + a.getAttribute("pricechange") + "and" + b.getAttribute("pricechange"))
-        n1 = parseFloat(a.getAttribute("pricechange"))
-        n2 = parseFloat(b.getAttribute("pricechange"))
-        return n1 == n2 ? 0 : (n1 > n2 ? 1 : -1);
-    },
-    "percentchange": function (a, b) {
-        n1 = parseFloat(a.getAttribute("percentchange"))
-        n2 = parseFloat(b.getAttribute("percentchange"))
-        return n1 == n2 ? 0 : (n1 > n2 ? 1 : -1);
-    },
-    "exdividenddate": function (a, b) {
-        date1 = dates.convert(a.getAttribute("exdividenddate"))
-        date2 = dates.convert(b.getAttribute("exdividenddate"))
-        return date1 == date2 ? 0 : (date1 > date2 ? 1 : -1);
-    },
-    "symbol": function (a, b) {
-        return a.getAttribute("symbol") == b.getAttribute("symbol")
-            ? 0
-            : (a.getAttribute("symbol") > b.getAttribute("symbol") ? 1 : -1);
+var sortingFunctionType = {
+    "price": "",
+    "pricechange": "float",
+    "percentchange": "float",
+    "exdividenddate": "date",
+    "symbol": ""
+}
+
+function getCompareFunction(key) {
+    var type = sortingFunctionType[key];
+
+    switch (type) {
+        case "float":
+            return function (a, b) {
+                n1 = parseFloat(a.getAttribute("pricechange"))
+                n2 = parseFloat(b.getAttribute("pricechange"))
+                return n1 == n2 ? 0 : (n1 > n2 ? 1 : -1);
+            }
+        case "date":
+            return function (a, b) {
+                date1 = Date.parse(a.getAttribute("exdividenddate"))
+                date2 = Date.parse(b.getAttribute("exdividenddate"))
+                return date1 == date2 ? 0 : (date1 > date2 ? 1 : -1);
+            }
+        default:
+            return function (a, b) {
+                return a.getAttribute("symbol") == b.getAttribute("symbol")
+                    ? 0
+                    : (a.getAttribute("symbol") > b.getAttribute("symbol") ? 1 : -1);
+            }
     }
 }
 
@@ -143,7 +85,7 @@ $(document).ready(function () {
         var fragment = document.createDocumentFragment();
 
         [...list.children]
-            .sort(compareFunctions[key])
+            .sort(getCompareFunction(key))
             .forEach(node => fragment.appendChild(node));
 
         list.appendChild(fragment);
