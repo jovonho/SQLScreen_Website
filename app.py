@@ -44,6 +44,12 @@ def submit_query():
 
 @app.context_processor
 def utility_processor():
+    def get_symbol(change):
+        if change < 0:
+            return "-"
+        else:
+            return "+"
+
     def format_change(change):
         return "{:+.2f}".format(change)
 
@@ -58,7 +64,7 @@ def utility_processor():
         return "{:,}".format(amount)
 
     def format_price(price):
-        if price is None:   
+        if price is None:
             return "-"
         return "{:.2f}".format(price)
 

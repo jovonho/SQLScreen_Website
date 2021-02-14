@@ -29,8 +29,8 @@
                         </a>
                     </div>
                     <ul class="main-nav-items">
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#steps">How it works</a></li>
+                        <li><a href="#about">About</a>
+                        <li><a href="#steps">How it works</a>
                     </ul>
                 </div>
             </div>
@@ -54,6 +54,7 @@
                     <select id="sort-by" class="sort-by">
                         <option value="price">Price</option>
                         <option value="pricechange">Price Change</option>
+                        <option value="percentchange">Percent Change</option>
                         <option value="exdividenddate">Ex-Dividend Date</option>
                         <option value="symbol">Symbol</option>
                     </select>
@@ -402,8 +403,7 @@
 
                     </div>
                 </div>
-            </li>
-            {% endfor %}
+                {% endfor %}
         </ol>
 
     </section>

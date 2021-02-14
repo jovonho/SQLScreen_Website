@@ -100,16 +100,30 @@ function openResult(elem) {
 
 var compareFunctions = {
     "price": function (a, b) {
-        return parseFloat(a.getAttribute("price")) > parseFloat(b.getAttribute("price"))
+        n1 = parseFloat(a.getAttribute("price"))
+        n2 = parseFloat(b.getAttribute("price"))
+        return n1 == n2 ? 0 : (n1 > n2 ? 1 : -1);
     },
     "pricechange": function (a, b) {
-        return parseFloat(a.getAttribute("pricechange")) > parseFloat(b.getAttribute("pricechange"))
+        // console.log("comparing " + a.getAttribute("pricechange") + "and" + b.getAttribute("pricechange"))
+        n1 = parseFloat(a.getAttribute("pricechange"))
+        n2 = parseFloat(b.getAttribute("pricechange"))
+        return n1 == n2 ? 0 : (n1 > n2 ? 1 : -1);
+    },
+    "percentchange": function (a, b) {
+        n1 = parseFloat(a.getAttribute("percentchange"))
+        n2 = parseFloat(b.getAttribute("percentchange"))
+        return n1 == n2 ? 0 : (n1 > n2 ? 1 : -1);
     },
     "exdividenddate": function (a, b) {
-        return dates.convert(a.getAttribute("exdividenddate")) > dates.convert(b.getAttribute("exdividenddate"))
+        date1 = dates.convert(a.getAttribute("exdividenddate"))
+        date2 = dates.convert(b.getAttribute("exdividenddate"))
+        return date1 == date2 ? 0 : (date1 > date2 ? 1 : -1);
     },
     "symbol": function (a, b) {
-        return a.getAttribute("symbol").localeCompare(b.getAttribute("symbol"))
+        return a.getAttribute("symbol") == b.getAttribute("symbol")
+            ? 0
+            : (a.getAttribute("symbol") > b.getAttribute("symbol") ? 1 : -1);
     }
 }
 
@@ -120,15 +134,23 @@ $(document).ready(function () {
     console.log($('.result-info-lines').length)
 
     $('#sort-by').change((e) => {
-
-        // Select the sorting key from the currently selected value in the drop-down
         var key = $(e.currentTarget).val();
 
         var t0 = performance.now()
-        sortList(key);
-        var t1 = performance.now()
 
-        console.log("Sorted by " + key + " in " + (t1 - t0) + " milliseconds.")
+        var list = document.querySelector('#result-list');
+
+        var fragment = document.createDocumentFragment();
+
+        [...list.children]
+            .sort(compareFunctions[key])
+            .forEach(node => fragment.appendChild(node));
+
+        list.appendChild(fragment);
+
+        var t1 = performance.now();
+        console.log("Sorted by " + key + " in " + (t1 - t0) + " milliseconds.");
+
     });
 
     $('.result-info-lines').click((e) => {

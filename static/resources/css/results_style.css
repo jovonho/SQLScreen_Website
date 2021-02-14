@@ -235,7 +235,6 @@ h3 {
     flex-direction: column;
     margin-top: 7px;
     margin-right: 50px;
-    /* margin-right: auto; */
 }
 
 .price-info-block,
@@ -275,7 +274,6 @@ h3 {
 }
 
 .hidden {
-    /* visibility: hidden; */
     display: none;
 }
 
@@ -362,7 +360,6 @@ section {
 /* --------- LINKS ---------- */
 
 
-
 /* color: #f5efef;  */
 
 a {
@@ -394,17 +391,6 @@ li {
     text-decoration: none;
 }
 
-
-/* .main-nav a.back-arrow:link,
-.main-nav a.back-arrow :visited {
-
-    text-shadow: 0px 0px;
-    transition: text-shadow 0.15s;
-} */
-/* .main-nav a.back-arrow :hover,
-.main-nav a.back-arrow :active {
-    text-shadow: 2px 2px;
-} */
 
 .main-nav-items {
     float: right;
