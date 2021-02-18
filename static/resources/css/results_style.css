@@ -98,6 +98,68 @@ h1 {
     border-radius:4px
 }
 
+.d-flex {
+    display: flex;
+    justify-content: center;
+}
+@keyframes spinner-border {
+    to { transform: rotate(360deg); }
+  }
+  
+.spinner-border {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: text-bottom;
+    border: .25rem solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border .75s linear infinite;
+}
+
+.spinner-border-sm {
+    width: 2rem;
+    height: 2rem;
+    border-width: .25rem;
+}
+  
+
+/*   */
+ /*  */
+/*  */
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    font-weight: 700;
+    padding-right: 5px;
+    padding-bottom: 3px;
+}
+
+thead th {
+    font-size: 80%;
+    padding-bottom: 3px;
+    border-bottom: solid 1px black;
+}
+
+
+tbody th {
+    font-size: 75%;
+    padding-top: 4px;
+}
+
+td {
+    text-align: right;
+    font-weight: 300;
+    font-size: 85%;
+    padding-top: 3px;
+    padding-right: 15px;
+    padding-bottom: 4px;
+}
+
+
 
 
 

@@ -83,7 +83,7 @@ $(document).ready(function () {
         console.log(query.sql)
 
         var form = $("#form");
-        form.append('<input type="hidden" name="sql" value="' + query.sql + '">');
+        form.append('<input type="hidden" name="q" value="' + query.sql + '">');
         form.submit();
     });
 });

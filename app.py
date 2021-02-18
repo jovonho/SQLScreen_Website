@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 from dbhandler import DbHandler
+import simplejson as json
 
 app = Flask(__name__)
 app.db = DbHandler()
@@ -12,9 +13,13 @@ def index():
 
 @app.route("/load", methods=["POST"])
 def load():
-    print(request.args)
+    data = request.json
+    query_where_clause = data["sql"]
+    limit = data["limit"]
+    offset = data["offset"]
+    order_by = data["orderBy"]
 
-    query_where_clause = request.form["sql"]
+    print("Received data: " + query_where_clause)
 
     # query_where_clause = "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS')"
     # query_where_clause = (
@@ -29,6 +34,40 @@ def load():
         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
         dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
 
+    query = f"select {fields} from quotes where {query_where_clause} order by {order_by} limit {limit} offset {offset};"
+
+    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
+    query_result = app.db.execute_self_contained(query)
+
+    json_result = json.dumps(query_result, default=str, use_decimal=True)
+    print(len(json_result))
+
+    return make_response(json_result, 200)
+
+
+@app.route("/results", methods=["GET", "POST"])
+def submit_query():
+    print(request.headers)
+
+    # We could use GET or POST here
+    # sql = request.form["sql"]
+    # query = base64.b64encode(bytes(request.args.get("q"), encoding="utf-8"))
+    query = request.args.get("q")
+
+    return render_template("query-result2.html", query=query)
+
+
+@app.route("/submit-query", methods=["GET"])
+def submit_query_old():
+
+    query_where_clause = "industry = 'REITs'"
+
+    fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh,
+        daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d,
+        averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow,
+        alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap,
+        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
+
     query = f"select {fields} from quotes where {query_where_clause};"
 
     # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
@@ -38,48 +77,8 @@ def load():
 
     # for k, v in query_result[0].items():
     #     print(f" {k}: {v}")
-    return query_result
 
-
-@app.route("/submit-query", methods=["POST"])
-def submit_query():
-    print(request.args)
-
-    sql = request.form["sql"]
-
-    return render_template("query-result2.html", sql=sql)
-
-
-# @app.route("/submit-query", methods=["POST"])
-# def submit_query():
-#     print(request.form)
-
-#     query_where_clause = request.form["sql"]
-
-#     # query_where_clause = "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS')"
-#     # query_where_clause = (
-#     #     "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS', 'RBX', 'TAL', 'VCI',  'AAB', 'AAV', 'AC', 'ACB')"
-#     # )
-
-#     # query_where_clause = "industry = 'REITs'"
-
-#     fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh,
-#         daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d,
-#         averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow,
-#         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap,
-#         dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
-
-#     query = f"select {fields} from quotes where {query_where_clause};"
-
-#     # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
-#     query_result = app.db.execute_self_contained(query)
-
-#     # print(query_result)
-
-#     # for k, v in query_result[0].items():
-#     #     print(f" {k}: {v}")
-
-#     return render_template("query-result.html", query=query, query_result=query_result)
+    return render_template("query-result.html", query=query, query_result=query_result)
 
 
 @app.context_processor

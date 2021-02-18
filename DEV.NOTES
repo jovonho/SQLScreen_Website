@@ -34,8 +34,16 @@ https://pythonise.com/categories/javascript/infinite-lazy-loading
 https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
+JS Promises
+https://web.dev/promises/
 
 UX performance framework
 https://web.dev/rail/
 https://docs.google.com/document/d/1vEW86DaeVs4uQzNFI5R-_xS9TcS1Cs_EUsHRSgCHGu8/edit
 
+
+CSS Optimization
+https://developer.mozilla.org/en-US/docs/Learn/Performance/CSS
+
+PGSQL pagination:
+https://www.citusdata.com/blog/2016/03/30/five-ways-to-paginate/
