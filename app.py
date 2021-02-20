@@ -26,8 +26,6 @@ def load():
     #     "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS', 'RBX', 'TAL', 'VCI',  'AAB', 'AAV', 'AC', 'ACB')"
     # )
 
-    # query_where_clause = "industry = 'REITs'"
-
     fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh, 
         daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
         averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
@@ -53,14 +51,15 @@ def submit_query():
     # sql = request.form["sql"]
     # query = base64.b64encode(bytes(request.args.get("q"), encoding="utf-8"))
     query = request.args.get("q")
+    # query = "symbol in ('CRDL.WT', 'TRL.WT', 'BXR', 'EKG', 'LRT.UN', 'BDGC', 'CUF.UN', 'ARTG', 'AGF.B', 'ABX', 'CSAV')"2
 
-    return render_template("query-result2.html", query=query)
+    return render_template("query-result.html", query=query)
 
 
 @app.route("/submit-query", methods=["GET"])
 def submit_query_old():
 
-    query_where_clause = "industry = 'REITs'"
+    query_where_clause = "symbol in ('CRDL.WT', 'TRL.WT', 'BXR', 'EKG', 'LRT.UN', 'AGF.B')"
 
     fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh,
         daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d,
@@ -70,15 +69,9 @@ def submit_query_old():
 
     query = f"select {fields} from quotes where {query_where_clause};"
 
-    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
     query_result = app.db.execute_self_contained(query)
 
-    # print(query_result)
-
-    # for k, v in query_result[0].items():
-    #     print(f" {k}: {v}")
-
-    return render_template("query-result.html", query=query, query_result=query_result)
+    return render_template("query-result_old.html", query=query, query_result=query_result)
 
 
 @app.context_processor

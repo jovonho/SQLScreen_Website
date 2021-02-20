@@ -18,7 +18,7 @@ function collapseResult(elem) {
     });
 
     $(elem).find('.hidden').slideToggle(200, function () {
-        if ($(this).is(':visible'))
+        if (!$(this).is(':visible'))
             $(this).css('display', 'flex');
     });
 }

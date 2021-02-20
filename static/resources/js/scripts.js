@@ -46,20 +46,10 @@ var datetime_ops = [
 var default_rules = {
     condition: 'OR',
     rules: [
-        // {
-        //     id: 'symbol',
-        //     operator: 'equal',
-        //     value: 'BBD.A'
-        // },
-        // {
-        //     id: 'symbol',
-        //     operator: 'equal',
-        //     value: 'BBD.B'
-        // }
         {
             id: 'industry',
             operator: 'equal',
-            value: 'Oil & Gas'
+            value: 'REITs'
         }
     ]
 };
