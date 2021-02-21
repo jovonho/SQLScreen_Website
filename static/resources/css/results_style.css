@@ -209,6 +209,7 @@ td {
     margin-right: 5px;
 }
 .sort-by {
+    border-radius: 5px;
     margin-right: 5px;
 }
 .sort-order {
@@ -391,7 +392,6 @@ td {
     margin-left: 5px;
     font-size: 80%;
 }
-
 
 
 /* For making a whole element a link */

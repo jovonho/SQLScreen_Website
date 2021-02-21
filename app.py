@@ -17,11 +17,10 @@ def load():
     query_where_clause = data["sql"]
     limit = data["limit"]
     offset = data["offset"]
-    order_by = data["orderBy"]
+    sortby = data["sortby"]
+    sortorder = data["sortorder"]
 
     print("Received data: " + query_where_clause)
-
-    # query_where_clause = "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS')"
     # query_where_clause = (
     #     "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS', 'RBX', 'TAL', 'VCI',  'AAB', 'AAV', 'AC', 'ACB')"
     # )
@@ -32,7 +31,7 @@ def load():
         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
         dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
 
-    query = f"select {fields} from quotes where {query_where_clause} order by {order_by} limit {limit} offset {offset};"
+    query = f"select {fields} from quotes where {query_where_clause} order by {sortby} {sortorder} limit {limit} offset {offset};"
 
     # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
     query_result = app.db.execute_self_contained(query)
@@ -45,13 +44,9 @@ def load():
 
 @app.route("/results", methods=["GET", "POST"])
 def submit_query():
-    print(request.headers)
 
-    # We could use GET or POST here
-    # sql = request.form["sql"]
-    # query = base64.b64encode(bytes(request.args.get("q"), encoding="utf-8"))
     query = request.args.get("q")
-    # query = "symbol in ('CRDL.WT', 'TRL.WT', 'BXR', 'EKG', 'LRT.UN', 'BDGC', 'CUF.UN', 'ARTG', 'AGF.B', 'ABX', 'CSAV')"2
+    # query = "symbol in ('CRDL.WT', 'TRL.WT', 'BXR', 'EKG', 'LRT.UN', 'BDGC', 'CUF.UN', 'ARTG', 'AGF.B', 'ABX', 'CSAV', 'MRG.DB.A')"
 
     return render_template("query-result.html", query=query)
 

@@ -55,16 +55,18 @@
                         Sort By
                     </div>
                     <select id="sort-by" class="sort-by">
+                        <option value="symbol">Symbol</option>
                         <option value="price">Price</option>
                         <option value="pricechange">Price Change</option>
                         <option value="percentchange">Percent Change</option>
                         <option value="exdividenddate">Ex-Dividend Date</option>
-                        <option value="symbol">Symbol</option>
                     </select>
-                    <button class="btn btn-primary sort-order">
-                        <svg xmlns='http://www.w3.org/2000/svg' width='20px' class='ionicon' viewBox='0 0 512 512'>
+                    <button class="btn btn-primary sort-order" id="sort-order" value="asc">
+                        <svg id="sort-order-icon" xmlns='http://www.w3.org/2000/svg' width='20px' class='ionicon'
+                            viewBox='0 0 512 512'>
                             <path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round'
                                 stroke-width='48' d='M112 268l144 144 144-144M256 392V100' />
+                        </svg>
                         </svg>
                     </button>
                 </div>
@@ -240,7 +242,7 @@
 
                         </div>
                     </div>
-                    <div class="result__line see-more js--see-more hidden">
+                    <div class="result__line see-more js--see-more" id="see-more">
                         <svg width="30px" viewBox="0 0 328 140.5">
                             <path fill='none' stroke='#444444' opacity='0.5' stroke-linecap='round'
                                 stroke-linejoin='round' stroke-width='40' d="M112,59,256,159.5,400,59"

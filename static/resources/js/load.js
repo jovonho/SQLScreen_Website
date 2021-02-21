@@ -51,10 +51,14 @@ function formatDate(d) {
     return d.split(" ")[0];
 }
 
-var dividendTable = '<table> <thead> <th colspan=4>Dividend</th> </thead> \
+const dividendTable = '<table> <thead> <th colspan=4>Dividend</th> </thead> \
 <tbody> <tr> <th>Frequency</th> <td id="dividendfrequency"></td> <th>Ex date</th><td id="exdividenddate"></td></tr><tr> \
 <th>Amount</th> <td id="dividendamount"> <span id="dividendcurr"> </span></td><th>Pay date</th><td id="dividendpaydate"></td></tr><tr><th>Yield</th> \
 <td id="dividendyield"></td> </tr></tbody> </table>'
+
+const SVG_arrow_down = "<path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 268l144 144 144-144M256 392V100' />"
+const SVG_arrow_up = "<path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 244l144-144 144 144M256 120v292'/>"
+
 
 $(document).ready(function () {
 
@@ -63,9 +67,7 @@ $(document).ready(function () {
     var scroller = document.querySelector("#scroller");
     var counter = 0;
 
-    var orderBy = "symbol";
-
-    function loadItems(limit, offset) {
+    function loadItems(limit, offset, sortby, sortorder) {
 
         const request = {
             method: "POST",
@@ -76,10 +78,10 @@ $(document).ready(function () {
                 "sql": document.querySelector("#query").dataset.query,
                 "limit": limit,
                 "offset": offset,
-                "orderBy": orderBy
+                "sortby": sortby,
+                "sortorder": sortorder
             })
         }
-
         console.log("request: " + request.body)
 
         fetch("/load", request).then((response) => {
@@ -176,10 +178,6 @@ $(document).ready(function () {
                     const dividendamount = data[i]["dividendamount"];
                     if (typeof dividendamount == "number") {
 
-                        console.log(data[i]["symbol"])
-                        console.log(dividendamount)
-                        console.log(typeof dividendamount)
-
                         var element = document.createElement('div');
                         element.insertAdjacentHTML('beforeend', dividendTable);
 
@@ -191,7 +189,6 @@ $(document).ready(function () {
                         var dividendcurr = data[i]["dividendcurrency"];
 
                         if (dividendcurr.length == 3 && dividendcurr != "CAD") {
-                            console.log(dividendcurr);
                             element.querySelector("#dividendamount").innerHTML = `${dividendamount}<span id="dividendcurr">${dividendcurr}</span>`;
                         }
                         else {
@@ -201,10 +198,16 @@ $(document).ready(function () {
                         template_clone.querySelector("#dividend-table").appendChild(element)
                     }
 
-
                     scroller.appendChild(template_clone);
                     counter += 1;
                 }
+
+
+                $('.result__info').click((e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    collapseResult($(e.currentTarget))
+                });
 
 
             })
@@ -212,16 +215,57 @@ $(document).ready(function () {
 
     }
 
-    // Create a new IntersectionObserver instance
     var intersectionObserver = new IntersectionObserver(entries => {
+
+        const sortby = document.querySelector('#sort-by').value;
+        const sortorder = document.querySelector('#sort-order').getAttribute('value');
+        console.log('Sorting by ' + sortby + " " + sortorder)
 
         if (entries[0].intersectionRatio <= 0) {
             return;
         }
 
-        loadItems(30, counter);
+        loadItems(30, counter, sortby, sortorder);
     });
 
     intersectionObserver.observe(sentinel);
 
+
+    // Sorting selector
+    document.querySelector('#sort-by').addEventListener('change', function () {
+        counter = 0;
+        scroller.innerHTML = '';
+        sentinel.innerHTML = '';
+        intersectionObserver.observe(sentinel);
+    });
+
+    document.querySelector('#sort-order').addEventListener('click', function () {
+
+        counter = 0;
+        scroller.innerHTML = '';
+        sentinel.innerHTML = '';
+
+        var currentVal = document.querySelector('#sort-order').getAttribute('value');
+        if (currentVal == "desc") {
+            document.querySelector('#sort-order').setAttribute('value', 'asc');
+            document.querySelector('#sort-order-icon').innerHTML = SVG_arrow_down;
+        }
+        else {
+            document.querySelector('#sort-order').setAttribute('value', 'desc');
+            document.querySelector('#sort-order-icon').innerHTML = SVG_arrow_up;
+        }
+
+        intersectionObserver.observe(sentinel);
+    });
+
+    $('#see-more').on("click", function () {
+        console.log("click")
+        // e.stopPropagation();
+        // e.preventDefault();
+        // collapseResult($(e.currentTarget))
+    });
+
+    document.querySelector('.left').addEventListener('click', function () {
+        console.log("click");
+    });
 })
