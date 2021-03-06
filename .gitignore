@@ -1,5 +1,7 @@
-.venv/*
-.idea/*
-__pycache__/*
-stuff/*
-
+__pycache__
+.mypy_cache
+.idea
+.vscode
+.venv
+stuff
+test

@@ -18,6 +18,25 @@ Possible avenues to optimize:
 - no more data processing in jinja, do that stuff upstream so it's correctly stored in the DB.
 - use less classes 
 
+Feb 21 2021:
+
+Bug: when search returns a few results, sentinel is already intersecting viewport and does not 
+update to "no more result". Keeps spinning forever. Put a condition if #results less than counter.  
+
+
+Mar 4 2021:
+
+FEATURE: Industry averages for comparison
+Show number of results
+Clear all button?
+
+Data bug: AGI yield shows as 91.5% ?? 
+Switch yields to percentages
+
+Show available on which brokers!
+
+
+
 
 Links:
 https://samdutton.wordpress.com/2015/04/02/high-performance-html/

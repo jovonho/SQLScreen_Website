@@ -42,6 +42,14 @@ body {
     min-height: 100vh; 
 }
 
+body.dark {
+    background: url(img/Results_bg2.svg);
+    background-attachment: fixed;
+    /* background-color: black; */
+    background-size: 100% auto;
+    min-height: 100vh; 
+}
+
 
 /* -------- HEADINGS --------- */
 
@@ -68,7 +76,9 @@ h1 {
     letter-spacing: .5px;
 }
 
+/* ---------------------------------- */
 /* Stolen from Bootstrap.css */
+/* ---------------------------------- */
 
 .label{
     padding-right:0.6em;
@@ -127,6 +137,10 @@ h1 {
 /*   */
  /*  */
 /*  */
+
+.query-section {
+    margin-bottom: 50px;
+}
 
 table {
     border-collapse: collapse;
@@ -224,7 +238,7 @@ td {
     background-color: rgba(255, 255, 255, 0.75);
     border-radius: 24px;
     border: 1px solid #4d4d4d;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     color:#444444;
     padding-top: 10px;
 }
@@ -249,7 +263,7 @@ td {
     flex-direction: column;
 }
 
-.result__line.see-more {
+#see-more {
     justify-content: center;
     margin-bottom: 5px;
 }
