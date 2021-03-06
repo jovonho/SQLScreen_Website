@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 from dbhandler import DbHandler
+import simplejson as json
 
 app = Flask(__name__)
 app.db = DbHandler()
@@ -10,19 +11,19 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/submit-query", methods=["POST"])
-# @app.route("/submit")
-def submit_query():
-    print(request.form)
+@app.route("/load", methods=["POST"])
+def load():
+    data = request.json
+    query_where_clause = data["sql"]
+    limit = data["limit"]
+    offset = data["offset"]
+    sortby = data["sortby"]
+    sortorder = data["sortorder"]
 
-    query_where_clause = request.form["sql"]
-
-    # query_where_clause = "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS')"
+    print("Received data: " + query_where_clause)
     # query_where_clause = (
     #     "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS', 'RBX', 'TAL', 'VCI',  'AAB', 'AAV', 'AC', 'ACB')"
     # )
-
-    # query_where_clause = "industry = 'REITs'"
 
     fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh, 
         daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
@@ -30,20 +31,58 @@ def submit_query():
         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
         dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
 
-    query = f"select {fields} from quotes where {query_where_clause};"
+    query = f"select {fields} from quotes where {query_where_clause} order by {sortby} {sortorder} limit {limit} offset {offset};"
 
     # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
     query_result = app.db.execute_self_contained(query)
 
-    # TODO: See ways to speed up large queries
-    # for k, v in query_result[0].items():
-    #     print(f" {k}: {v}")
+    json_result = json.dumps(query_result, default=str, use_decimal=True)
+    print(len(json_result))
 
-    return render_template("query-result.html", query=query, query_result=query_result)
+    return make_response(json_result, 200)
+
+
+# Endpoint called when query is submitted.
+@app.route("/results", methods=["GET", "POST"])
+def submit_query():
+ 
+    query_where_clause = request.args.get("q")
+
+    query = f"select count(*) from quotes where {query_where_clause};"
+
+    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
+    number_results = app.db.execute_self_contained(query)
+
+    return render_template("query-result.html", query=query_where_clause)
+
+
+# Test url to see results page without having to go through usual flow
+@app.route("/submit-query", methods=["GET"])
+def submit_query_old():
+
+    query_where_clause = "symbol in ('CRDL.WT', 'TRL.WT', 'BXR', 'EKG', 'LRT.UN', 'AGF.B')"
+
+    fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh,
+        daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d,
+        averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow,
+        alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap,
+        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
+
+    query = f"select {fields} from quotes where {query_where_clause};"
+
+    query_result = app.db.execute_self_contained(query)
+
+    return render_template("query-result_old.html", query=query, query_result=query_result)
 
 
 @app.context_processor
 def utility_processor():
+    def get_symbol(change):
+        if change < 0:
+            return "-"
+        else:
+            return "+"
+
     def format_change(change):
         return "{:+.2f}".format(change)
 
@@ -58,7 +97,7 @@ def utility_processor():
         return "{:,}".format(amount)
 
     def format_price(price):
-        if price is None:   
+        if price is None:
             return "-"
         return "{:.2f}".format(price)
 

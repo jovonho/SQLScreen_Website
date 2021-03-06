@@ -1,6 +1,8 @@
 import psycopg2
 import psycopg2.extras
-from dbconfig import config
+from configparser import SafeConfigParser
+
+configfile = "./config/db.ini"
 
 
 def NoneHandlerStr(value, cur):
@@ -9,25 +11,33 @@ def NoneHandlerStr(value, cur):
     return value
 
 
-# def NoneHandlerNum(value, cur):
-#     if value is None:
-#         return 0
-#     return value
-
-
 NoneHandlerStrType = psycopg2.extensions.new_type((25, 114), "NoneHandlerStr", NoneHandlerStr)
-# NoneHandlerNumType = psycopg2.extensions.new_type((20, 23, 1700), "NoneHandlerNum", NoneHandlerNum)
 
 
 class DbHandler:
     def __init__(self):
         super()
 
+    def config(self, filename=configfile, section="postgresql"):
+
+        parser = SafeConfigParser()
+        parser.read(filename)
+
+        db = {}
+        if parser.has_section(section):
+            params = parser.items(section)
+            for param in params:
+                db[param[0]] = param[1]
+        else:
+            raise Exception("Section {0} not found in the {1} file".format(section, filename))
+
+        return db
+
     def create_connection(self):
         """ create a database connection to a PostgreSQL database """
         conn = None
         try:
-            params = config()
+            params = self.config()
             print("Connecting to db...")
             conn = psycopg2.connect(**params)
 
@@ -37,7 +47,6 @@ class DbHandler:
             print(f"PostgreSQL version {db_version}")
 
             psycopg2.extensions.register_type(NoneHandlerStrType)
-            psycopg2.extensions.register_type(NoneHandlerNumType)
             cur.close()
 
         except (Exception, psycopg2.DatabaseError) as error:
@@ -62,7 +71,7 @@ class DbHandler:
 
         result = None
         try:
-            cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
             cursor.execute(sql_statement)
             result = cursor.fetchall()
         except Exception as e:
@@ -71,55 +80,4 @@ class DbHandler:
             cursor.close()
             conn.commit()
             conn.close()
-            return result
-
-    def insert_quote(self, conn, quote_info):
-        result = None
-        # psycopg2.extras.register_hstore(conn)
-
-        try:
-            c = conn.cursor()
-
-            sql = """INSERT INTO quotes (symbol, name, price, priceChange, percentChange, exchangeName, exShortName, exchangeCode, marketPlace, 
-                    sector, industry, volume, openPrice, dayHigh, dayLow, MarketCap, MarketCapAllClasses, peRatio, prevClose, dividendFrequency, 
-                    dividendYield, dividendAmount, dividendCurrency, beta, eps, exDividendDate, shortDescription, longDescription, website, email,
-                    phoneNumber, fullAddress, employees, shareOutStanding, totalDebtToEquity, totalSharesOutStanding, sharesESCROW, vwap, 
-                    dividendPayDate, weeks52high, weeks52low, alpha, averageVolume10D, averageVolume30D, averageVolume50D, priceToBook, 
-                    priceToCashFlow, returnOnEquity, returnOnAssets, day21MovingAvg, day50MovingAvg, day200MovingAvg, dividend3Years, 
-                    dividend5Years, datatype, __typename)  
-                    VALUES 
-                    (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-                    ON CONFLICT (symbol) DO UPDATE SET 
-                    (name, price, priceChange, percentChange, exchangeName, exShortName, exchangeCode, marketPlace, 
-                    sector, industry, volume, openPrice, dayHigh, dayLow, MarketCap, MarketCapAllClasses, peRatio, prevClose, dividendFrequency, 
-                    dividendYield, dividendAmount, dividendCurrency, beta, eps, exDividendDate, shortDescription, longDescription, website, email,
-                    phoneNumber, fullAddress, employees, shareOutStanding, totalDebtToEquity, totalSharesOutStanding, sharesESCROW, vwap, 
-                    dividendPayDate, weeks52high, weeks52low, alpha, averageVolume10D, averageVolume30D, averageVolume50D, priceToBook, 
-                    priceToCashFlow, returnOnEquity, returnOnAssets, day21MovingAvg, day50MovingAvg, day200MovingAvg, dividend3Years, 
-                    dividend5Years, datatype, __typename)  
-                    = 
-                    (EXCLUDED.name, EXCLUDED.price, EXCLUDED.priceChange, EXCLUDED.percentChange, EXCLUDED.exchangeName, EXCLUDED.exShortName, 
-                    EXCLUDED.exchangeCode, EXCLUDED.marketPlace, EXCLUDED.sector, EXCLUDED.industry, EXCLUDED.volume, EXCLUDED.openPrice, 
-                    EXCLUDED.dayHigh, EXCLUDED.dayLow, EXCLUDED.MarketCap, EXCLUDED.MarketCapAllClasses, EXCLUDED.peRatio, EXCLUDED.prevClose, 
-                    EXCLUDED.dividendFrequency, EXCLUDED.dividendYield, EXCLUDED.dividendAmount, EXCLUDED.dividendCurrency, EXCLUDED.beta, 
-                    EXCLUDED.eps, EXCLUDED.exDividendDate, EXCLUDED.shortDescription, EXCLUDED.longDescription, EXCLUDED.website, EXCLUDED.email, 
-                    EXCLUDED.phoneNumber, EXCLUDED.fullAddress, EXCLUDED.employees, EXCLUDED.shareOutStanding, EXCLUDED.totalDebtToEquity, 
-                    EXCLUDED.totalSharesOutStanding, EXCLUDED.sharesESCROW, EXCLUDED.vwap, EXCLUDED.dividendPayDate, EXCLUDED.weeks52high, 
-                    EXCLUDED.weeks52low, EXCLUDED.alpha, EXCLUDED.averageVolume10D, EXCLUDED.averageVolume30D, EXCLUDED.averageVolume50D, 
-                    EXCLUDED.priceToBook, EXCLUDED.priceToCashFlow, EXCLUDED.returnOnEquity, EXCLUDED.returnOnAssets, EXCLUDED.day21MovingAvg, 
-                    EXCLUDED.day50MovingAvg, EXCLUDED.day200MovingAvg, EXCLUDED.dividend3Years, EXCLUDED.dividend5Years, EXCLUDED.datatype, 
-                    EXCLUDED.__typename)
-                    
-                    RETURNING symbol;"""
-
-            # print(c.mogrify(sql, quote_info))
-
-            c.execute(sql, quote_info)
-            result = c.fetchone()
-            c.close()
-
-        except (Exception, psycopg2.Error) as e:
-            print(e)
-        finally:
-            conn.commit()
             return result

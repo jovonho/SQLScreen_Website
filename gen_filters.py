@@ -1,3 +1,9 @@
+"""Utility script to write filters.js
+
+Assign correct operators to each field depending on its type.
+
+"""
+
 import json
 import re
 from dbhandler import DbHandler

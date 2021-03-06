@@ -46,20 +46,10 @@ var datetime_ops = [
 var default_rules = {
     condition: 'OR',
     rules: [
-        // {
-        //     id: 'symbol',
-        //     operator: 'equal',
-        //     value: 'BBD.A'
-        // },
-        // {
-        //     id: 'symbol',
-        //     operator: 'equal',
-        //     value: 'BBD.B'
-        // }
         {
             id: 'industry',
             operator: 'equal',
-            value: 'Oil & Gas'
+            value: 'REITs'
         }
     ]
 };
@@ -83,7 +73,7 @@ $(document).ready(function () {
         console.log(query.sql)
 
         var form = $("#form");
-        form.append('<input type="hidden" name="sql" value="' + query.sql + '">');
+        form.append('<input type="hidden" name="q" value="' + query.sql + '">');
         form.submit();
     });
 });

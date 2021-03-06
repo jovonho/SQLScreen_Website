@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/static/resources/css/queries.css">
 </head>
 
-<body>
+<body class=dark>
     <header>
         <nav>
             <div class="row">
@@ -29,8 +29,8 @@
                         </a>
                     </div>
                     <ul class="main-nav-items">
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#steps">How it works</a></li>
+                        <li><a href="#about">About</a>
+                        <li><a href="#steps">How it works</a>
                     </ul>
                 </div>
             </div>
@@ -44,23 +44,27 @@
         <div class="row">
             <div class="result-header">
                 <div class="left">
-                    <h3>Data as of 2020-12-25</h3>
-                    <h3>All prices in CAD</h3>
+                    <!-- <h3>Data as of 2020-12-25</h3> -->
+                    <h3 id="numresults">Results: ?</h3>
+                    <h4>All prices in CAD unless specified</h4>
                 </div>
                 <!-- <div class="sort-by-section">
                     <div class="sort-by-text">
                         Sort By
                     </div>
                     <select id="sort-by" class="sort-by">
+                        <option value="symbol">Symbol</option>
                         <option value="price">Price</option>
                         <option value="pricechange">Price Change</option>
+                        <option value="percentchange">Percent Change</option>
                         <option value="exdividenddate">Ex-Dividend Date</option>
-                        <option value="symbol">Symbol</option>
                     </select>
-                    <button class="btn btn-primary sort-order">
-                        <svg xmlns='http://www.w3.org/2000/svg' width='20px' class='ionicon' viewBox='0 0 512 512'>
+                    <button class="btn btn-primary sort-order" id="sort-order" value="asc">
+                        <svg id="sort-order-icon" xmlns='http://www.w3.org/2000/svg' width='20px' class='ionicon'
+                            viewBox='0 0 512 512'>
                             <path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round'
                                 stroke-width='48' d='M112 268l144 144 144-144M256 392V100' />
+                        </svg>
                         </svg>
                     </button>
                 </div> -->
