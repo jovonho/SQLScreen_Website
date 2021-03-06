@@ -179,7 +179,7 @@ function fillTemplate(template_clone, data) {
         element.querySelector("#dividendfrequency").innerText = data.dividendfrequency;
         element.querySelector("#exdividenddate").innerText = formatDate(data.exdividenddate);
         element.querySelector("#dividendpaydate").innerText = formatDate(data.dividendpaydate);
-        element.querySelector("#dividendyield").innerText = data.dividendyield;
+        element.querySelector("#dividendyield").innerText = `${data.dividendyield} %`;
 
         var dividendcurr = data.dividendcurrency;
 

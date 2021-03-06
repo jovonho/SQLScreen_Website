@@ -42,15 +42,21 @@ def load():
     return make_response(json_result, 200)
 
 
+# Endpoint called when query is submitted.
 @app.route("/results", methods=["GET", "POST"])
 def submit_query():
+ 
+    query_where_clause = request.args.get("q")
 
-    query = request.args.get("q")
-    # query = "symbol in ('CRDL.WT', 'TRL.WT', 'BXR', 'EKG', 'LRT.UN', 'BDGC', 'CUF.UN', 'ARTG', 'AGF.B', 'ABX', 'CSAV', 'MRG.DB.A')"
+    query = f"select count(*) from quotes where {query_where_clause};"
 
-    return render_template("query-result.html", query=query)
+    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
+    number_results = app.db.execute_self_contained(query)
+
+    return render_template("query-result.html", query=query_where_clause)
 
 
+# Test url to see results page without having to go through usual flow
 @app.route("/submit-query", methods=["GET"])
 def submit_query_old():
 

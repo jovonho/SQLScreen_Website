@@ -1,6 +1,8 @@
 import psycopg2
 import psycopg2.extras
-from dbconfig import config
+from configparser import SafeConfigParser
+
+configfile = "./config/db.ini"
 
 
 def NoneHandlerStr(value, cur):
@@ -9,25 +11,33 @@ def NoneHandlerStr(value, cur):
     return value
 
 
-# def NoneHandlerNum(value, cur):
-#     if value is None:
-#         return 0
-#     return value
-
-
 NoneHandlerStrType = psycopg2.extensions.new_type((25, 114), "NoneHandlerStr", NoneHandlerStr)
-# NoneHandlerNumType = psycopg2.extensions.new_type((20, 23, 1700), "NoneHandlerNum", NoneHandlerNum)
 
 
 class DbHandler:
     def __init__(self):
         super()
 
+    def config(self, filename=configfile, section="postgresql"):
+
+        parser = SafeConfigParser()
+        parser.read(filename)
+
+        db = {}
+        if parser.has_section(section):
+            params = parser.items(section)
+            for param in params:
+                db[param[0]] = param[1]
+        else:
+            raise Exception("Section {0} not found in the {1} file".format(section, filename))
+
+        return db
+
     def create_connection(self):
         """ create a database connection to a PostgreSQL database """
         conn = None
         try:
-            params = config()
+            params = self.config()
             print("Connecting to db...")
             conn = psycopg2.connect(**params)
 
