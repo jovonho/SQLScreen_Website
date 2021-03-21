@@ -1,0 +1,2 @@
+FLASK_APP=tmxscreen.py
+FLASK_ENV=development

@@ -1,9 +1,6 @@
-from flask import Flask, render_template, request, make_response
-from dbhandler import DbHandler
+from app import app
+from flask import render_template, request, make_response
 import simplejson as json
-
-app = Flask(__name__)
-app.db = DbHandler()
 
 
 @app.route("/")
@@ -45,7 +42,7 @@ def load():
 # Endpoint called when query is submitted.
 @app.route("/results", methods=["GET", "POST"])
 def submit_query():
- 
+
     query_where_clause = request.args.get("q")
 
     query = f"select count(*) from quotes where {query_where_clause};"
