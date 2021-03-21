@@ -19,9 +19,7 @@
 Ensure `config/db.ini` is good.
 
 ### Launch flask
-Set-up environment variable to development to enable hot reloading (view changes in web page without relaunching flask). 
-
-Depending on which shell you're using it's done differently. In VSCode integrated windows powershell it's `$env:FLASK_ENV="development"`, on windows cmd it's `set FLASK_ENV=development` on bash it's `FLASK_ENV=development`.
+The environment variables are defined in `.flaskenv` and will be created automatically. 
 
 Now launch the server with `flask run`. Or if that doesn't work `py -m flask run`. You should see `* Environment: development`.
 
