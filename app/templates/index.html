@@ -25,6 +25,11 @@
             <div class="row">
                 <div class="main-nav">
                     <ul class="main-nav-items">
+                        {% if current_user.is_anonymous %}
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        {% else %}
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        {% endif %}
                         <li><a href="#about">About</a></li>
                         <li><a href="#steps">How it works</a></li>
                     </ul>
@@ -34,6 +39,17 @@
     </header>
 
     <section class="main-section">
+        <div class="row">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </div>
         <div class="row">
             <div class="title">
                 <object type="image/svg+xml" data="/static/resources/icons/tmx_logo_white.svg"

@@ -38,7 +38,7 @@ class DbHandler:
         conn = None
         try:
             params = self.config()
-            print("Connecting to db...")
+            # print("Connecting to db...")
             conn = psycopg2.connect(**params)
 
             cur = conn.cursor()
@@ -66,13 +66,47 @@ class DbHandler:
         finally:
             return result
 
-    def execute_self_contained(self, sql_statement):
+    def exec_realdict(self, sql_statement):
         conn = self.create_connection()
 
         result = None
         try:
             cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
             cursor.execute(sql_statement)
+            result = cursor.fetchall()
+        except Exception as e:
+            print(e)
+        finally:
+            cursor.close()
+            conn.commit()
+            conn.close()
+            return result
+
+    def exec_self_contained(self, sql_statement, return_multiple=False):
+        conn = self.create_connection()
+
+        result = None
+        try:
+            cur = conn.cursor()
+            cur.execute(sql_statement)
+            if return_multiple:
+                result = cur.fetchall()
+            else:
+                result = cur.fetchone()
+        except Exception as e:
+            print(e)
+        finally:
+            cur.close()
+            conn.commit()
+            conn.close()
+            return result
+
+    def exec_self_contained(self, sql, tuple):
+        conn = self.create_connection()
+        result = None
+        try:
+            cursor = conn.cursor()
+            cursor.execute(sql, tuple)
             result = cursor.fetchall()
         except Exception as e:
             print(e)

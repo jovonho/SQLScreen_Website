@@ -11,12 +11,12 @@ function resizeNames() {
 
 function collapseResult(elem) {
 
-    $(elem).find('.line-info').slideToggle(200, function () {
+    $(elem).find('.line-info').slideToggle(100, function () {
         if ($(this).is(':visible'))
             $(this).css('display', 'flex');
     });
 
-    $(elem).find('.hidden').slideToggle(200, function () {
+    $(elem).find('.hidden').slideToggle(100, function () {
         if ($(this).is(':visible'))
             $(this).css('display', 'flex');
     });
@@ -24,12 +24,12 @@ function collapseResult(elem) {
 
 function openResult(elem) {
 
-    $(elem).find('.line-info').slideToggle(200, function () {
+    $(elem).find('.line-info').slideToggle(100, function () {
         if (!$(this).is(':visible'))
             $(this).css('display', 'none');
     });
 
-    $(elem).find('.hidden').slideToggle(200, function () {
+    $(elem).find('.hidden').slideToggle(100, function () {
         if (!$(this).is(':visible'))
             $(this).css('display', 'none');
     });
