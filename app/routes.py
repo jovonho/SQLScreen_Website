@@ -1,7 +1,8 @@
+from flask_login.utils import login_required
 from app import app
 from app.forms import LoginForm
 from app.models.user import User
-from flask import render_template, request, make_response, flash, redirect, url_for
+from flask import render_template, request, make_response, flash, redirect, url_for, abort
 from flask_login import current_user, login_user, logout_user
 import simplejson as json
 from werkzeug.urls import url_parse
@@ -67,6 +68,33 @@ def login():
         return redirect(next)
 
     return render_template("login.html", form=form)
+
+
+# TODO: How can we checkt that THIS user is connected?
+@app.route("/user/<username>")
+@login_required
+def user(username):
+    user = User.get_by_username(username)
+    if user is not None:
+        # TODO: Fetch real saved queries from the database
+        saved_queries = [
+            {
+                "id": 1,
+                "created": 21327,
+                "run_at": "1900",
+                "freq": "daily",
+                "query_terms": "Industry='Tech' AND PE > 1 AND PE < 30",
+            },
+            {
+                "id": 2,
+                "created": 34554,
+                "run_at": "1900",
+                "freq": "daily",
+                "query_terms": "Industry='REITs' AND pricetobook < 1",
+            },
+        ]
+        return render_template("user.html", user=user, saved_queries=saved_queries)
+    abort(404)
 
 
 @app.route("/logout")

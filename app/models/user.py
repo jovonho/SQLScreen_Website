@@ -2,6 +2,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from dbhandler import DbHandler
 from app import login
+from hashlib import md5
+from datetime import datetime
 
 
 class NoUserIdError(Exception):
@@ -22,6 +24,7 @@ class User(UserMixin):
         self.id = None
         self.username = username
         self.email = email
+        self.created = None
         self.firstname = firstname
         self.lastname = lastname
         self.password_hash = password_hash
@@ -34,8 +37,15 @@ class User(UserMixin):
 
     def create(self):
         res = self.db.exec_self_contained(
-            "INSERT INTO users (username, email, firstname, lastname, password_hash) VALUES (%s, %s, %s, %s, %s) RETURNING id",
-            (self.username, self.email, self.firstname, self.lastname, self.password_hash),
+            "INSERT INTO users (username, email, firstname, lastname, password_hash) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
+            (
+                self.username,
+                self.email,
+                datetime.utcnow(),
+                self.firstname,
+                self.lastname,
+                self.password_hash,
+            ),
         )
         if len(res) != 0:
             id = res[0][0]
@@ -61,6 +71,10 @@ class User(UserMixin):
             raise NoUserIdError(
                 f"User {self.username} ({self.firstname}, {self.lastname}, {self.email}) has no ID."
             )
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode("utf-8")).hexdigest()
+        return f"https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}"
 
     @classmethod
     def get_by_id(self, id):
