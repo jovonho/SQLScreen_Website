@@ -237,18 +237,15 @@ def export_csv():
         "dividendpaydate",
     ]
 
-    with open("./app/static/query_result.csv", "w", newline="") as csvfile:
+    with open("./app/generated/query_result.csv", "w", newline="") as csvfile:
         writer = csv.DictWriter(csvfile, delimiter=",", quotechar='"', fieldnames=fieldnames)
         writer.writeheader()
 
         for row in query_result:
             writer.writerow(row)
 
-    print("is file found? ", os.path.isfile("static\\query_result.csv"))
+    filepath = "generated/query_result.csv"
 
-    filepath = os.path.join(current_app.root_path, "static\\query_result.csv")
-
-    print("now? ", os.path.isfile(filepath))
     try:
         return send_file(filepath, attachment_filename="query_result.csv")
     except Exception as e:

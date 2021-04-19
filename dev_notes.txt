@@ -36,6 +36,12 @@ Switch yields to percentages
 Show available on which brokers!
 
 
+Apr 19 2021:
+
+Calculate and show industry/sector averages and changes.
+Different visualizations using graphs
+
+
 
 
 Links:

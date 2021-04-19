@@ -44,8 +44,7 @@ $(document).ready(function () {
         e.stopPropagation();
         e.preventDefault();
 
-        console.log("download-button clicked")
-
+        const query = document.querySelector("#query").dataset.query;
         const sortby = document.querySelector('#sort-by').value;
         const sortorder = document.querySelector('#sort-order').getAttribute('value');
 
@@ -55,19 +54,26 @@ $(document).ready(function () {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "query": document.querySelector("#query").dataset.query,
+                "query": query,
                 "sortby": sortby,
                 "sortorder": sortorder
             })
         };
 
-        console.log("request: " + request.body);
-
-        fetch("/exportcsv", request).then((response) => {
-            console.log(response);
-        });
-
-    });
+        const filename = 'query_result_' + Date.now() + '.csv'
+        fetch("/exportcsv", request)
+            .then(resp => resp.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+    })
 
     $('.result__info').on("click", (e) => {
         console.log(e.currentTarget + " clicked")
