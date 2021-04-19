@@ -1,3 +1,6 @@
+import os
+from flask.globals import current_app
+from flask.helpers import send_file
 from flask_login.utils import login_required
 from app import app
 from app.forms import LoginForm
@@ -8,6 +11,7 @@ import simplejson as json
 from werkzeug.urls import url_parse
 from app import db
 from app.forms import RegistrationForm
+import csv
 
 
 @app.route("/")
@@ -144,9 +148,10 @@ def submit_query():
     query = f"select count(*) from quotes where {query_where_clause};"
 
     # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
-    number_results = db.exec_realdict(query)
+    num_results = db.exec_self_contained(query, False)
+    num_results = num_results[0][0]
 
-    return render_template("query-result.html", query=query_where_clause)
+    return render_template("query-result.html", query=query_where_clause, num_results=num_results)
 
 
 # Test url to see results page without having to go through usual flow
@@ -166,6 +171,88 @@ def submit_query_old():
     query_result = db.execute_self_contained(query)
 
     return render_template("query-result_old.html", query=query, query_result=query_result)
+
+
+# TODO Limit results to 100 lines for non-users
+@app.route("/exportcsv", methods=["POST"])
+def export_csv():
+    query_where_clause = request.json.get("query")
+    sortby = request.json.get("sortby")
+    sortorder = request.json.get("sortorder")
+
+    fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh, 
+        daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
+        averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
+        alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
+        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
+
+    query = f"select {fields} from quotes where {query_where_clause} order by {sortby} {sortorder};"
+
+    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
+    query_result = db.exec_realdict(query)
+
+    fieldnames = [
+        "symbol",
+        "name",
+        "sector",
+        "industry",
+        "exshortname",
+        "price",
+        "pricechange",
+        "percentchange",
+        "price",
+        "openprice",
+        "prevclose",
+        "dayhigh",
+        "daylow",
+        "weeks52high",
+        "weeks52low",
+        "day21movingavg",
+        "day50movingavg",
+        "day200movingavg",
+        "volume",
+        "averagevolume10d",
+        "averagevolume30d",
+        "averagevolume50d",
+        "shareoutstanding",
+        "marketcap",
+        "totalsharesoutstanding",
+        "marketcapallclasses",
+        "sharesescrow",
+        "alpha",
+        "beta",
+        "eps",
+        "peratio",
+        "pricetobook",
+        "pricetocashflow",
+        "returnonequity",
+        "returnonassets",
+        "totaldebttoequity",
+        "vwap",
+        "dividendfrequency",
+        "dividendyield",
+        "dividendamount",
+        "dividendcurrency",
+        "exdividenddate",
+        "dividendpaydate",
+    ]
+
+    with open("./app/static/query_result.csv", "w", newline="") as csvfile:
+        writer = csv.DictWriter(csvfile, delimiter=",", quotechar='"', fieldnames=fieldnames)
+        writer.writeheader()
+
+        for row in query_result:
+            writer.writerow(row)
+
+    print("is file found? ", os.path.isfile("static\\query_result.csv"))
+
+    filepath = os.path.join(current_app.root_path, "static\\query_result.csv")
+
+    print("now? ", os.path.isfile(filepath))
+    try:
+        return send_file(filepath, attachment_filename="query_result.csv")
+    except Exception as e:
+        return str(e)
 
 
 @app.context_processor

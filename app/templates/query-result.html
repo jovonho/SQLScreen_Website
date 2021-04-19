@@ -52,9 +52,9 @@
         <div class="row">
             <div class="result-header">
                 <div class="left">
-                    <!-- <h3>Data as of 2020-12-25</h3> -->
-                    <h3 id="numresults">Results: ?</h3>
-                    <h4>All prices in CAD unless specified</h4>
+                    <h3>Data as of ...</h3>
+                    <h3 id="numresults">Results: {{ num_results }}</h3>
+                    <h5>All prices in CAD unless specified</h5>
                 </div>
                 <div class="sort-by-section">
                     <div class="sort-by-text">
@@ -73,15 +73,20 @@
                             <path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round'
                                 stroke-width='48' d='M112 268l144 144 144-144M256 392V100' />
                         </svg>
-                        </svg>
                     </button>
                 </div>
             </div>
         </div>
         <div class="row right">
-            <!-- <button class="btn collapse-all" id="collapse-all">
-                Collapse All
-            </button> -->
+            Export csv &nbsp;
+            <button class="btn btn-secondary sort-order" id="download-button">
+                <svg xmlns='http://www.w3.org/2000/svg' id="download-button-icon" width="20px" viewBox='0 0 512 512'>
+                    <path
+                        d='M384 224v184a40 40 0 01-40 40H104a40 40 0 01-40-40V168a40 40 0 0140-40h167.48M336 64h112v112M224 288L440 72'
+                        fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'
+                        stroke-width='32' />
+                </svg>
+            </button>
         </div>
     </section>
 

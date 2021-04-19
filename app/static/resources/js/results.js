@@ -38,7 +38,36 @@ function openResult(elem) {
 
 $(document).ready(function () {
 
-    // resizeNames();
+    resizeNames();
+
+    $('#download-button').on("click", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        console.log("download-button clicked")
+
+        const sortby = document.querySelector('#sort-by').value;
+        const sortorder = document.querySelector('#sort-order').getAttribute('value');
+
+        const request = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "query": document.querySelector("#query").dataset.query,
+                "sortby": sortby,
+                "sortorder": sortorder
+            })
+        };
+
+        console.log("request: " + request.body);
+
+        fetch("/exportcsv", request).then((response) => {
+            console.log(response);
+        });
+
+    });
 
     $('.result__info').on("click", (e) => {
         console.log(e.currentTarget + " clicked")
