@@ -32,7 +32,7 @@ class SavedQuery(db.Model):
 
 class Quote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    symbol = db.Column(db.Text, index=True)
+    symbol = db.Column(db.Text, unique=True, index=True)
     name = db.Column(db.Text, nullable=False)
     price = db.Column(db.Numeric)
     pricechange = db.Column(db.Numeric)
@@ -87,5 +87,6 @@ class Quote(db.Model):
     dividend3years = db.Column(db.Numeric)
     dividend5years = db.Column(db.Numeric)
     datatype = db.Column(db.Text)
-    __typename = db.Column(db.Text)
+    typename = db.Column(db.Text)
+    lastupdate = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     __table_args__ = (db.UniqueConstraint("symbol", "name", name="quotes_symbol_name_key"),)
