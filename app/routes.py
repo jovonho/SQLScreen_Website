@@ -4,7 +4,7 @@ from flask.helpers import send_file
 from flask_login.utils import login_required
 from app import app
 from app.forms import LoginForm
-from app.models.user import User
+from app.models import User
 from flask import render_template, request, make_response, flash, redirect, url_for, abort
 from flask_login import current_user, login_user, logout_user
 import simplejson as json
