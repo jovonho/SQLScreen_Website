@@ -113,6 +113,7 @@ function fillTemplate(template_clone, data) {
     template_clone.querySelector("#percentchange").innerText = `(${formatChange(data.percentchange.toFixed(2))} %)`;
     template_clone.querySelector("#symbol").innerText = data.symbol;
     template_clone.querySelector("#name").innerText = data.name;
+    template_clone.querySelector("#external-link").href = "https://money.tmx.com/en/quote/" + data.symbol;
     template_clone.querySelector("#exshortname").innerText = data.exshortname;
     template_clone.querySelector("#sector").innerText = notNull(data.sector);
     template_clone.querySelector("#industry").innerText = notNull(data.industry);

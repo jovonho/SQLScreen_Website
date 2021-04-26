@@ -53,7 +53,7 @@
             <div class="result-header">
                 <div class="left">
                     <h3>Data as of ...</h3>
-                    <h3 id="numresults">Results: {{ num_results }}</h3>
+                    <h3 id="numresults">Results: {{ num_results[0] }}</h3>
                     <h5>All prices in CAD unless specified</h5>
                 </div>
                 <div class="sort-by-section">
@@ -106,7 +106,8 @@
                             </div>
                         </span>
                         <span class="result-id-info">
-                            <!-- <a href="https://money.tmx.com/en/quote/"><span class="empty-span"></span></a> -->
+                            <a id="external-link" href="https://money.tmx.com/en/quote/"><span
+                                    class="empty-span"></span></a>
                             <span class="h2 symbol" id="symbol"></span>
                             <span class="sep">&mdash;</span>
                             <span class="h3 name" id="name"></span>

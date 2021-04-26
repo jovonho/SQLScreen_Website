@@ -24,18 +24,19 @@ def index():
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
-    form = RegistrationForm()
 
+    form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(
+        newuser = User(
             username=form.username.data,
             email=form.email.data,
             firstname=form.firstname.data,
             lastname=form.lastname.data,
         )
-        user.set_password(form.password.data)
+        newuser.set_password(form.password.data)
         try:
-            user.create()
+            db.session.add(newuser)
+            db.session.commit()
             flash("Congratulations, you are now a registered user!")
             return redirect(url_for("login"))
         except Exception as e:
@@ -52,12 +53,11 @@ def login():
         return redirect(url_for("index"))
 
     form = LoginForm()
+    # We are in the case of login form submission
     if form.validate_on_submit():
 
         user = User.get_by_username(form.username.data)
         print(user)
-
-        print(form.password.data)
 
         if user is None or not user.check_password(form.password.data):
             flash("Invalid username or password")
@@ -74,29 +74,19 @@ def login():
     return render_template("login.html", form=form)
 
 
-# TODO: How can we checkt that THIS user is connected?
 @app.route("/user/<username>")
 @login_required
 def user(username):
+    print(current_user)
+    if username != current_user.username:
+        b = username != current_user.username
+        print(b)
+        return redirect("/user/" + current_user.username)
     user = User.get_by_username(username)
     if user is not None:
         # TODO: Fetch real saved queries from the database
-        saved_queries = [
-            {
-                "id": 1,
-                "created": 21327,
-                "run_at": "1900",
-                "freq": "daily",
-                "query_terms": "Industry='Tech' AND PE > 1 AND PE < 30",
-            },
-            {
-                "id": 2,
-                "created": 34554,
-                "run_at": "1900",
-                "freq": "daily",
-                "query_terms": "Industry='REITs' AND pricetobook < 1",
-            },
-        ]
+        saved_queries = user.saved_queries
+
         return render_template("user.html", user=user, saved_queries=saved_queries)
     abort(404)
 
@@ -128,12 +118,12 @@ def load():
         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
         dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
 
-    query = f"select {fields} from quotes where {query_where_clause} order by {sortby} {sortorder} limit {limit} offset {offset};"
+    query = f"select {fields} from quote where {query_where_clause} order by {sortby} {sortorder} limit {limit} offset {offset};"
 
     # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
-    query_result = db.exec_realdict(query)
+    query_result = db.session.execute(query)
 
-    json_result = json.dumps(query_result, default=str, use_decimal=True)
+    json_result = json.dumps(query_result.all(), default=str, use_decimal=True)
     print(len(json_result))
 
     return make_response(json_result, 200)
@@ -145,13 +135,15 @@ def submit_query():
 
     query_where_clause = request.args.get("q")
 
-    query = f"select count(*) from quotes where {query_where_clause};"
+    query = f"select count(*) from quote where {query_where_clause};"
 
     # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
-    num_results = db.exec_self_contained(query, False)
-    num_results = num_results[0][0]
+    num_results = db.session.execute(query)
+    print(num_results)
 
-    return render_template("query-result.html", query=query_where_clause, num_results=num_results)
+    return render_template(
+        "query-result.html", query=query_where_clause, num_results=num_results.first()
+    )
 
 
 # Test url to see results page without having to go through usual flow
@@ -166,11 +158,11 @@ def submit_query_old():
         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap,
         dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
 
-    query = f"select {fields} from quotes where {query_where_clause};"
+    query = f"select {fields} from quote where {query_where_clause};"
 
-    query_result = db.execute_self_contained(query)
+    query_result = db.session.execute(query)
 
-    return render_template("query-result_old.html", query=query, query_result=query_result)
+    return render_template("query-result_old.html", query=query, query_result=query_result.all())
 
 
 # TODO Limit results to 100 lines for non-users
@@ -184,12 +176,12 @@ def export_csv():
         daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
         averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
-        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
+        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate, lastupdate """
 
-    query = f"select {fields} from quotes where {query_where_clause} order by {sortby} {sortorder};"
+    query = f"select {fields} from quote where {query_where_clause} order by {sortby} {sortorder};"
 
     # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
-    query_result = db.exec_realdict(query)
+    query_result = db.session.execute(query)
 
     fieldnames = [
         "symbol",
@@ -235,14 +227,63 @@ def export_csv():
         "dividendcurrency",
         "exdividenddate",
         "dividendpaydate",
+        "lastupdate",
     ]
 
     with open("./app/generated/query_result.csv", "w", newline="") as csvfile:
-        writer = csv.DictWriter(csvfile, delimiter=",", quotechar='"', fieldnames=fieldnames)
-        writer.writeheader()
+        writer = csv.writer(csvfile, delimiter=",", quotechar='"')
+        writer.writerow(fieldnames)
 
-        for row in query_result:
-            writer.writerow(row)
+        for row in query_result.all():
+            print(row)
+            writer.writerow(
+                [
+                    row.symbol,
+                    row.name,
+                    row.sector,
+                    row.industry,
+                    row.exshortname,
+                    row.price,
+                    row.pricechange,
+                    row.percentchange,
+                    row.price,
+                    row.openprice,
+                    row.prevclose,
+                    row.dayhigh,
+                    row.daylow,
+                    row.weeks52high,
+                    row.weeks52low,
+                    row.day21movingavg,
+                    row.day50movingavg,
+                    row.day200movingavg,
+                    row.volume,
+                    row.averagevolume10d,
+                    row.averagevolume30d,
+                    row.averagevolume50d,
+                    row.shareoutstanding,
+                    row.marketcap,
+                    row.totalsharesoutstanding,
+                    row.marketcapallclasses,
+                    row.sharesescrow,
+                    row.alpha,
+                    row.beta,
+                    row.eps,
+                    row.peratio,
+                    row.pricetobook,
+                    row.pricetocashflow,
+                    row.returnonequity,
+                    row.returnonassets,
+                    row.totaldebttoequity,
+                    row.vwap,
+                    row.dividendfrequency,
+                    row.dividendyield,
+                    row.dividendamount,
+                    row.dividendcurrency,
+                    row.exdividenddate,
+                    row.dividendpaydate,
+                    row.lastupdate,
+                ]
+            )
 
     filepath = "generated/query_result.csv"
 

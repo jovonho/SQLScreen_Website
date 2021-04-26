@@ -1,17 +1,43 @@
-from app import db
+from app import db, login
 from datetime import datetime
+from flask_login import UserMixin
+from hashlib import md5
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class User(db.Model):
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), nullable=False, index=True, unique=True)
     email = db.Column(db.String(120), nullable=False, index=True, unique=True)
     password_hash = db.Column(db.String(128), nullable=False)
-    firstname = db.Column(db.String(64), nullable=False)
+    firstname = db.Column(db.String(64))
     lastname = db.Column(db.String(64))
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     # Not an actual db field.
     saved_queries = db.relationship("SavedQuery", backref="author", lazy="dynamic")
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode("utf-8")).hexdigest()
+        return f"https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}"
+
+    @classmethod
+    def get_by_username(cls, username):
+        return cls.query.filter_by(username=username).first()
+
+    @classmethod
+    def get_by_email(cls, email):
+        return cls.query.filter_by(email=email).first()
 
     def __repr__(self):
         return "<User {}:\n\tid: {}\n\temail: {}\n\tfirstname {}\n\tlastname {}>".format(
@@ -24,6 +50,8 @@ class SavedQuery(db.Model):
     title = db.Column(db.String(120), nullable=False, index=True, unique=True)
     query = db.Column(db.Text, nullable=False)
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    run_at = db.Column(db.Time, nullable=False)
+    frequency = db.Column(db.String(30), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     def __repr__(self):

@@ -42,7 +42,13 @@ Calculate and show industry/sector averages and changes.
 Different visualizations using graphs
 
 
+Apr 25 2021:
 
+Good resource for cloud sizing https://www.concurrencylabs.com/blog/5-steps-for-finding-optimal-ec2-infrastructure/
+Measured 1.5MB for a ~70 result search and csv download.
+Measured ~2.5MB for a ~2500 result search and csv download (800kB for csv).
+
+Locust to load test your app https://locust.io/
 
 Links:
 https://samdutton.wordpress.com/2015/04/02/high-performance-html/
