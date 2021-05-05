@@ -112,11 +112,11 @@ def load():
 
     print("Received data: " + query_where_clause)
 
-    fields = """symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh, 
+    fields = """symbol, name, sector, industry, exshortname, price, pricechange, percentchange, openprice, prevclose, dayhigh, 
         daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
         averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
-        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate, lastupdate"""
+        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate, lastupdate, dividend3Years, dividend5Years"""
 
     query = f"select {fields} from quote where {query_where_clause} order by {sortby} {sortorder} limit {limit} offset {offset};"
 

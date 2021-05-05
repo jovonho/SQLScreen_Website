@@ -8,10 +8,7 @@
     <meta name="description" content="A simple stock screener for the TSX.">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,600;1,300&display=swap"
         rel="stylesheet">
-    <!-- <link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css"> -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css">
     <link rel="stylesheet" type="text/css" href="/static/vendors/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/static/vendors/css/grid.css">
     <link rel="stylesheet" type="text/css" href="/static/resources/css/results_style.css">
@@ -59,7 +56,7 @@
                     <div class="sort-by-text">
                         Sort By
                     </div>
-                    <select id="sort-by" class="sort-by">
+                    <select id="sort-by" class="sort-by custom-select">
                         <option value="symbol">Symbol</option>
                         <option value="price">Price</option>
                         <option value="pricechange">Price Change</option>
@@ -67,10 +64,9 @@
                         <option value="exdividenddate">Ex-Dividend Date</option>
                     </select>
                     <button class="btn btn-primary sort-order" id="sort-order" value="asc">
-                        <svg id="sort-order-icon" xmlns='http://www.w3.org/2000/svg' width='20px' class='ionicon'
-                            viewBox='0 0 512 512'>
-                            <path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round'
-                                stroke-width='48' d='M112 268l144 144 144-144M256 392V100' />
+                        <svg xmlns="http://www.w3.org/2000/svg" id="sort-order-icon" width="16px" height="16px"
+                            viewBox="0 0 8 8">
+                            <path fill='white' d="M2 0v5h-2l2.53 3 2.47-3h-2v-5h-1z" transform="translate(1)" />
                         </svg>
                     </button>
                 </div>
@@ -78,14 +74,12 @@
         </div>
         <div class="row right">
             Export csv &nbsp;
-            <button class="btn btn-secondary sort-order" id="download-button">
-                <svg xmlns='http://www.w3.org/2000/svg' id="download-button-icon" width="20px" viewBox='0 0 512 512'>
-                    <path
-                        d='M384 224v184a40 40 0 01-40 40H104a40 40 0 01-40-40V168a40 40 0 0140-40h167.48M336 64h112v112M224 288L440 72'
-                        fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'
-                        stroke-width='32' />
+            <button class="btn btn-secondary download-button" id="download-button">
+                <svg xmlns="http://www.w3.org/2000/svg" id="download-button-icon" width="14px" viewBox="0 0 8 8">
+                    <path d="M3 0v3h-2l3 3 3-3h-2v-3h-2zm-3 7v1h8v-1h-8z" />
                 </svg>
             </button>
+
         </div>
     </section>
 
@@ -139,7 +133,7 @@
                                     <tbody>
                                         <tr>
                                             <th>Close</th>
-                                            <td class="close"></td>
+                                            <td class="closeprice"></td>
                                             <th>Day Range</th>
                                             <td>
                                                 <span class="daylow"></span>/
@@ -247,6 +241,7 @@
                                 </table>
                             </div>
                             <div class="multi-block dividend-table">
+
                             </div>
                         </div>
                         <div class="result__line last-line">
@@ -255,14 +250,19 @@
                                 <span class="lastupdate"></span>
                             </div>
                             <div class="external-link-container">
-                                <a class="external-link" href="https://money.tmx.com/en/quote/">
+                                <a class="external-link" href="https://money.tmx.com/en/quote/" target="_blank">
                                     open on tmx.com &nbsp;
-                                    <svg xmlns='http://www.w3.org/2000/svg' class="icon-external-link" width="15px"
+                                    <!-- <svg xmlns='http://www.w3.org/2000/svg' class="icon-external-link" width="15px"
                                         viewBox='0 0 512 512'>
                                         <path
                                             d='M384 224v184a40 40 0 01-40 40H104a40 40 0 01-40-40V168a40 40 0 0140-40h167.48M336 64h112v112M224 288L440 72'
                                             fill='none' stroke='currentColor' stroke-linecap='round'
                                             stroke-linejoin='round' stroke-width='32' />
+                                    </svg> -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-external-link" width="10"
+                                        viewBox="0 0 8 8">
+                                        <path fill='grey'
+                                            d="M0 0v8h8v-2h-1v1h-6v-6h1v-1h-2zm4 0l1.5 1.5-2.5 2.5 1 1 2.5-2.5 1.5 1.5v-4h-4z" />
                                     </svg>
                                 </a>
                             </div>

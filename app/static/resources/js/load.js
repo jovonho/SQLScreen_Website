@@ -117,7 +117,7 @@ function fillTemplate(template_clone, data) {
     template_clone.querySelector(".sector").innerText = notNull(data.sector);
     template_clone.querySelector(".industry").innerText = notNull(data.industry);
 
-    template_clone.querySelector(".close").innerText = formatPrice(data.prevclose);
+    template_clone.querySelector(".closeprice").innerText = formatPrice(data.price);
     template_clone.querySelector(".daylow").innerText = formatPrice(data.daylow);
     template_clone.querySelector(".dayhigh").innerText = formatPrice(data.dayhigh);
     template_clone.querySelector(".ma21d").innerText = formatPrice(data.day21movingavg);
@@ -162,10 +162,10 @@ function fillTemplate(template_clone, data) {
 
     template_clone.querySelector(".alpha").innerText = formatFinancial(data.alpha);
     template_clone.querySelector(".peratio").innerText = formatFinancial(data.peratio, 1);
-    template_clone.querySelector(".returnonequity").innerText = formatFinancial(data.returnonequity, 2);
+    template_clone.querySelector(".returnonequity").innerText = `${formatFinancial(data.returnonequity, 2)} %`;
     template_clone.querySelector(".beta").innerText = formatFinancial(data.beta);
     template_clone.querySelector(".pricetobook").innerText = formatFinancial(data.pricetobook, 2);
-    template_clone.querySelector(".returnonassets").innerText = formatFinancial(data.returnonassets, 2);
+    template_clone.querySelector(".returnonassets").innerText = `${formatFinancial(data.returnonassets, 2)} %`;
     template_clone.querySelector(".eps").innerText = formatFinancial(data.eps, 2);
     template_clone.querySelector(".pricetocashflow").innerText = formatFinancial(data.pricetocashflow, 2);
     template_clone.querySelector(".totaldebttoequity").innerText = formatFinancial(data.totaldebttoequity, 2);
@@ -180,6 +180,8 @@ function fillTemplate(template_clone, data) {
         element.querySelector(".exdividenddate").innerText = formatDate(data.exdividenddate);
         element.querySelector(".dividendpaydate").innerText = formatDate(data.dividendpaydate);
         element.querySelector(".dividendyield").innerText = `${formatFinancial(data.dividendyield, 2)} %`;
+        element.querySelector(".dividend3years").innerText = `${formatFinancial(data.dividend3years, 2)} %`;
+        element.querySelector(".dividend5years").innerText = `${formatFinancial(data.dividend5years, 2)} %`;
 
         var dividendcurr = data.dividendcurrency;
 
@@ -246,10 +248,10 @@ function formatDate(d) {
     return d.split(" ")[0];
 }
 
-const dividendTable = '<table> <thead> <th colspan=4>Dividend</th> </thead> \
-<tbody> <tr> <th>Frequency</th> <td class="dividendfrequency"></td> <th>Ex date</th><td class="exdividenddate"></td></tr><tr> \
-<th>Amount</th> <td class="dividendamount"> <span class="dividendcurr"> </span></td><th>Pay date</th><td class="dividendpaydate"></td></tr><tr><th>Yield</th> \
-<td class="dividendyield"></td> </tr></tbody> </table>'
+const dividendTable = '<table><thead><th colspan=6>Dividend</th></thead><tbody><tr><th>Frequency</th><td class="dividendfrequency">\
+    </td><th>Exdate</th><td class="exdividenddate"></td><th>Growth 3y</th><td class="dividend3years"></td></tr><tr>\
+    <th>Amount</th><td class="dividendamount"><span class="dividendcurr"></span></td><th>Paydate</th><td class="dividendpaydate">\
+    </td><th>Growth 5y</th><td class="dividend5years"></td></tr><tr><th>Yield</th>\<td class="dividendyield"></td></tr></tbody></table>'
 
-const SVG_arrow_down = "<path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 268l144 144 144-144M256 392V100' />"
-const SVG_arrow_up = "<path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 244l144-144 144 144M256 120v292'/>"
+const SVG_arrow_down = '<path fill="white" d="M2 0v5h-2l2.53 3 2.47-3h-2v-5h-1z" transform="translate(1)" />'
+const SVG_arrow_up = '<path fill="white" d="M2.47 0l-2.47 3h2v5h1v-5h2l-2.53-3z" transform="translate(1)" />'

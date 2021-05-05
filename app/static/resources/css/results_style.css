@@ -227,10 +227,12 @@ td {
     margin-right: 5px;
 }
 .sort-order {
-    padding-top: 2px;
-    padding-bottom: 0px;
-    padding-right: 2px;
-    padding-left: 2px;
+    text-align: center;
+    /* padding: 3px 5px; */
+}
+
+.download-button {
+    padding: 3px 5px;
 }
 
 .result {
