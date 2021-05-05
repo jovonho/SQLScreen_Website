@@ -97,31 +97,31 @@
                 <li class="result">
                     <div class="result__line">
                         <span class="price-n-change">
-                            <div class="price">$<span id="price"></span>
+                            <div class="price">$<span class="price"></span>
                             </div>
-                            <div class="change" id="ch_container">
-                                <div id="pricechange"></div>
-                                <div class="nowrap" id="percentchange"></div>
+                            <div class="change">
+                                <div class="pricechange"></div>
+                                <div class="nowrap percentchange"></div>
                             </div>
                         </span>
                         <span class="result-id-info">
-                            <span class="h2 symbol" id="symbol"></span>
+                            <span class="h2 symbol"></span>
                             <span class="sep">&mdash;</span>
-                            <span class="h3 name" id="name"></span>
+                            <span class="h3 name"></span>
                         </span>
                     </div>
                     <div class="result__info">
 
                         <div class="result__line">
-                            <span id="exshortname"></span>
+                            <span class="exshortname"></span>
                             <span class="sep">&mdash;</span>
                             <span class="class-info-sector">
                                 <span class="class-info-label">Sector:</span>
-                                <span class="class-info-value" id="sector"></span>
+                                <span class="class-info-value sector"></span>
                             </span>
-                            <span class="class-info-sector ">
+                            <span class="class-info-sector">
                                 <span class="class-info-label">Industry:</span>
-                                <span class="class-info-value" id="industry"></span>
+                                <span class="class-info-value industry"></span>
                             </span>
                         </div>
 
@@ -139,33 +139,33 @@
                                     <tbody>
                                         <tr>
                                             <th>Close</th>
-                                            <td id="close"></td>
+                                            <td class="close"></td>
                                             <th>Day Range</th>
                                             <td>
-                                                <span id="daylow"></span>/
-                                                <span id="dayhigh"></span>
+                                                <span class="daylow"></span>/
+                                                <span class="dayhigh"></span>
                                             </td>
                                             <th>21d</th>
-                                            <td id="ma21d"></td>
+                                            <td class="ma21d"></td>
                                         </tr>
                                         <tr>
                                             <th>Open</th>
-                                            <td id="open"></td>
+                                            <td class="open"></td>
                                             <th>Year Range</th>
                                             <td>
-                                                <span id="low52w"></span>/
-                                                <span id="high52w"></span>
+                                                <span class="low52w"></span>/
+                                                <span class="high52w"></span>
                                             </td>
                                             <th>50d</th>
-                                            <td id="ma50d"></td>
+                                            <td class="ma50d"></td>
                                         </tr>
                                         <tr>
                                             <th>Prev.</th>
-                                            <td id="prev"></td>
+                                            <td class="prev"></td>
                                             <th>VWAP</th>
-                                            <td id="vwap"></td>
+                                            <td class="vwap"></td>
                                             <th>200d</th>
-                                            <td id="ma200d"></td>
+                                            <td class="ma200d"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -183,27 +183,27 @@
                                     <tbody>
                                         <tr>
                                             <th>Volume</th>
-                                            <td id="volume"></td>
+                                            <td class="volume"></td>
                                             <th>Escrowed</th>
-                                            <td id="escrowed"></td>
+                                            <td class="escrowed"></td>
                                             <th>10d</th>
-                                            <td id="avgvol10d"></td>
+                                            <td class="avgvol10d"></td>
                                         </tr>
                                         <tr>
                                             <th>Outstanding</th>
-                                            <td id="shareoutstanding"></td>
+                                            <td class="shareoutstanding"></td>
                                             <th>Outstanding (all)</th>
-                                            <td id="totalsharesoutstanding"></td>
+                                            <td class="totalsharesoutstanding"></td>
                                             <th>30d</th>
-                                            <td id="avgvol30d"></td>
+                                            <td class="avgvol30d"></td>
                                         </tr>
                                         <tr>
                                             <th>Market Cap</th>
-                                            <td id="mktcap"></td>
+                                            <td class="mktcap"></td>
                                             <th>Market Cap (all)</th>
-                                            <td id="mktcapall"></td>
+                                            <td class="mktcapall"></td>
                                             <th>50d</th>
-                                            <td id="avgvol50d"></td>
+                                            <td class="avgvol50d"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -221,32 +221,32 @@
                                     <tbody>
                                         <tr>
                                             <th>Alpha</th>
-                                            <td id="alpha"></td>
+                                            <td class="alpha"></td>
                                             <th>Price / Earnings</th>
-                                            <td id="peratio"></td>
+                                            <td class="peratio"></td>
                                             <th>Return on Equity</th>
-                                            <td id="returnonequity"></td>
+                                            <td class="returnonequity"></td>
                                         </tr>
                                         <tr>
                                             <th>Beta</th>
-                                            <td id="beta"></td>
+                                            <td class="beta"></td>
                                             <th>Price / Book</th>
-                                            <td id="pricetobook"></td>
+                                            <td class="pricetobook"></td>
                                             <th>Return on Assets</th>
-                                            <td id="returnonassets"></td>
+                                            <td class="returnonassets"></td>
                                         </tr>
                                         <tr>
                                             <th>EPS</th>
-                                            <td id="eps"></td>
+                                            <td class="eps"></td>
                                             <th>Price / Cashflow</th>
-                                            <td id="pricetocashflow"></td>
+                                            <td class="pricetocashflow"></td>
                                             <th>Debt / Equity</th>
-                                            <td id="totaldebttoequity"></td>
+                                            <td class="totaldebttoequity"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="multi-block" id="dividend-table">
+                            <div class="multi-block dividend-table">
                             </div>
                         </div>
                         <div class="result__line last-line">

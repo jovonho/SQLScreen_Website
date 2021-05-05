@@ -98,77 +98,77 @@ $(document).ready(function () {
 
 function fillTemplate(template_clone, data) {
 
-    template_clone.querySelector("#price").innerText = formatPrice(data.price);
+    template_clone.querySelector(".price").innerText = formatPrice(data.price);
     const pricechange = data.pricechange;
 
     if (pricechange > 0) {
-        template_clone.querySelector("#ch_container").classList.add("ch-pos")
+        template_clone.querySelector(".change").classList.add("ch-pos")
     }
     else if (pricechange < 0) {
-        template_clone.querySelector("#ch_container").classList.add("ch-neg")
+        template_clone.querySelector(".change").classList.add("ch-neg")
     }
-    template_clone.querySelector("#pricechange").innerText = formatChange(pricechange);
-    template_clone.querySelector("#percentchange").innerText = `(${formatChange(data.percentchange.toFixed(2))} %)`;
-    template_clone.querySelector("#symbol").innerText = data.symbol;
-    template_clone.querySelector("#name").innerText = data.name;
+    template_clone.querySelector(".pricechange").innerText = formatChange(pricechange);
+    template_clone.querySelector(".percentchange").innerText = `(${formatChange(data.percentchange.toFixed(2))} %)`;
+    template_clone.querySelector(".symbol").innerText = data.symbol;
+    template_clone.querySelector(".name").innerText = data.name;
     template_clone.querySelector(".external-link").href = "https://money.tmx.com/en/quote/" + data.symbol;
     template_clone.querySelector(".lastupdate").innerText = formatDate(data.lastupdate);
-    template_clone.querySelector("#exshortname").innerText = data.exshortname;
-    template_clone.querySelector("#sector").innerText = notNull(data.sector);
-    template_clone.querySelector("#industry").innerText = notNull(data.industry);
+    template_clone.querySelector(".exshortname").innerText = data.exshortname;
+    template_clone.querySelector(".sector").innerText = notNull(data.sector);
+    template_clone.querySelector(".industry").innerText = notNull(data.industry);
 
-    template_clone.querySelector("#close").innerText = formatPrice(data.prevclose);
-    template_clone.querySelector("#daylow").innerText = formatPrice(data.daylow);
-    template_clone.querySelector("#dayhigh").innerText = formatPrice(data.dayhigh);
-    template_clone.querySelector("#ma21d").innerText = formatPrice(data.day21movingavg);
+    template_clone.querySelector(".close").innerText = formatPrice(data.prevclose);
+    template_clone.querySelector(".daylow").innerText = formatPrice(data.daylow);
+    template_clone.querySelector(".dayhigh").innerText = formatPrice(data.dayhigh);
+    template_clone.querySelector(".ma21d").innerText = formatPrice(data.day21movingavg);
 
-    template_clone.querySelector("#open").innerText = formatPrice(data.openprice);
-    template_clone.querySelector("#low52w").innerText = formatPrice(data.weeks52low);
-    template_clone.querySelector("#high52w").innerText = formatPrice(data.weeks52high);
-    template_clone.querySelector("#ma50d").innerText = formatPrice(data.day50movingavg);
+    template_clone.querySelector(".open").innerText = formatPrice(data.openprice);
+    template_clone.querySelector(".low52w").innerText = formatPrice(data.weeks52low);
+    template_clone.querySelector(".high52w").innerText = formatPrice(data.weeks52high);
+    template_clone.querySelector(".ma50d").innerText = formatPrice(data.day50movingavg);
 
-    template_clone.querySelector("#prev").innerText = formatPrice(data.prevclose);
-    template_clone.querySelector("#vwap").innerText = formatFinancial(data.vwap);
-    template_clone.querySelector("#ma200d").innerText = formatPrice(data.day200movingavg);
-    template_clone.querySelector("#ma21d").innerText = formatPrice(data.day21movingavg);
+    template_clone.querySelector(".prev").innerText = formatPrice(data.prevclose);
+    template_clone.querySelector(".vwap").innerText = formatFinancial(data.vwap);
+    template_clone.querySelector(".ma200d").innerText = formatPrice(data.day200movingavg);
+    template_clone.querySelector(".ma21d").innerText = formatPrice(data.day21movingavg);
 
-    template_clone.querySelector("#volume").innerText = formatComma(data.volume);
-    template_clone.querySelector("#escrowed").innerText = formatComma(data.sharesescrow);
-    template_clone.querySelector("#avgvol10d").innerText = formatComma(data.averagevolume10d);
+    template_clone.querySelector(".volume").innerText = formatComma(data.volume);
+    template_clone.querySelector(".escrowed").innerText = formatComma(data.sharesescrow);
+    template_clone.querySelector(".avgvol10d").innerText = formatComma(data.averagevolume10d);
 
     const sharesoutstanding = data.shareoutstanding;
     const totalsharesoutstanding = data.totalsharesoutstanding;
 
     if (sharesoutstanding != 0) {
-        template_clone.querySelector("#shareoutstanding").innerText = formatComma(sharesoutstanding);
+        template_clone.querySelector(".shareoutstanding").innerText = formatComma(sharesoutstanding);
 
 
         if (totalsharesoutstanding != sharesoutstanding) {
-            template_clone.querySelector("#totalsharesoutstanding").innerText = formatComma(totalsharesoutstanding);
+            template_clone.querySelector(".totalsharesoutstanding").innerText = formatComma(totalsharesoutstanding);
         }
 
         else {
-            template_clone.querySelector("#totalsharesoutstanding").innerText = '-';
+            template_clone.querySelector(".totalsharesoutstanding").innerText = '-';
         }
     } else {
-        template_clone.querySelector("#shareoutstanding").innerText = '-';
-        template_clone.querySelector("#totalsharesoutstanding").innerText = '-';
+        template_clone.querySelector(".shareoutstanding").innerText = '-';
+        template_clone.querySelector(".totalsharesoutstanding").innerText = '-';
     }
-    template_clone.querySelector("#avgvol30d").innerText = formatComma(data.averagevolume30d);
+    template_clone.querySelector(".avgvol30d").innerText = formatComma(data.averagevolume30d);
 
-    template_clone.querySelector("#mktcap").innerText = formatComma(data.marketcap);
-    template_clone.querySelector("#mktcapall").innerText = formatComma(data.marketcapallclasses);
-    template_clone.querySelector("#avgvol50d").innerText = formatComma(data.averagevolume50d);
+    template_clone.querySelector(".mktcap").innerText = formatComma(data.marketcap);
+    template_clone.querySelector(".mktcapall").innerText = formatComma(data.marketcapallclasses);
+    template_clone.querySelector(".avgvol50d").innerText = formatComma(data.averagevolume50d);
 
-    template_clone.querySelector("#alpha").innerText = formatFinancial(data.alpha);
-    template_clone.querySelector("#peratio").innerText = formatFinancial(data.peratio, 1);
-    template_clone.querySelector("#returnonequity").innerText = formatFinancial(data.returnonequity, 2);
-    template_clone.querySelector("#beta").innerText = formatFinancial(data.beta);
-    template_clone.querySelector("#pricetobook").innerText = formatFinancial(data.pricetobook, 2);
-    template_clone.querySelector("#returnonassets").innerText = formatFinancial(data.returnonassets, 2);
-    template_clone.querySelector("#eps").innerText = formatFinancial(data.eps, 2);
-    template_clone.querySelector("#pricetocashflow").innerText = formatFinancial(data.pricetocashflow, 2);
-    template_clone.querySelector("#totaldebttoequity").innerText = formatFinancial(data.totaldebttoequity, 2);
+    template_clone.querySelector(".alpha").innerText = formatFinancial(data.alpha);
+    template_clone.querySelector(".peratio").innerText = formatFinancial(data.peratio, 1);
+    template_clone.querySelector(".returnonequity").innerText = formatFinancial(data.returnonequity, 2);
+    template_clone.querySelector(".beta").innerText = formatFinancial(data.beta);
+    template_clone.querySelector(".pricetobook").innerText = formatFinancial(data.pricetobook, 2);
+    template_clone.querySelector(".returnonassets").innerText = formatFinancial(data.returnonassets, 2);
+    template_clone.querySelector(".eps").innerText = formatFinancial(data.eps, 2);
+    template_clone.querySelector(".pricetocashflow").innerText = formatFinancial(data.pricetocashflow, 2);
+    template_clone.querySelector(".totaldebttoequity").innerText = formatFinancial(data.totaldebttoequity, 2);
 
     const dividendamount = data.dividendamount;
     if (typeof dividendamount == "number") {
@@ -176,21 +176,21 @@ function fillTemplate(template_clone, data) {
         var element = document.createElement('div');
         element.insertAdjacentHTML('beforeend', dividendTable);
 
-        element.querySelector("#dividendfrequency").innerText = data.dividendfrequency;
-        element.querySelector("#exdividenddate").innerText = formatDate(data.exdividenddate);
-        element.querySelector("#dividendpaydate").innerText = formatDate(data.dividendpaydate);
-        element.querySelector("#dividendyield").innerText = `${formatFinancial(data.dividendyield, 2)} %`;
+        element.querySelector(".dividendfrequency").innerText = data.dividendfrequency;
+        element.querySelector(".exdividenddate").innerText = formatDate(data.exdividenddate);
+        element.querySelector(".dividendpaydate").innerText = formatDate(data.dividendpaydate);
+        element.querySelector(".dividendyield").innerText = `${formatFinancial(data.dividendyield, 2)} %`;
 
         var dividendcurr = data.dividendcurrency;
 
         if (dividendcurr.length == 3 && dividendcurr != "CAD") {
-            element.querySelector("#dividendamount").innerHTML = `${dividendamount} <span id="dividendcurr">${dividendcurr}</span>`;
+            element.querySelector(".dividendamount").innerHTML = `${dividendamount} <span class="dividendcurr">${dividendcurr}</span>`;
         }
         else {
-            element.querySelector("#dividendamount").innerHTML = dividendamount;
+            element.querySelector(".dividendamount").innerHTML = dividendamount;
         }
 
-        template_clone.querySelector("#dividend-table").appendChild(element);
+        template_clone.querySelector(".dividend-table").appendChild(element);
     }
 }
 
@@ -247,9 +247,9 @@ function formatDate(d) {
 }
 
 const dividendTable = '<table> <thead> <th colspan=4>Dividend</th> </thead> \
-<tbody> <tr> <th>Frequency</th> <td id="dividendfrequency"></td> <th>Ex date</th><td id="exdividenddate"></td></tr><tr> \
-<th>Amount</th> <td id="dividendamount"> <span id="dividendcurr"> </span></td><th>Pay date</th><td id="dividendpaydate"></td></tr><tr><th>Yield</th> \
-<td id="dividendyield"></td> </tr></tbody> </table>'
+<tbody> <tr> <th>Frequency</th> <td class="dividendfrequency"></td> <th>Ex date</th><td class="exdividenddate"></td></tr><tr> \
+<th>Amount</th> <td class="dividendamount"> <span class="dividendcurr"> </span></td><th>Pay date</th><td class="dividendpaydate"></td></tr><tr><th>Yield</th> \
+<td class="dividendyield"></td> </tr></tbody> </table>'
 
 const SVG_arrow_down = "<path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 268l144 144 144-144M256 392V100' />"
 const SVG_arrow_up = "<path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 244l144-144 144 144M256 120v292'/>"
