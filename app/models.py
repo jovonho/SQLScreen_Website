@@ -116,5 +116,6 @@ class Quote(db.Model):
     dividend5years = db.Column(db.Numeric)
     datatype = db.Column(db.Text)
     typename = db.Column(db.Text)
+    suspended = db.Column(db.Boolean, default=False)
     lastupdate = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     __table_args__ = (db.UniqueConstraint("symbol", "name", name="quotes_symbol_name_key"),)

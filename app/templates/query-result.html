@@ -52,9 +52,8 @@
         <div class="row">
             <div class="result-header">
                 <div class="left">
-                    <h3>Data as of ...</h3>
                     <h3 id="numresults">Results: {{ num_results[0] }}</h3>
-                    <h5>All prices in CAD unless specified</h5>
+                    <h5>Prices in CAD unless specified</h5>
                 </div>
                 <div class="sort-by-section">
                     <div class="sort-by-text">
@@ -106,8 +105,6 @@
                             </div>
                         </span>
                         <span class="result-id-info">
-                            <a id="external-link" href="https://money.tmx.com/en/quote/"><span
-                                    class="empty-span"></span></a>
                             <span class="h2 symbol" id="symbol"></span>
                             <span class="sep">&mdash;</span>
                             <span class="h3 name" id="name"></span>
@@ -251,7 +248,24 @@
                             </div>
                             <div class="multi-block" id="dividend-table">
                             </div>
-
+                        </div>
+                        <div class="result__line last-line">
+                            <div class="lastupdate-container">
+                                Last update:&nbsp;
+                                <span class="lastupdate"></span>
+                            </div>
+                            <div class="external-link-container">
+                                <a class="external-link" href="https://money.tmx.com/en/quote/">
+                                    open on tmx.com &nbsp;
+                                    <svg xmlns='http://www.w3.org/2000/svg' class="icon-external-link" width="15px"
+                                        viewBox='0 0 512 512'>
+                                        <path
+                                            d='M384 224v184a40 40 0 01-40 40H104a40 40 0 01-40-40V168a40 40 0 0140-40h167.48M336 64h112v112M224 288L440 72'
+                                            fill='none' stroke='currentColor' stroke-linecap='round'
+                                            stroke-linejoin='round' stroke-width='32' />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="result__line hidden" id="see-more">

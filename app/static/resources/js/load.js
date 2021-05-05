@@ -93,8 +93,6 @@ $(document).ready(function () {
 
         intersectionObserver.observe(sentinel);
     });
-
-
 })
 
 
@@ -113,7 +111,8 @@ function fillTemplate(template_clone, data) {
     template_clone.querySelector("#percentchange").innerText = `(${formatChange(data.percentchange.toFixed(2))} %)`;
     template_clone.querySelector("#symbol").innerText = data.symbol;
     template_clone.querySelector("#name").innerText = data.name;
-    template_clone.querySelector("#external-link").href = "https://money.tmx.com/en/quote/" + data.symbol;
+    template_clone.querySelector(".external-link").href = "https://money.tmx.com/en/quote/" + data.symbol;
+    template_clone.querySelector(".lastupdate").innerText = formatDate(data.lastupdate);
     template_clone.querySelector("#exshortname").innerText = data.exshortname;
     template_clone.querySelector("#sector").innerText = notNull(data.sector);
     template_clone.querySelector("#industry").innerText = notNull(data.industry);
@@ -162,14 +161,14 @@ function fillTemplate(template_clone, data) {
     template_clone.querySelector("#avgvol50d").innerText = formatComma(data.averagevolume50d);
 
     template_clone.querySelector("#alpha").innerText = formatFinancial(data.alpha);
-    template_clone.querySelector("#peratio").innerText = formatFinancial(data.peratio);
-    template_clone.querySelector("#returnonequity").innerText = formatFinancial(data.returnonequity);
+    template_clone.querySelector("#peratio").innerText = formatFinancial(data.peratio, 1);
+    template_clone.querySelector("#returnonequity").innerText = formatFinancial(data.returnonequity, 2);
     template_clone.querySelector("#beta").innerText = formatFinancial(data.beta);
-    template_clone.querySelector("#pricetobook").innerText = formatFinancial(data.pricetobook);
-    template_clone.querySelector("#returnonassets").innerText = formatFinancial(data.returnonassets);
-    template_clone.querySelector("#eps").innerText = formatFinancial(data.eps);
-    template_clone.querySelector("#pricetocashflow").innerText = formatFinancial(data.pricetocashflow);
-    template_clone.querySelector("#totaldebttoequity").innerText = formatFinancial(data.totaldebttoequity);
+    template_clone.querySelector("#pricetobook").innerText = formatFinancial(data.pricetobook, 2);
+    template_clone.querySelector("#returnonassets").innerText = formatFinancial(data.returnonassets, 2);
+    template_clone.querySelector("#eps").innerText = formatFinancial(data.eps, 2);
+    template_clone.querySelector("#pricetocashflow").innerText = formatFinancial(data.pricetocashflow, 2);
+    template_clone.querySelector("#totaldebttoequity").innerText = formatFinancial(data.totaldebttoequity, 2);
 
     const dividendamount = data.dividendamount;
     if (typeof dividendamount == "number") {
@@ -180,7 +179,7 @@ function fillTemplate(template_clone, data) {
         element.querySelector("#dividendfrequency").innerText = data.dividendfrequency;
         element.querySelector("#exdividenddate").innerText = formatDate(data.exdividenddate);
         element.querySelector("#dividendpaydate").innerText = formatDate(data.dividendpaydate);
-        element.querySelector("#dividendyield").innerText = `${data.dividendyield} %`;
+        element.querySelector("#dividendyield").innerText = `${formatFinancial(data.dividendyield, 2)} %`;
 
         var dividendcurr = data.dividendcurrency;
 
@@ -208,11 +207,11 @@ function formatPrice(price) {
     return "-";
 }
 
-function formatFinancial(n) {
+function formatFinancial(n, decimals = 4) {
     if (n == null || n == 0) {
         return "-";
     }
-    return n.toFixed(4);
+    return n.toFixed(decimals);
 }
 
 function formatChange(n) {

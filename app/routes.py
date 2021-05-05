@@ -112,11 +112,11 @@ def load():
 
     print("Received data: " + query_where_clause)
 
-    fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh, 
+    fields = """symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh, 
         daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
         averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
         alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
-        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
+        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate, lastupdate"""
 
     query = f"select {fields} from quote where {query_where_clause} order by {sortby} {sortorder} limit {limit} offset {offset};"
 
@@ -144,25 +144,6 @@ def submit_query():
     return render_template(
         "query-result.html", query=query_where_clause, num_results=num_results.first()
     )
-
-
-# Test url to see results page without having to go through usual flow
-@app.route("/submit-query", methods=["GET"])
-def submit_query_old():
-
-    query_where_clause = "symbol in ('CRDL.WT', 'TRL.WT', 'BXR', 'EKG', 'LRT.UN', 'AGF.B')"
-
-    fields = """ symbol, name, sector, industry, exshortname, price, pricechange, percentchange, price, openprice, prevclose, dayhigh,
-        daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d,
-        averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow,
-        alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap,
-        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate """
-
-    query = f"select {fields} from quote where {query_where_clause};"
-
-    query_result = db.session.execute(query)
-
-    return render_template("query-result_old.html", query=query, query_result=query_result.all())
 
 
 # TODO Limit results to 100 lines for non-users
