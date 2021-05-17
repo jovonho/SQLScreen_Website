@@ -108,7 +108,7 @@ function fillTemplate(template_clone, data) {
         template_clone.querySelector(".change").classList.add("ch-neg")
     }
     template_clone.querySelector(".pricechange").innerText = formatChange(pricechange);
-    template_clone.querySelector(".percentchange").innerText = `(${formatChange(data.percentchange.toFixed(2))} %)`;
+    template_clone.querySelector(".percentchange").innerText = `(${formatGrowth(data.percentchange)})`;
     template_clone.querySelector(".symbol").innerText = data.symbol;
     template_clone.querySelector(".name").innerText = data.name;
     template_clone.querySelector(".external-link").href = "https://money.tmx.com/en/quote/" + data.symbol;
@@ -162,10 +162,10 @@ function fillTemplate(template_clone, data) {
 
     template_clone.querySelector(".alpha").innerText = formatFinancial(data.alpha);
     template_clone.querySelector(".peratio").innerText = formatFinancial(data.peratio, 1);
-    template_clone.querySelector(".returnonequity").innerText = `${formatFinancial(data.returnonequity, 2)} %`;
+    template_clone.querySelector(".returnonequity").innerText = formatGrowth(data.returnonequity);
     template_clone.querySelector(".beta").innerText = formatFinancial(data.beta);
     template_clone.querySelector(".pricetobook").innerText = formatFinancial(data.pricetobook, 2);
-    template_clone.querySelector(".returnonassets").innerText = `${formatFinancial(data.returnonassets, 2)} %`;
+    template_clone.querySelector(".returnonassets").innerText = formatGrowth(data.returnonassets);
     template_clone.querySelector(".eps").innerText = formatFinancial(data.eps, 2);
     template_clone.querySelector(".pricetocashflow").innerText = formatFinancial(data.pricetocashflow, 2);
     template_clone.querySelector(".totaldebttoequity").innerText = formatFinancial(data.totaldebttoequity, 2);
@@ -179,9 +179,9 @@ function fillTemplate(template_clone, data) {
         element.querySelector(".dividendfrequency").innerText = data.dividendfrequency;
         element.querySelector(".exdividenddate").innerText = formatDate(data.exdividenddate);
         element.querySelector(".dividendpaydate").innerText = formatDate(data.dividendpaydate);
-        element.querySelector(".dividendyield").innerText = `${formatFinancial(data.dividendyield, 2)} %`;
-        element.querySelector(".dividend3years").innerText = `${formatFinancial(data.dividend3years, 2)} %`;
-        element.querySelector(".dividend5years").innerText = `${formatFinancial(data.dividend5years, 2)} %`;
+        element.querySelector(".dividendyield").innerText = formatGrowth(data.dividendyield);
+        element.querySelector(".dividend3years").innerText = formatGrowth(data.dividend3years);;
+        element.querySelector(".dividend5years").innerText = formatGrowth(data.dividend5years);;
 
         var dividendcurr = data.dividendcurrency;
 
@@ -208,6 +208,17 @@ function formatPrice(price) {
     }
     return "-";
 }
+
+function formatGrowth(n) {
+    r = formatFinancial(n, 2);
+    if (r === '-') {
+        return '-';
+    }
+    else {
+        return `${r} %`;
+    }
+}
+
 
 function formatFinancial(n, decimals = 4) {
     if (n == null || n == 0) {
