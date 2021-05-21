@@ -50,6 +50,11 @@ body.dark {
     min-height: 100vh; 
 }
 
+.row-result {
+    max-width: 75%;
+    margin: 0 auto;
+}
+
 
 /* -------- HEADINGS --------- */
 
@@ -204,7 +209,7 @@ td {
     justify-self: left;
 }
 
-.row.right {
+.row-result.right {
     display: flex;
     justify-content: flex-end;
 }
@@ -430,50 +435,25 @@ a.external-link {
     justify-content: center;
 }
 
-/* ------------------------------------------------------------- */
-/* SCROLL BAR */
-/* ------------------------------------------------------------- */
 
-/* width */
-::-webkit-scrollbar {
-    width: 7px;
-    background-color: transparent;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #888888;
-    border-radius: 15px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #6b6969;
-    border-radius: 15px;
-  }
 
 /* ------------------------------------------------------------- */
 /* REUSABLE COMPONENTS */
 /* ------------------------------------------------------------- */
 
-.row {
-    max-width: 1140px;
+/* .row {
+    max-width: 70%;
     margin: 0 auto;
-}
+} */
 
-section {
+/* section {
     padding-top: 10px;
     padding-bottom: 0px;
 }
 
 .box {
     padding: 1%;
-}
+} */
 
 
 /* --------- LINKS ---------- */
@@ -496,22 +476,22 @@ li {
 
 
 /* Main navigation bar */
-.main-nav {
+/* .main-nav {
     margin-top: 20px;
 }
 
 .main-nav-items-left {
     float:left;
-}
+} */
 
-.main-nav a.back-arrow {
+/* .main-nav a.back-arrow {
     padding: 4px 0;
     font-size: 95%;
     text-decoration: none;
-}
+} */
 
 
-.main-nav-items {
+/* .main-nav-items {
     float: right;
     margin-right: 10px;
     background-color: rgba(255, 255, 255, 0.6);
@@ -520,9 +500,9 @@ li {
 .main-nav-items li {
     display: inline-block;
     margin-left: 30px;
-}
+} */
 
-.main-nav li a:link, 
+/* .main-nav li a:link, 
 .main-nav li a:visited {
     padding: 4px 0;
     font-size: 95%;
@@ -535,4 +515,4 @@ li {
 .main-nav li a:active {
     color: #3b3b3b;   
     border-bottom: 1px solid #686565d8;
-}
+} */

@@ -1,101 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <title>TMX Screen - Register</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A simple stock screener for the TSX.">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;1,300&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/query-builder.default.css" />
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/grid.css">
-    <link rel="stylesheet" type="text/css" href="/static/resources/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/resources/css/queries.css">
-    <link rel="prefetch" href="/static/resources/css/img/Results_bg2.svg" />
-</head>
+{% block content %}
 
-<body>
-    <header>
-        <nav>
-            <div class="row">
-                <div class="main-nav">
-                    <ul class="main-nav-items">
-                        <li><a href="{{ url_for('index') }}">Home</a></li>
-                        <li><a href=" #about">About</a></li>
-                        <li><a href="#steps">How it works</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <body>
+<section>
+    <div class="row">
+        <h1>Register</h1>
         <div class="row">
-
-
-            <h1>Register</h1>
-            <div class="row">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                    <li style="color: red;"> {{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
-            </div>
-            <form action="" method="post">
-                {{ form.hidden_tag() }}
-                <p>
-                    {{ form.username.label }}<br>
-                    {{ form.username(size=32) }}<br>
-                    {% for error in form.username.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.email.label }}<br>
-                    {{ form.email(size=64) }}<br>
-                    {% for error in form.email.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.firstname.label }}<br>
-                    {{ form.firstname(size=32) }}<br>
-                    {% for error in form.firstname.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.lastname.label }}<br>
-                    {{ form.lastname(size=32) }}<br>
-                    {% for error in form.lastname.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.password.label }}<br>
-                    {{ form.password(size=32) }}<br>
-                    {% for error in form.password.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.password2.label }}<br>
-                    {{ form.password2(size=32) }}<br>
-                    {% for error in form.password2.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>{{ form.submit(class="btn btn-primary") }}</p>
-            </form>
-
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li style="color: red;"> {{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
         </div>
-    </body>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}<br>
+                {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.email.label }}<br>
+                {{ form.email(size=64) }}<br>
+                {% for error in form.email.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.firstname.label }}<br>
+                {{ form.firstname(size=32) }}<br>
+                {% for error in form.firstname.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.lastname.label }}<br>
+                {{ form.lastname(size=32) }}<br>
+                {% for error in form.lastname.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}<br>
+                {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.password2.label }}<br>
+                {{ form.password2(size=32) }}<br>
+                {% for error in form.password2.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit(class="btn btn-primary") }}</p>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

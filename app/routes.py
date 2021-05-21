@@ -17,7 +17,7 @@ import csv
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", index=True)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -87,7 +87,7 @@ def user(username):
         # TODO: Fetch real saved queries from the database
         saved_queries = user.saved_queries
 
-        return render_template("user.html", user=user, saved_queries=saved_queries)
+        return render_template("user.html", user=user, saved_queries=saved_queries, profilepage=True)
     abort(404)
 
 
@@ -97,6 +97,7 @@ def logout():
     return redirect(url_for("index"))
 
 
+# Called by js to lazy load query results
 @app.route("/load", methods=["POST"])
 def load():
     data = request.json
@@ -142,7 +143,7 @@ def submit_query():
     print(num_results)
 
     return render_template(
-        "query-result.html", query=query_where_clause, num_results=num_results.first()
+        "results.html", query=query_where_clause, num_results=num_results.first(), results=True
     )
 
 

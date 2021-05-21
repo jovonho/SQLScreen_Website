@@ -1,39 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <title>User page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A simple stock screener for the TSX.">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;1,300&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/query-builder.default.css" />
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="/static/vendors/css/grid.css">
-    <link rel="stylesheet" type="text/css" href="/static/resources/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/resources/css/queries.css">
-    <link rel="prefetch" href="/static/resources/css/img/Results_bg2.svg" />
-</head>
-
-<body>
-    <header>
-        <nav>
-            <div class="row">
-                <div class="main-nav">
-                    <ul class="main-nav-items">
-                        <li><a href="{{ url_for('index') }}">Home</a></li>
-                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                        <li><a href=" #about">About</a></li>
-                        <li><a href="#steps">How it works</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+{% block content %}
+<section>
     <div class="row">
         <h1>Hello {{ user.username }}</h1>
         <img src="{{ user.avatar(128) }}">
@@ -84,7 +52,6 @@
         </div>
 
     </div>
+</section>
 
-</body>
-
-</html>
+{% endblock %}

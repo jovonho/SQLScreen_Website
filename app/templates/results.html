@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="query-section">
+    <!-- <div class="row">
+            <h1>Query was: {{ query }}</h1>
+        </div> -->
+    <div class="row-result">
+        <div class="result-header">
+            <div class="left">
+                <h3 id="numresults">Results: {{ num_results[0] }}</h3>
+                <h5>Prices in CAD unless specified</h5>
+            </div>
+            <div class="sort-by-section">
+                <div class="sort-by-text">
+                    Sort By
+                </div>
+                <select id="sort-by" class="sort-by custom-select">
+                    <option value="symbol">Symbol</option>
+                    <option value="price">Price</option>
+                    <option value="pricechange">Price Change</option>
+                    <option value="percentchange">Percent Change</option>
+                    <option value="exdividenddate">Ex-Dividend Date</option>
+                </select>
+                <button class="btn btn-primary sort-order" id="sort-order" value="asc">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="sort-order-icon" width="16px" height="16px"
+                        viewBox="0 0 8 8">
+                        <path fill='white' d="M2 0v5h-2l2.53 3 2.47-3h-2v-5h-1z" transform="translate(1)" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row-result right">
+        Export csv &nbsp;
+        <button class="btn btn-secondary download-button" id="download-button">
+            <svg xmlns="http://www.w3.org/2000/svg" id="download-button-icon" width="14px" viewBox="0 0 8 8">
+                <path d="M3 0v3h-2l3 3 3-3h-2v-3h-2zm-3 7v1h8v-1h-8z" />
+            </svg>
+        </button>
+
+    </div>
+</section>
+
+
+<section class="row-result main-section">
+    <ol class="results" id="scroller">
+        <template id="template">
+
+            <li class="result">
+                <div class="result__line">
+                    <span class="price-n-change">
+                        <div class="price">$<span class="price"></span>
+                        </div>
+                        <div class="change">
+                            <div class="pricechange"></div>
+                            <div class="nowrap percentchange"></div>
+                        </div>
+                    </span>
+                    <span class="result-id-info">
+                        <span class="h2 symbol"></span>
+                        <span class="sep">&mdash;</span>
+                        <span class="h3 name"></span>
+                    </span>
+                </div>
+                <div class="result__info">
+
+                    <div class="result__line">
+                        <span class="exshortname"></span>
+                        <span class="sep">&mdash;</span>
+                        <span class="class-info-sector">
+                            <span class="class-info-label">Sector:</span>
+                            <span class="class-info-value sector"></span>
+                        </span>
+                        <span class="class-info-sector">
+                            <span class="class-info-label">Industry:</span>
+                            <span class="class-info-value industry"></span>
+                        </span>
+                    </div>
+
+                    <div class="result__line line-info">
+                        <div class="multi-block">
+                            <table>
+                                <thead>
+                                    <th colspan=4>
+                                        Price
+                                    </th>
+                                    <th colspan=2>
+                                        Price Avg
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Close</th>
+                                        <td class="closeprice"></td>
+                                        <th>Day Range</th>
+                                        <td>
+                                            <span class="daylow"></span>/
+                                            <span class="dayhigh"></span>
+                                        </td>
+                                        <th>21d</th>
+                                        <td class="ma21d"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Open</th>
+                                        <td class="open"></td>
+                                        <th>Year Range</th>
+                                        <td>
+                                            <span class="low52w"></span>/
+                                            <span class="high52w"></span>
+                                        </td>
+                                        <th>50d</th>
+                                        <td class="ma50d"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Prev.</th>
+                                        <td class="prev"></td>
+                                        <th>VWAP</th>
+                                        <td class="vwap"></td>
+                                        <th>200d</th>
+                                        <td class="ma200d"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="multi-block">
+                            <table>
+                                <thead>
+                                    <th colspan=4>
+                                        Shares
+                                    </th>
+                                    <th colspan=2>
+                                        Volume Avg
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Volume</th>
+                                        <td class="volume"></td>
+                                        <th>Escrowed</th>
+                                        <td class="escrowed"></td>
+                                        <th>10d</th>
+                                        <td class="avgvol10d"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Outstanding</th>
+                                        <td class="shareoutstanding"></td>
+                                        <th>Outstanding (all)</th>
+                                        <td class="totalsharesoutstanding"></td>
+                                        <th>30d</th>
+                                        <td class="avgvol30d"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Market Cap</th>
+                                        <td class="mktcap"></td>
+                                        <th>Market Cap (all)</th>
+                                        <td class="mktcapall"></td>
+                                        <th>50d</th>
+                                        <td class="avgvol50d"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="result__line line-info">
+                        <div class="multi-block">
+                            <table>
+                                <thead>
+                                    <th colspan=6>
+                                        Financials
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Alpha</th>
+                                        <td class="alpha"></td>
+                                        <th>Price / Earnings</th>
+                                        <td class="peratio"></td>
+                                        <th>Return on Equity</th>
+                                        <td class="returnonequity"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Beta</th>
+                                        <td class="beta"></td>
+                                        <th>Price / Book</th>
+                                        <td class="pricetobook"></td>
+                                        <th>Return on Assets</th>
+                                        <td class="returnonassets"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>EPS</th>
+                                        <td class="eps"></td>
+                                        <th>Price / Cashflow</th>
+                                        <td class="pricetocashflow"></td>
+                                        <th>Debt / Equity</th>
+                                        <td class="totaldebttoequity"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="multi-block dividend-table">
+
+                        </div>
+                    </div>
+                    <div class="result__line last-line line-info">
+                        <div class="lastupdate-container">
+                            Last update:&nbsp;
+                            <span class="lastupdate"></span>
+                        </div>
+                        <div class="external-link-container">
+                            <a class="external-link" href="https://money.tmx.com/en/quote/" target="_blank">
+                                open on tmx.com &nbsp;
+                                <!-- <svg xmlns='http://www.w3.org/2000/svg' class="icon-external-link" width="15px"
+                                        viewBox='0 0 512 512'>
+                                        <path
+                                            d='M384 224v184a40 40 0 01-40 40H104a40 40 0 01-40-40V168a40 40 0 0140-40h167.48M336 64h112v112M224 288L440 72'
+                                            fill='none' stroke='currentColor' stroke-linecap='round'
+                                            stroke-linejoin='round' stroke-width='32' />
+                                    </svg> -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-external-link" width="10"
+                                    viewBox="0 0 8 8">
+                                    <path fill='grey'
+                                        d="M0 0v8h8v-2h-1v1h-6v-6h1v-1h-2zm4 0l1.5 1.5-2.5 2.5 1 1 2.5-2.5 1.5 1.5v-4h-4z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="result__line hidden" id="see-more">
+                    <svg width="30px" viewBox="0 0 328 140.5">
+                        <path fill='none' stroke='#444444' opacity='0.5' stroke-linecap='round' stroke-linejoin='round'
+                            stroke-width='40' d="M112,59,256,159.5,400,59" transform="translate(-92 -39)" />
+                    </svg>
+                </div>
+            </li>
+        </template>
+    </ol>
+</section>
+
+<div class="d-flex" id="sentinel">
+    <div class="spinner-border" role="status">
+    </div>
+</div>
+
+<div id="query" data-query="{{ query }}"></div>
+
+<script src=" https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="/static/resources/js/load.js"></script>
+<script src="/static/resources/js/results.js"></script>
+
+{% endblock %}

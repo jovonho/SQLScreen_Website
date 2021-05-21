@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>TMX Screen</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple stock screener for the TSX.">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;1,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/query-builder.default.css" />
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="/static/resources/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="/static/resources/css/queries.css">
+    {% if results %}
+    <link rel="stylesheet" type="text/css" href="/static/resources/css/results_style.css">
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="/static/resources/css/style.css">
+    {% endif %}
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="row">
+                <div class="nav-container">
+                    {% if not index %}
+                    <div class="homelink"><a href="{{ url_for('index') }}">Home</a></div>
+                    {% endif %}
+                    <div class="main-nav">
+                        <ul class="main-nav-items">
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#steps">How it works</a></li>
+                            {% if current_user.is_anonymous %}
+                            <li><a href="{{ url_for('login') }}">Login</a></li>
+                            {% elif not profilepage %}
+                            <li>
+                                <a href="{{ url_for('user', username=current_user.username) }}" class="profilepic">
+                                    <!-- {{ current_user.username }} -->
+                                    <img src="{{ current_user.avatar(24) }}" style="border-radius: 10px;">
+                                </a>
+                            </li>
+                            {% else %}
+                            {% endif %}
+                            <!-- <li><a href="{{ url_for('logout') }}">Logout</a></li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    {% block content %}{% endblock %}
+</body>
+
+</html>
