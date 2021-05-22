@@ -29,30 +29,30 @@
             <div class="row">
                 <div class="nav-container">
                     {% if not index %}
-                    <!-- <div class="homelink"><a href="{{ url_for('index') }}">Home</a></div>                        -->
-                    <a href='/' class="homelink back-arrow">
-                        <svg xmlns='http://www.w3.org/2000/svg' width='25px' class='ionicon' viewBox='0 0 512 512'>
-                            <path fill='none' stroke='grey' stroke-linecap='round' stroke-linejoin='round'
+                    <a href="{{ url_for('index') }}" class="a-home back-arrow-icon">
+                        <svg xmlns='http://www.w3.org/2000/svg' width='25px' viewBox='0 0 512 512'>
+                            <path fill='none' stroke='#585858' stroke-linecap='round' stroke-linejoin='round'
                                 stroke-width='48' d='M244 400L100 256l144-144M120 256h292' />
                         </svg>
                     </a>
                     {% endif %}
                     <div class="main-nav">
                         <ul class="main-nav-items">
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#steps">How it works</a></li>
+                            <li><a class="a-nav" href="#about">About</a></li>
+                            <li><a class="a-nav" href="#steps">How it works</a></li>
                             {% if current_user.is_anonymous %}
-                            <li><a href="{{ url_for('login') }}">Login</a></li>
+                            <li><a class="a-nav" href="{{ url_for('login') }}">Login</a></li>
                             {% elif not profilepage %}
                             <li>
-                                <a href="{{ url_for('user', username=current_user.username) }}" class="profilepic">
+                                <a class="" href="{{ url_for('user', username=current_user.username) }}"
+                                    class="profilepic">
                                     <!-- {{ current_user.username }} -->
                                     <img src="{{ current_user.avatar(24) }}" style="border-radius: 10px;">
                                 </a>
                             </li>
                             {% else %}
                             {% endif %}
-                            <!-- <li><a href="{{ url_for('logout') }}">Logout</a></li> -->
+                            <!-- <li><a class="a-nav" href="{{ url_for('logout') }}">Logout</a></li> -->
                         </ul>
                     </div>
                 </div>

@@ -43,7 +43,7 @@ html {
 }
 
 .row {
-    max-width: 90%;
+    max-width: 85%;
     margin: 0 auto;
 }
 
@@ -93,28 +93,28 @@ a {
     color: #585858;
 }
 
-a:link, a:visited {
-    padding: 4px 0;
+a.a-nav:link, 
+a.a-nav:visited {
     font-size: 95%;
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: border-bottom 0.15s;
+    transition: border-bottom 0.15s; 
 }
 
-a:hover, 
-a:active {
+a.a-nav:hover, 
+a.a-nav:active {
     color: #3b3b3b;
     border-bottom: 1px solid #3b3b3b;
 }
 
-a.profilepic:link, 
+/* a.profilepic:link, 
 a.profilepic:visited {
     transition: none;
 }
 a.profilepic:hover, 
 a.profilepic:active {
     border-bottom: none;
-}
+} */
 
 li {
     list-style: none; 
@@ -126,8 +126,12 @@ li {
     margin-top: 20px;
 }
 
-.homelink {
+a.a-home {
     float: left;
+    margin-bottom: 10px;
+    /* padding: 4px 0; */
+    font-size: 95%;
+    text-decoration: none;
 }
 
 .main-nav-items {

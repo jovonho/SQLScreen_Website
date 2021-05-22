@@ -50,6 +50,7 @@ body.dark {
     min-height: 100vh; 
 }
 
+
 .row-result {
     max-width: 75%;
     margin: 0 auto;
@@ -435,84 +436,17 @@ a.external-link {
     justify-content: center;
 }
 
-
-
-/* ------------------------------------------------------------- */
-/* REUSABLE COMPONENTS */
-/* ------------------------------------------------------------- */
-
-/* .row {
-    max-width: 70%;
-    margin: 0 auto;
-} */
-
-/* section {
-    padding-top: 10px;
-    padding-bottom: 0px;
-}
-
-.box {
-    padding: 1%;
+/* .a-home {
 } */
 
 
-/* --------- LINKS ---------- */
-
-
-/* color: #f5efef;  */
-
-a {
-    /* color: #7e7e7e;  */
-    color: #585858;   
-    text-decoration: none;
-    padding-bottom: 1px;
-    /* border-bottom: 1px solid #9d99a0; */
+/* 
+a.back-arrow-icon:link, 
+a.back-arrow-icon:visited {
+    transition: none;
 }
 
-li {
-    list-style: none; 
-    color: rgb(152, 89, 194);
-}
-
-
-/* Main navigation bar */
-/* .main-nav {
-    margin-top: 20px;
-}
-
-.main-nav-items-left {
-    float:left;
-} */
-
-/* .main-nav a.back-arrow {
-    padding: 4px 0;
-    font-size: 95%;
-    text-decoration: none;
-} */
-
-
-/* .main-nav-items {
-    float: right;
-    margin-right: 10px;
-    background-color: rgba(255, 255, 255, 0.6);
-}
-
-.main-nav-items li {
-    display: inline-block;
-    margin-left: 30px;
-} */
-
-/* .main-nav li a:link, 
-.main-nav li a:visited {
-    padding: 4px 0;
-    font-size: 95%;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-bottom color 0.15s;
-}
-
-.main-nav li a:hover, 
-.main-nav li a:active {
-    color: #3b3b3b;   
-    border-bottom: 1px solid #686565d8;
+a.back-arrow-icon:hover, 
+a.back-arrow-icon:active {
+    border-bottom: none;
 } */
