@@ -40,6 +40,19 @@ $(document).ready(function () {
 
     resizeNames();
 
+    const html = document.querySelector('html');
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', e => {
+
+        if (html.scrollTop > window.innerHeight * 0.75) {
+            nav.classList.add('sticky');
+        }
+        else if (html.scrollTop <= window.innerHeight * 0.75) {
+            nav.classList.remove('sticky');
+        }
+    });
+
+
     $('#download-button').on("click", (e) => downloadResults(e))
 
     $('.result__info').on("click", (e) => {

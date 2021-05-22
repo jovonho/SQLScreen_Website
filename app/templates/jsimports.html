@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block jsimports %}
+
+<script src=" https://code.jquery.com/jquery-3.5.1.min.js"></script>
+{% if index %}
+<div>test</div>
+<script type="text/javascript" src="/static/vendors/js/query-builder.standalone.js"></script>
+<script type="text/javascript" src="/static/vendors/js/sql-parser.js"></script>
+<script type="text/javascript" src="/static/resources/js/filters.js"></script>
+<script type="text/javascript" src="/static/resources/js/scripts.js"></script>
+{% elif results %}
+<script src="/static/resources/js/load.js"></script>
+<script src="/static/resources/js/results.js"></script>
+<!-- <script src="vendors/js/jquery.waypoints.min.js"></script> -->
+{% endif %}
+<script type="text/javascript" src="/static/vendors/js/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="/static/vendors/js/moment.min.js"></script>
+
+{{super()}}
+{% endblock %}

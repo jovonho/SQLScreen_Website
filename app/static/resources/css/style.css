@@ -13,16 +13,6 @@ body {
     background-repeat: no-repeat;
 }
 
-
-/* .hero-text-box {
-    position: absolute;
-    width: 1140px;
-    top: 50%;
-    left: 50%;
-    margin-top: 15px;
-    transform: translate(-50%, -50%);
-} */
-
 .title {
     /* background: radial-gradient(ellipse, rgba(154,89,227,0.6535656498927696) 0%, rgba(151,91,219,0) 38%, rgba(255,255,255,0) 100%); */
     display: flex;
