@@ -2,38 +2,6 @@
 /* BASIC SETUP */
 /* ------------------------------------------------------------- */
 
-* {
-    margin: 0;
-    padding: 0;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-}
-
-*:focus {
-    outline: none;
-}
-
-html {
-    background-color: #fff;
-    color: rgb(50, 50, 50);
-    font-family: 'Lato', 'Arial', sans-serif;
-    font-size: 20px;
-    font-weight: 300;
-    text-rendering: optimizeLegibility;
-    overflow-y: overlay;
-    overflow-x: hidden;
-}
-
-.clearfix { zoom: 1 }
-.clearfix:after {
-    content: '.';
-    clear: both;
-    display: block;
-    height: 0;
-    visibility: hidden;
-}
-
-
 body {
     /* background: url(img/BW_vert_2_sides_60op.svg); */
     background: url(img/Results_bg2.svg);
@@ -181,10 +149,6 @@ td {
     padding-bottom: 4px;
 }
 
-/* .nowrap {
-    display: inline-block;
-    white-space: normal;
-} */
 
 #ch_container {
     width: max-content;
@@ -435,18 +399,3 @@ a.external-link {
     display: flex;
     justify-content: center;
 }
-
-/* .a-home {
-} */
-
-
-/* 
-a.back-arrow-icon:link, 
-a.back-arrow-icon:visited {
-    transition: none;
-}
-
-a.back-arrow-icon:hover, 
-a.back-arrow-icon:active {
-    border-bottom: none;
-} */

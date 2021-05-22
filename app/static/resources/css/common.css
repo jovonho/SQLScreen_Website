@@ -37,13 +37,13 @@ html {
 /* REUSABLE COMPONENTS */
 /* ------------------------------------------------------------- */
 
-.row-main {
-    max-width: 70%;
+.row {
+    max-width: 85%;
     margin: 0 auto;
 }
 
-.row {
-    max-width: 85%;
+.row-main {
+    max-width: 70%;
     margin: 0 auto;
 }
 
@@ -65,7 +65,7 @@ h1, h2, h3 {
 }
 
 h1 {
-    font-size: 250%; /* relative to parent's size, in this case the html style info. */
+    font-size: 250%;
     margin-top: 0;
     margin-bottom: 15px;
     color: #000;
@@ -107,15 +107,6 @@ a.a-nav:active {
     border-bottom: 1px solid #3b3b3b;
 }
 
-/* a.profilepic:link, 
-a.profilepic:visited {
-    transition: none;
-}
-a.profilepic:hover, 
-a.profilepic:active {
-    border-bottom: none;
-} */
-
 li {
     list-style: none; 
 }
@@ -129,7 +120,6 @@ li {
 a.a-home {
     float: left;
     margin-bottom: 10px;
-    /* padding: 4px 0; */
     font-size: 95%;
     text-decoration: none;
 }
@@ -151,18 +141,10 @@ a.a-home {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.75);
-    box-shadow: 0 2px 2px rgb(241, 240, 240);
+    background-color: rgba(211, 206, 206, 0.85);
+    box-shadow: 0 2px 2px rgb(153, 151, 151);
     z-index: 9999;
 }
-
-/* .sticky .main-nav { margin-top: 18px; } */
-
-/* .sticky .main-nav li a:link, 
-.sticky .main-nav li a:visited {
-    color: #555;
-} */
-
 
 
 /* ------------------------------------------------------------- */
