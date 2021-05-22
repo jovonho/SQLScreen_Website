@@ -29,7 +29,13 @@
             <div class="row">
                 <div class="nav-container">
                     {% if not index %}
-                    <div class="homelink"><a href="{{ url_for('index') }}">Home</a></div>
+                    <!-- <div class="homelink"><a href="{{ url_for('index') }}">Home</a></div>                        -->
+                    <a href='/' class="homelink back-arrow">
+                        <svg xmlns='http://www.w3.org/2000/svg' width='25px' class='ionicon' viewBox='0 0 512 512'>
+                            <path fill='none' stroke='grey' stroke-linecap='round' stroke-linejoin='round'
+                                stroke-width='48' d='M244 400L100 256l144-144M120 256h292' />
+                        </svg>
+                    </a>
                     {% endif %}
                     <div class="main-nav">
                         <ul class="main-nav-items">
