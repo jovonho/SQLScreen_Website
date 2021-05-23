@@ -1,6 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, InputRequired
+from wtforms import StringField, TextAreaField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import (
+    ValidationError,
+    DataRequired,
+    Email,
+    EqualTo,
+    InputRequired,
+    Length,
+    Required,
+)
 from app.models import User
 
 
@@ -17,7 +25,7 @@ class RegistrationForm(FlaskForm):
     email = StringField("Email", validators=[InputRequired(), Email()])
     firstname = StringField("First Name", validators=[InputRequired()])
     lastname = StringField("Last Name", validators=[InputRequired()])
-    password = PasswordField("Password", validators=[InputRequired()])
+    password = PasswordField("Password", validators=[InputRequired(), Length(min=8, max=64)])
     password2 = PasswordField("Repeat Password", validators=[InputRequired(), EqualTo("password")])
     submit = SubmitField("Register")
 
@@ -34,6 +42,34 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError("Email already registered.")
 
-    def validate_password(self, password):
-        if len(password) < 7:
-            raise ValidationError("Password must be longer than 8 characters.")
+    # def validate_password(self, password):
+    #     if len(password) < 7:
+    #         raise ValidationError("Password must be longer than 8 characters.")
+
+
+class RequiredIf(Required):
+    # a validator which makes a field required if
+    # another field is set and has a truthy value
+
+    def __init__(self, other_field_name, *args, **kwargs):
+        self.other_field_name = other_field_name
+        super(RequiredIf, self).__init__(*args, **kwargs)
+
+    def __call__(self, form, field):
+        other_field = form._fields.get(self.other_field_name)
+        if other_field is None:
+            raise Exception('no field named "%s" in form' % self.other_field_name)
+        if other_field.data is not "":
+            super(RequiredIf, self).__call__(form, field)
+
+
+class EditProfileForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    email = StringField("Email", validators=[Email()])
+    firstname = StringField("First Name")
+    lastname = StringField("Last Name")
+    # password = PasswordField("Password", validators=[Length(min=8, max=64)])
+    # password2 = PasswordField(
+    #     "Repeat Password", validators=[RequiredIf("password"), EqualTo("password")]
+    # )
+    submit = SubmitField("Submit")

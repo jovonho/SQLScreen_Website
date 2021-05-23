@@ -1,17 +1,17 @@
-import os
+import re
+from app import app, db
+from app.models import User
+from app.forms import RegistrationForm, EditProfileForm, LoginForm
+from datetime import datetime
 from flask.globals import current_app
 from flask.helpers import send_file
 from flask_login.utils import login_required
-from app import app
-from app.forms import LoginForm
-from app.models import User
 from flask import render_template, request, make_response, flash, redirect, url_for, abort
 from flask_login import current_user, login_user, logout_user
 import simplejson as json
 from werkzeug.urls import url_parse
-from app import db
-from app.forms import RegistrationForm
 import csv
+from sqlalchemy.exc import IntegrityError
 
 
 @app.route("/")
@@ -87,8 +87,43 @@ def user(username):
         # TODO: Fetch real saved queries from the database
         saved_queries = user.saved_queries
 
-        return render_template("user.html", user=user, saved_queries=saved_queries, profilepage=True)
+        return render_template(
+            "user.html", user=user, saved_queries=saved_queries, profilepage=True
+        )
     abort(404)
+
+
+@app.route("/edit_profile", methods=["GET", "POST"])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        if form.username.data is not None:
+            current_user.username = form.username.data
+        if form.email.data is not None:
+            current_user.email = form.email.data
+        if form.firstname.data is not None:
+            current_user.firstname = form.firstname.data
+        if form.lastname.data is not None:
+            current_user.lastname = form.lastname.data
+        try:
+            db.session.commit()
+            flash("Your changes have been saved.")
+            return redirect(url_for("user", username=current_user.username))
+        except IntegrityError as e:
+            db.session.rollback()
+            pattern = re.compile(r"DETAIL:\s+Key\s+\((\w+)\)=\((\w+)\)\s(.*)\.")
+            matches = re.search(pattern, str(e.orig))
+            print(matches.group(0))
+            flash(f"Error: {matches.group(1)} {matches.group(2)} {matches.group(3)}")
+            return render_template("edit_profile.html", title="Edit Profile", form=form, editprofile=True)
+
+    elif request.method == "GET":
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        form.firstname.data = current_user.firstname
+        form.lastname.data = current_user.lastname
+    return render_template("edit_profile.html", title="Edit Profile", form=form, editprofile=True)
 
 
 @app.route("/logout")
@@ -145,6 +180,14 @@ def submit_query():
     return render_template(
         "results.html", query=query_where_clause, num_results=num_results.first(), results=True
     )
+
+
+# Update user last_seen
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 
 # TODO Limit results to 100 lines for non-users

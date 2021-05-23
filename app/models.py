@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     firstname = db.Column(db.String(64))
     lastname = db.Column(db.String(64))
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     # Not an actual db field.
     saved_queries = db.relationship("SavedQuery", backref="author", lazy="dynamic")
 
