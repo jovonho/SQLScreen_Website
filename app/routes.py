@@ -96,7 +96,7 @@ def user(username):
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username, email=current_user.email)
     if form.validate_on_submit():
         if form.username.data is not None:
             current_user.username = form.username.data
@@ -116,7 +116,9 @@ def edit_profile():
             matches = re.search(pattern, str(e.orig))
             print(matches.group(0))
             flash(f"Error: {matches.group(1)} {matches.group(2)} {matches.group(3)}")
-            return render_template("edit_profile.html", title="Edit Profile", form=form, editprofile=True)
+            return render_template(
+                "edit_profile.html", title="Edit Profile", form=form, editprofile=True
+            )
 
     elif request.method == "GET":
         form.username.data = current_user.username

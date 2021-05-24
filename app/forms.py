@@ -59,7 +59,7 @@ class RequiredIf(Required):
         other_field = form._fields.get(self.other_field_name)
         if other_field is None:
             raise Exception('no field named "%s" in form' % self.other_field_name)
-        if other_field.data is not "":
+        if other_field.data != "" and other_field is not None:
             super(RequiredIf, self).__call__(form, field)
 
 
@@ -73,3 +73,20 @@ class EditProfileForm(FlaskForm):
     #     "Repeat Password", validators=[RequiredIf("password"), EqualTo("password")]
     # )
     submit = SubmitField("Submit")
+
+    def __init__(self, original_username, email, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.original_username = original_username
+        self.original_email = email
+
+    def validate_username(self, username):
+        if username.data != self.original_username:
+            user = User.query.filter_by(username=self.username.data).first()
+            if user is not None:
+                raise ValidationError("Username already taken.\nPlease use a different one.")
+
+    def validate_email(self, email):
+        if email.data != self.original_email:
+            user = User.query.filter_by(email=self.email.data).first()
+            if user is not None:
+                raise ValidationError("Email already registered.\nPlease use a different one.")

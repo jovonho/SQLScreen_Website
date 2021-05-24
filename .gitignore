@@ -5,3 +5,4 @@ __pycache__
 .venv
 stuff
 test
+logs
