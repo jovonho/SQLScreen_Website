@@ -1,17 +1,15 @@
 
-/* ------------------------------------------------------------- */
-/* HEADER */
-/* ------------------------------------------------------------- */
 
+
+/* 
 body {
     background-image: 
-        /* url(img/BlueWaveform2_twist180_long_grad2.svg); */
         url(img/BlueWaveform_trsfrm_horiz_long3-01.svg);
     background-size: 130% auto;
     min-height: 100vh;
     background-position: top;
     background-repeat: no-repeat;
-}
+} */
 
 .title {
     /* background: radial-gradient(ellipse, rgba(154,89,227,0.6535656498927696) 0%, rgba(151,91,219,0) 38%, rgba(255,255,255,0) 100%); */

@@ -1,0 +1,15 @@
+body {
+    /* background: url(img/BW_vert_2_sides_60op.svg); */
+    background: url(img/Results_bg2.svg);
+    background-attachment: fixed;
+    background-size: 100% auto;
+    min-height: 100vh; 
+}
+
+body.dark {
+    background: url(img/Results_bg2.svg);
+    background-attachment: fixed;
+    /* background-color: black; */
+    background-size: 100% auto;
+    min-height: 100vh; 
+}

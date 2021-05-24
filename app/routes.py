@@ -64,7 +64,6 @@ def login():
             return redirect(url_for("login"))
 
         login_user(user, remember=form.remember_me.data)
-        flash(f"Hello {user.firstname}")
 
         next = request.args.get("next")
         if not next or url_parse(next).netloc != "":
