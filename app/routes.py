@@ -84,22 +84,19 @@ def save_query(username):
         flash("Access Forbidden")
         return redirect(url_for("results", q=form.query_to_save.data))
 
-    user = User.get_by_username(username)
+    # user = User.get_by_username(username)
     query = SavedQuery(
         title=form.query_to_save.data,
         query=form.query_to_save.data,
         run_at=time(8, 0),
         frequency="daily",
-        user_id=user.id,
+        user_id=current_user.id,
     )
     print(f"Query to save: {query}")
     if form.validate_on_submit():
-        print(current_user.saved_queries)
-        db.session.add(query)
+        current_user.saved_queries.append(query)
         db.session.commit()
-        # user.saved_queries.append(query)
-        print(current_user.saved_queries)
-        pass
+        flash("Please review the default frequency and run time of your query.")
     return redirect(url_for("user", username=current_user.username))
 
 
