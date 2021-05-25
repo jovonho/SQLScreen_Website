@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import (
     ValidationError,
     DataRequired,
@@ -10,6 +10,11 @@ from wtforms.validators import (
     Required,
 )
 from app.models import User
+
+
+class SaveQueryForm(FlaskForm):
+    query_to_save = HiddenField("Query to Save", validators=[InputRequired()])
+    submit = SubmitField("Submit")
 
 
 class LoginForm(FlaskForm):

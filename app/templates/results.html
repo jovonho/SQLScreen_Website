@@ -33,13 +33,20 @@
         </div>
     </div>
     <div class="row-result right">
-        Export csv &nbsp;
-        <button class="btn btn-secondary download-button" id="download-button">
-            <svg xmlns="http://www.w3.org/2000/svg" id="download-button-icon" width="14px" viewBox="0 0 8 8">
-                <path d="M3 0v3h-2l3 3 3-3h-2v-3h-2zm-3 7v1h8v-1h-8z" />
-            </svg>
-        </button>
-
+        <div>
+            <button class="btn btn-secondary download-button" id="download-button">
+                Export csv &nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg" id="download-button-icon" width="14px" viewBox="0 0 8 8">
+                    <path d="M3 0v3h-2l3 3 3-3h-2v-3h-2zm-3 7v1h8v-1h-8z" />
+                </svg>
+            </button>
+        </div>
+        <div>
+            <form action="{{ url_for('save_query', username=current_user.username) }}" method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='Save Query') }}
+            </form>
+        </div>
     </div>
 </section>
 

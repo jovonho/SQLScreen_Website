@@ -1,6 +1,7 @@
 from app import db, login
-from datetime import datetime
+from datetime import datetime, time
 from flask_login import UserMixin
+from sqlalchemy import Time
 from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -51,7 +52,7 @@ class SavedQuery(db.Model):
     title = db.Column(db.String(120), nullable=False, index=True, unique=True)
     query = db.Column(db.Text, nullable=False)
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    run_at = db.Column(db.Time, nullable=False)
+    run_at = db.Column(Time, nullable=False, default=time(8, 0))
     frequency = db.Column(db.String(30), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 

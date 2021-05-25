@@ -1,8 +1,10 @@
 import re
+
+from sqlalchemy.orm import query
 from app import app, db
-from app.models import User
-from app.forms import RegistrationForm, EditProfileForm, LoginForm
-from datetime import datetime
+from app.models import User, SavedQuery
+from app.forms import RegistrationForm, EditProfileForm, LoginForm, SaveQueryForm
+from datetime import datetime, time
 from flask.globals import current_app
 from flask.helpers import send_file
 from flask_login.utils import login_required
@@ -73,10 +75,37 @@ def login():
     return render_template("login.html", form=form)
 
 
+@app.route("/savedqueries/<username>", methods=["POST"])
+@login_required
+def save_query(username):
+    form = SaveQueryForm()
+    # Ensure the user is saving the query for themselves
+    if username != current_user.username:
+        flash("Access Forbidden")
+        return redirect(url_for("results", q=form.query_to_save.data))
+
+    user = User.get_by_username(username)
+    query = SavedQuery(
+        title=form.query_to_save.data,
+        query=form.query_to_save.data,
+        run_at=time(8, 0),
+        frequency="daily",
+        user_id=user.id,
+    )
+    print(f"Query to save: {query}")
+    if form.validate_on_submit():
+        print(current_user.saved_queries)
+        db.session.add(query)
+        db.session.commit()
+        # user.saved_queries.append(query)
+        print(current_user.saved_queries)
+        pass
+    return redirect(url_for("user", username=current_user.username))
+
+
 @app.route("/user/<username>")
 @login_required
 def user(username):
-    print(current_user)
     if username != current_user.username:
         b = username != current_user.username
         print(b)
@@ -178,8 +207,15 @@ def submit_query():
     num_results = db.session.execute(query)
     print(num_results)
 
+    save_query_form = SaveQueryForm()
+    save_query_form.query_to_save.data = query_where_clause
+
     return render_template(
-        "results.html", query=query_where_clause, num_results=num_results.first(), results=True
+        "results.html",
+        query=query_where_clause,
+        num_results=num_results.first(),
+        results=True,
+        form=save_query_form,
     )
 
 
