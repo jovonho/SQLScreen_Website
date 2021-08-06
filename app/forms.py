@@ -25,7 +25,7 @@ class ResetPasswordForm(FlaskForm):
 
 class SaveQueryForm(FlaskForm):
     query_to_save = HiddenField("Query to Save", validators=[InputRequired()])
-    submit = SubmitField("Submit")
+    submit = SubmitField("Save Query    ")
 
 
 class LoginForm(FlaskForm):

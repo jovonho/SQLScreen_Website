@@ -33,15 +33,15 @@ html {
     visibility: hidden;
 }
 
-.row {
-    max-width: 85%;
-    margin: 0 auto;
-}
 /* ------------------------------------------------------------- */
 /* REUSABLE COMPONENTS */
 /* ------------------------------------------------------------- */
 /* 
 
+.row {
+    max-width: 85%;
+    margin: 0 auto;
+}
 .row-main {
     max-width: 70%;
     margin: 0 auto;
