@@ -12,6 +12,17 @@ from wtforms.validators import (
 from app.models import User
 
 
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Request Password Reset")
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField("Password", validators=[DataRequired()])
+    password2 = PasswordField("Repeat Password", validators=[DataRequired(), EqualTo("password")])
+    submit = SubmitField("Request Password Reset")
+
+
 class SaveQueryForm(FlaskForm):
     query_to_save = HiddenField("Query to Save", validators=[InputRequired()])
     submit = SubmitField("Submit")
