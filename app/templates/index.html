@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css">
+<link rel="stylesheet" type="text/css" href="/static/vendors/css/query-builder.default.css" />
+{{super()}}
+{% endblock %}
+
+{% block app_content %}
 
 <section class="main-section">
     <div class="row-main">
@@ -35,13 +41,13 @@
         </footer> -->
 </section>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script type="text/javascript" src="/static/vendors/js/moment.min.js"></script>
+{% endblock %}
+
+
+{% block scripts %}
+{{super()}}
 <script type="text/javascript" src="/static/vendors/js/query-builder.standalone.js"></script>
-<script type="text/javascript" src="/static/vendors/js/jquery.waypoints.min.js"></script>
 <script type="text/javascript" src="/static/vendors/js/sql-parser.js"></script>
 <script type="text/javascript" src="/static/resources/js/scripts.js"></script>
 <script type="text/javascript" src="/static/resources/js/filters.js"></script>
-
-
 {% endblock %}

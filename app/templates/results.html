@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
 
 <section class="query-section">
     <!-- <div class="row">
@@ -253,9 +253,10 @@
 
 <div id="query" data-query="{{ query }}"></div>
 
-<script src=" https://code.jquery.com/jquery-3.5.1.min.js"></script>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
 <script src="/static/resources/js/load.js"></script>
 <script src="/static/resources/js/results.js"></script>
-
-
 {% endblock %}

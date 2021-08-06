@@ -4,6 +4,7 @@ from config import Config
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_bootstrap import Bootstrap, WebCDN
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
@@ -16,6 +17,10 @@ mail = Mail(app)
 
 login = LoginManager(app)
 login.login_view = "login"
+
+bootstrap = Bootstrap(app)
+# app.extensions["bootstrap"]["cdns"]["jquery"] = None
+app.extensions["bootstrap"]["cdns"]["jquery-3.5.1.min.js"] = WebCDN("https://code.jquery.com/")
 
 from app import routes, models, errors
 

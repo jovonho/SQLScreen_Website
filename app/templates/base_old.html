@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>TMX Screen</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple stock screener for the TSX.">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;1,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/bootstrap-3.3.7.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/query-builder.default.css" />
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/static/vendors/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="/static/resources/css/common.css" />
+    {% include "styles.html" %}
+</head>
+
+<body>
+    {% include "navbar.html" %} 
+
+    {% block app_content %}{% endblock %}
+</body>
+
+</html>
