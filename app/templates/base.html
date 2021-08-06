@@ -23,19 +23,27 @@
 {% endblock %}
 
 {% block navbar %}
-<nav>
-    <div class="row">
-        <div class="navbar nav-container">
+<nav class="navbar navbar-default" style="background-color: transparent; border-bottom-color: transparent;">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                style="background-color: transparent; border-color: transparent;"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             {% if not index %}
             {% if editprofile %}
-            <a href="{{ url_for('user', username=current_user.username) }}" class="a-home back-arrow-icon">
+            <a href="{{ url_for('user', username=current_user.username) }}" class="a-home back-arrow-icon navbar-brand">
                 <svg xmlns='http://www.w3.org/2000/svg' width='25px' viewBox='0 0 512 512'>
                     <path fill='none' stroke='#585858' stroke-linecap='round' stroke-linejoin='round' stroke-width='48'
                         d='M244 400L100 256l144-144M120 256h292' />
                 </svg>
             </a>
             {% else %}
-            <a href="{{ url_for('index') }}" class="a-home back-arrow-icon">
+            <a href="{{ url_for('index') }}" class="a-home back-arrow-icon navbar-brand">
                 <svg xmlns='http://www.w3.org/2000/svg' width='25px' viewBox='0 0 512 512'>
                     <path fill='none' stroke='#585858' stroke-linecap='round' stroke-linejoin='round' stroke-width='48'
                         d='M244 400L100 256l144-144M120 256h292' />
@@ -43,39 +51,42 @@
             </a>
             {% endif %}
             {% endif %}
-            <div class="main-nav">
-                <ul class="main-nav-items">
-                    <li><a class="a-nav" href="#about">About</a></li>
-                    <li><a class="a-nav" href="#steps">How it works</a></li>
-                    {% if current_user.is_anonymous %}
-                    <li><a class="a-nav" href="{{ url_for('login') }}">Login</a></li>
-                    {% elif not profilepage %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true"
-                            aria-expanded="false">
-                            <img src="{{ current_user.avatar(24) }}" style="border-radius: 10px;">
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ url_for('user', username=current_user.username) }}">
-                                    Profile
-                                </a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="{{ url_for('logout') }}">
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    {% else %}
-                    {% endif %}
-                </ul>
-            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border-color: transparent;">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="a-nav" href="#about">About</a></li>
+                <li><a class="a-nav" href="#steps">How it works</a></li>
+                {% if current_user.is_anonymous %}
+                <li><a class="a-nav" href="{{ url_for('login') }}">Login</a></li>
+                {% elif not profilepage %}
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true"
+                        aria-expanded="false" style="background-color: transparent;">
+                        <img src="{{ current_user.avatar(24) }}" style="border-radius: 10px;">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('user', username=current_user.username) }}">
+                                Profile
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ url_for('logout') }}">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% else %}
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>
+
 {% endblock %}
 
 
