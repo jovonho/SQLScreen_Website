@@ -9,6 +9,7 @@ from wtforms.validators import (
     Length,
     Required,
 )
+from wtforms.widgets.core import HiddenInput
 from app.models import User
 
 
@@ -25,13 +26,14 @@ class ResetPasswordForm(FlaskForm):
 
 class SaveQueryForm(FlaskForm):
     query_to_save = HiddenField("Query to Save", validators=[InputRequired()])
-    submit = SubmitField("Save Query    ")
+    submit = SubmitField("Save Query")
 
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[InputRequired()])
     password = PasswordField("Password", validators=[InputRequired()])
     remember_me = BooleanField("Remember Me")
+    return_on_error_url = HiddenField("Return on Error Url")
     submit = SubmitField("Sign In")
 
 

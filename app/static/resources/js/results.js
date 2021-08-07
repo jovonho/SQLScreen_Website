@@ -35,6 +35,15 @@ function downloadResults(e) {
         });
 }
 
+/* Trigger flash modal */
+$(document).ready(function () {
+    var messages = $("#flashed-messages");
+
+    if (messages.length > 0 && messages.text().trim() !== '') {
+        $("#modalRequestLogin").modal();
+    };
+});
+
 
 $(document).ready(function () {
 

@@ -224,9 +224,10 @@ function formatPrice(price) {
 }
 
 function formatGrowth(n) {
+
     r = formatFinancial(n, 2);
     if (r === '-') {
-        return '-';
+        return '0.00 %';
     }
     else {
         return `${r} %`;
@@ -245,7 +246,7 @@ function formatChange(n) {
     if (decimals(n) < 2) {
         n = n.toFixed(2);
     }
-    return (n > 0) ? "+" + n : n;
+    return (n > 0) ? " +" + n : " " + n;
 }
 
 function decimals(value) {

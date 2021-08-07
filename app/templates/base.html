@@ -92,22 +92,13 @@
 
 {% block content %}
 <div class="container">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-danger" role="alert">{{ message }}</div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-
-    {# application content needs to be provided in the app_content block #}
     {% block app_content %}{% endblock %}
 </div>
 {% endblock %}
 
 {% block scripts %}
-{{super()}}
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+{{super()}}
 <script type="text/javascript" src="/static/vendors/js/jquery.waypoints.min.js"></script>
 <script type="text/javascript" src="/static/vendors/js/moment.min.js"></script>
 {% endblock %}

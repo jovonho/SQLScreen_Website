@@ -39,9 +39,52 @@
                 </button>
             </div>
             <div>
+                {% if current_user.is_anonymous %}
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalRequestLogin">
+                    Save Query
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="modalRequestLogin" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="exampleModalLabel">Log in required</h4>
+                                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button> -->
+                            </div>
+                            <div class="modal-body">
+                                <div id="flashed-messages">
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    {% for message in messages %}
+                                    <div class="alert alert-danger" role="alert">{{ message }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
+                                </div>
+
+                                <form action="/login?next={{ url_for('save_query', username=current_user.username) }}"
+                                    method="POST">
+                                    {{ wtf.quick_form(loginform, button_map={'submit':'primary'}) }}
+                                </form>
+
+                            </div>
+                            <!-- <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                {% else %}
                 <form action="{{ url_for('save_query', username=current_user.username) }}" method="POST">
-                    {{ wtf.quick_form(form, button_map={'submit':'secondary'}) }}
+                    {{ wtf.quick_form(savequeryform, button_map={'submit':'secondary'}) }}
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>

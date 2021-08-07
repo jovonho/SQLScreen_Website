@@ -1,3 +1,4 @@
+from os import write
 import re
 
 from app.email import send_password_reset_email
@@ -67,15 +68,18 @@ def login():
     if form.validate_on_submit():
 
         user = User.get_by_username(form.username.data)
-        print(user)
+        next = request.args.get("next")
 
         if user is None or not user.check_password(form.password.data):
             flash("Invalid username or password")
+            print("return on err url: ", form.return_on_error_url.data)
+
+            if form.return_on_error_url.data:
+                return redirect(form.return_on_error_url.data)
             return redirect(url_for("login"))
 
         login_user(user, remember=form.remember_me.data)
 
-        next = request.args.get("next")
         if not next or url_parse(next).netloc != "":
             next = url_for("index")
         return redirect(next)
@@ -83,9 +87,14 @@ def login():
     return render_template("login.html", form=form)
 
 
-@app.route("/savedqueries/<username>", methods=["POST"])
+@app.route("/savedqueries", methods=["POST"])
 @login_required
 def save_query(username):
+
+    if not current_user.is_authenticated:
+        flash("You must be logged in to save queries")
+        return current_app.login_manager.unauthorized()
+
     form = SaveQueryForm()
     # Ensure the user is saving the query for themselves
     if username != current_user.username:
@@ -124,6 +133,67 @@ def user(username):
             "user.html", user=user, saved_queries=saved_queries, profilepage=True
         )
     abort(404)
+
+
+# Called by js to lazy load query results
+@app.route("/load", methods=["POST"])
+def load():
+    data = request.json
+    query_where_clause = data["sql"]
+    limit = data["limit"]
+    offset = data["offset"]
+    sortby = data["sortby"]
+    sortorder = data["sortorder"]
+
+    # query_where_clause = (
+    #     "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS', 'RBX', 'TAL', 'VCI',  'AAB', 'AAV', 'AC', 'ACB')"
+    # )
+
+    print("Received data: " + query_where_clause)
+
+    fields = """symbol, name, sector, industry, exshortname, price, pricechange, percentchange, openprice, prevclose, dayhigh, 
+        daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
+        averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
+        alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
+        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate, lastupdate, dividend3Years, dividend5Years"""
+
+    query = f"select {fields} from quote where {query_where_clause} order by {sortby} {sortorder} limit {limit} offset {offset};"
+
+    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
+    query_result = db.session.execute(query)
+
+    json_result = json.dumps(query_result.all(), default=str, use_decimal=True)
+    print(len(json_result))
+
+    return make_response(json_result, 200)
+
+
+# Endpoint called when query is submitted.
+@app.route("/results", methods=["GET", "POST"])
+def submit_query():
+
+    query_where_clause = request.args.get("q")
+
+    query = f"select count(*) from quote where {query_where_clause};"
+
+    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
+    num_results = db.session.execute(query)
+    print(num_results)
+
+    save_query_form = SaveQueryForm()
+    save_query_form.query_to_save.data = query_where_clause
+
+    loginform = LoginForm()
+    loginform.return_on_error_url.data = url_for(request.endpoint, **request.args)
+
+    return render_template(
+        "results.html",
+        query=query_where_clause,
+        num_results=num_results.first(),
+        results=True,
+        savequeryform=save_query_form,
+        loginform=loginform,
+    )
 
 
 @app.route("/edit_profile", methods=["GET", "POST"])
@@ -199,63 +269,6 @@ def logout():
     return redirect(url_for("index"))
 
 
-# Called by js to lazy load query results
-@app.route("/load", methods=["POST"])
-def load():
-    data = request.json
-    query_where_clause = data["sql"]
-    limit = data["limit"]
-    offset = data["offset"]
-    sortby = data["sortby"]
-    sortorder = data["sortorder"]
-
-    # query_where_clause = (
-    #     "symbol in ('CEE', 'FOUR', 'HMM.A', 'MCS', 'RBX', 'TAL', 'VCI',  'AAB', 'AAV', 'AC', 'ACB')"
-    # )
-
-    print("Received data: " + query_where_clause)
-
-    fields = """symbol, name, sector, industry, exshortname, price, pricechange, percentchange, openprice, prevclose, dayhigh, 
-        daylow, weeks52high, weeks52low, day21movingavg, day50movingavg, day200movingavg, volume, averagevolume10d, averagevolume30d, 
-        averagevolume50d, shareoutstanding, marketcap, totalsharesoutstanding, marketcapallclasses, sharesescrow, 
-        alpha, beta, eps, peratio, pricetobook, pricetocashflow, returnonequity, returnonassets, totaldebttoequity, vwap, 
-        dividendfrequency, dividendyield, dividendamount, dividendcurrency, exdividenddate, dividendpaydate, lastupdate, dividend3Years, dividend5Years"""
-
-    query = f"select {fields} from quote where {query_where_clause} order by {sortby} {sortorder} limit {limit} offset {offset};"
-
-    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
-    query_result = db.session.execute(query)
-
-    json_result = json.dumps(query_result.all(), default=str, use_decimal=True)
-    print(len(json_result))
-
-    return make_response(json_result, 200)
-
-
-# Endpoint called when query is submitted.
-@app.route("/results", methods=["GET", "POST"])
-def submit_query():
-
-    query_where_clause = request.args.get("q")
-
-    query = f"select count(*) from quote where {query_where_clause};"
-
-    # TODO: What is the best practice here? Should the app have a single connection or every call generate its own?
-    num_results = db.session.execute(query)
-    print(num_results)
-
-    save_query_form = SaveQueryForm()
-    save_query_form.query_to_save.data = query_where_clause
-
-    return render_template(
-        "results.html",
-        query=query_where_clause,
-        num_results=num_results.first(),
-        results=True,
-        form=save_query_form,
-    )
-
-
 # Update user last_seen
 @app.before_request
 def before_request():
@@ -329,8 +342,11 @@ def export_csv():
         "lastupdate",
     ]
 
-    with open("./app/generated/query_result.csv", "w", newline="") as csvfile:
+    filename = "query_result" + datetime.utcnow() + ".csv"
+
+    with open("./app/generated/" + filename, "w", newline="") as csvfile:
         writer = csv.writer(csvfile, delimiter=",", quotechar='"')
+        writer.writerow("sep=,")
         writer.writerow(fieldnames)
 
         for row in query_result.all():
@@ -384,10 +400,10 @@ def export_csv():
                 ]
             )
 
-    filepath = "generated/query_result.csv"
+    filepath = "generated/" + filename
 
     try:
-        return send_file(filepath, attachment_filename="query_result.csv")
+        return send_file(filepath, attachment_filename=filename)
     except Exception as e:
         return str(e)
 
