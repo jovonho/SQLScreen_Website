@@ -81,13 +81,13 @@ var tmx_filters = [
 	},
 	{
 		id: 'dividend3Years',
-		label: 'Dividend Growth (3y)',
+		label: '3Y Dividend Growth %',
 		type: 'double',
 		operators: numeric_ops
 	},
 	{
 		id: 'dividend5Years',
-		label: 'Dividend Growth (5y)',
+		label: '5Y Dividend Growth %',
 		type: 'double',
 		operators: numeric_ops
 	},
@@ -125,7 +125,7 @@ var tmx_filters = [
 	},
 	{
 		id: 'dividendYield',
-		label: 'Dividend Yield',
+		label: 'Dividend Yield (%)',
 		type: 'double',
 		operators: numeric_ops
 	},

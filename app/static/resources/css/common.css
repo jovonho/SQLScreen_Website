@@ -33,6 +33,11 @@ html {
     visibility: hidden;
 }
 
+.row-main {
+    margin-top: 50px;
+}
+
+
 /* ------------------------------------------------------------- */
 /* REUSABLE COMPONENTS */
 /* ------------------------------------------------------------- */
@@ -40,10 +45,6 @@ html {
 
 .row {
     max-width: 85%;
-    margin: 0 auto;
-}
-.row-main {
-    max-width: 70%;
     margin: 0 auto;
 }
 
@@ -104,7 +105,7 @@ a.a-nav:visited {
 a.a-nav:hover, 
 a.a-nav:active {
     color: #3b3b3b;
-    border-bottom: 1px solid #3b3b3b;
+    /* border-bottom: 1px solid #3b3b3b; */
 }
 
 li {

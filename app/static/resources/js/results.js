@@ -38,19 +38,19 @@ function downloadResults(e) {
 
 $(document).ready(function () {
 
-    resizeNames();
+    // resizeNames();
 
     const html = document.querySelector('html');
     const nav = document.querySelector('nav');
-    window.addEventListener('scroll', e => {
+    // window.addEventListener('scroll', e => {
 
-        if (html.scrollTop > window.innerHeight * 0.75) {
-            nav.classList.add('sticky');
-        }
-        else if (html.scrollTop <= window.innerHeight * 0.75) {
-            nav.classList.remove('sticky');
-        }
-    });
+    //     if (html.scrollTop > window.innerHeight * 0.75) {
+    //         nav.classList.add('sticky');
+    //     }
+    //     else if (html.scrollTop <= window.innerHeight * 0.75) {
+    //         nav.classList.remove('sticky');
+    //     }
+    // });
 
 
     $('#download-button').on("click", (e) => downloadResults(e))
@@ -94,17 +94,6 @@ $(document).ready(function () {
         }
     });
 });
-
-function resizeNames() {
-
-    names = $('h3.name');
-
-    $.each(names, (i, obj) => {
-        if ($(obj).text().length > 125)
-            $(obj).css('font-size', '100%')
-    })
-
-}
 
 function collapseResult(elem) {
 

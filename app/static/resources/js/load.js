@@ -1,3 +1,13 @@
+function resizeNames() {
+
+    names = $('span .name');
+
+    $.each(names, (i, obj) => {
+        if ($(obj).text().length > 80)
+            $(obj).css('font-size', '160%')
+    })
+
+}
 
 $(document).ready(function () {
 
@@ -48,10 +58,14 @@ $(document).ready(function () {
                 $('.result').click((e) => {
                     collapseResult($(e.currentTarget))
                 });
+
+                resizeNames();
             })
         })
 
     }
+
+
 
     var intersectionObserver = new IntersectionObserver(entries => {
 

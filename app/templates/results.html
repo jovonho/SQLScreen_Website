@@ -4,20 +4,17 @@
 {% block app_content %}
 
 <section class="query-section">
-    <!-- <div class="row">
-            <h1>Query was: {{ query }}</h1>
-        </div> -->
     <div class="row-result">
         <div class="result-header">
             <div class="left">
-                <h3 id="numresults">Results: {{ num_results[0] }}</h3>
-                <h5>Prices in CAD unless specified</h5>
+                <h3>{{ num_results[0] }} results for query: {{ query }}</h3>
+                <h5>Prices in CAD unless otherwise specified</h5>
             </div>
             <div class="sort-by-section">
                 <div class="sort-by-text">
                     Sort By
                 </div>
-                <select id="sort-by" class="sort-by custom-select">
+                <select id="sort-by" class="form-control sort-by custom-select">
                     <option value="symbol">Symbol</option>
                     <option value="price">Price</option>
                     <option value="pricechange">Price Change</option>
@@ -32,20 +29,20 @@
                 </button>
             </div>
         </div>
-    </div>
-    <div class="row-result right">
-        <div>
-            <button class="btn btn-secondary download-button" id="download-button">
-                Export csv &nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" id="download-button-icon" width="14px" viewBox="0 0 8 8">
-                    <path d="M3 0v3h-2l3 3 3-3h-2v-3h-2zm-3 7v1h8v-1h-8z" />
-                </svg>
-            </button>
-        </div>
-        <div>
-            <form action="{{ url_for('save_query', username=current_user.username) }}" method="POST">
-                {{ wtf.quick_form(form, button_map={'submit':'secondary'}) }}
-            </form>
+        <div class="row-result right">
+            <div>
+                <button class="btn btn-secondary download-button" id="download-button">
+                    Export csv &nbsp;
+                    <svg xmlns="http://www.w3.org/2000/svg" id="download-button-icon" width="14px" viewBox="0 0 8 8">
+                        <path d="M3 0v3h-2l3 3 3-3h-2v-3h-2zm-3 7v1h8v-1h-8z" />
+                    </svg>
+                </button>
+            </div>
+            <div>
+                <form action="{{ url_for('save_query', username=current_user.username) }}" method="POST">
+                    {{ wtf.quick_form(form, button_map={'submit':'secondary'}) }}
+                </form>
+            </div>
         </div>
     </div>
 </section>
@@ -66,9 +63,9 @@
                         </div>
                     </span>
                     <span class="result-id-info">
-                        <span class="h2 symbol"></span>
+                        <span class="symbol"></span>
                         <span class="sep">&mdash;</span>
-                        <span class="h3 name"></span>
+                        <span class="name"></span>
                     </span>
                 </div>
                 <div class="result__info">
