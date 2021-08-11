@@ -139,7 +139,7 @@ def edit_query(username, query_where_clause):
     form.run_day.data = saved_query.run_day
     form.run_frequency.data = saved_query.run_frequency
 
-    return render_template("edit_query.html", form=form)
+    return render_template("edit_query.html", form=form, query_obj=saved_query)
 
 
 @app.route("/user/<username>")

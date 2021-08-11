@@ -2,10 +2,83 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-<h1>Save Query</h1>
 <div class="row">
-    <div class="col-md-4">
-        {{ wtf.quick_form(form) }}
-    </div>
+    <form action="/{{ current_user.username }}/edit_query/{{ query_where_clause }}" method="POST">
+        <h1>Edit Saved Query</h1>
+
+        <div class="row">
+            <div class="input-group">
+                <label for="query-title">
+                    Title:
+                </label>
+                <input type="text" class="form-control" id="query-title" placeholder="{{ query_obj.title }}"
+                    aria-describedby="title-label">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-group">
+                <label for="query-label">
+                    Query:
+                </label>
+                <input type="text" style="color: black;" class="form-control" id="query-label"
+                    palceholder="{{ query_obj.query }}" aria-describedby="query-label" readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <label for="run-freq-chooser">
+                Run Frequency:
+            </label>
+            <div class="form-group">
+                <ul class="nav nav-pills">
+                    <li role="presentation" id="freq-daily" class="active"><a href="#freq-daily-content"
+                            data-toggle="tab">Daily</a></li>
+                    <li role="presentation" id="freq-weekly"><a href="#freq-weekly-content" data-toggle="tab">Weekly</a>
+                    </li>
+                    <li role="presentation" id="freq-biweekly"><a href="#freq-biweekly-content"
+                            data-toggle="tab">Bi-Weekly</a></li>
+                    <li role="presentation" id="freq-monthly"><a href="#freq-monthly-content"
+                            data-toggle="tab">Monthly</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="freq-daily-content">
+                        <div class="form-group col-3">
+                            <label for="freq-daily-runtime">
+                                Time of Day:
+                            </label>
+                            <input class="form-control" type="time" id="freq-daily-runtime">
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="freq-weekly-content">...
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="freq-biweekly-content">...
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="freq-monthly-content">
+                        <div class="form-group col-3">
+                            <label for="freq-monthly-rundatetime">
+                                Day:
+                            </label>
+                            <input class="form-control" type="datetime-local" id="freq-monthly-rundatetime">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
+<div class="row">
+
+
+</div>
+
+</form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src="/static/resources/js/edit_query.js"></script>
 {% endblock %}
