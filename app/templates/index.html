@@ -10,17 +10,18 @@
 
 <section class="main-section">
     <div class="row-main">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+
     </div>
     <div class="row-main">
+        <div class="row">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
         <div class="title">
             <!-- <object type="image/svg+xml" data="/static/resources/icons/tmx_logo_white.svg" class="tmx-icon"></object> -->
             <svg width="555px">

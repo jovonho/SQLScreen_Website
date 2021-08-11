@@ -65,9 +65,7 @@
                                     {% endif %}
                                     {% endwith %}
                                 </div>
-
-                                <form action="/login?next={{ url_for('save_query', username=current_user.username) }}"
-                                    method="POST">
+                                <form action="/login?next={{ url_for('save_query') }}" method="POST">
                                     {{ wtf.quick_form(loginform, button_map={'submit':'primary'}) }}
                                 </form>
 
@@ -81,7 +79,8 @@
                 </div>
 
                 {% else %}
-                <form action="{{ url_for('save_query', username=current_user.username) }}" method="POST">
+                {# When user is logged in #}
+                <form action="{{ url_for('save_query') }}" method="POST">
                     {{ wtf.quick_form(savequeryform, button_map={'submit':'secondary'}) }}
                 </form>
                 {% endif %}

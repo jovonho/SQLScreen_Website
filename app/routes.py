@@ -10,6 +10,7 @@ from app.forms import (
     EditProfileForm,
     LoginForm,
     SaveQueryForm,
+    EditSavedQuery,
     ResetPasswordRequestForm,
     ResetPasswordForm,
 )
@@ -28,6 +29,7 @@ from sqlalchemy.exc import IntegrityError
 @app.route("/")
 @app.route("/index")
 def index():
+    # flash("NASDAQ stonks coming soon!")
     return render_template("index.html", index=True)
 
 
@@ -82,39 +84,62 @@ def login():
 
         if not next or url_parse(next).netloc != "":
             next = url_for("index")
+        # elif next == "/save_query":
+        #     # Since we don't have the username yet when trying to save a query without being logged in
+        #     next = "/save_query"
+
         return redirect(next)
 
     return render_template("login.html", form=form)
 
 
-@app.route("/savedqueries", methods=["POST"])
+@app.route("/save_query", methods=["POST"])
 @login_required
-def save_query(username):
+def save_query():
 
-    if not current_user.is_authenticated:
-        flash("You must be logged in to save queries")
-        return current_app.login_manager.unauthorized()
+    print(request.form)
 
     form = SaveQueryForm()
-    # Ensure the user is saving the query for themselves
-    if username != current_user.username:
-        flash("Access Forbidden")
-        return redirect(url_for("results", q=form.query_to_save.data))
 
-    # user = User.get_by_username(username)
+    # Fills with default values
     query = SavedQuery(
         title=form.query_to_save.data,
         query=form.query_to_save.data,
-        run_at=time(8, 0),
-        frequency="daily",
-        user_id=current_user.id,
+        run_frequency="daily",
+        username=current_user.username,
     )
     print(f"Query to save: {query}")
+
     if form.validate_on_submit():
         current_user.saved_queries.append(query)
         db.session.commit()
         flash("Please review the default frequency and run time of your query.")
-    return redirect(url_for("user", username=current_user.username))
+
+    return redirect(
+        url_for("edit_query", username=current_user.username, query_where_clause=query.query)
+    )
+
+
+@app.route("/<username>/edit_query/<query_where_clause>", methods=["GET", "POST"])
+@login_required
+def edit_query(username, query_where_clause):
+
+    saved_query = (
+        db.session.query(SavedQuery)
+        .join(User)
+        .filter(SavedQuery.username == username, SavedQuery.query == query_where_clause)
+        .first()
+    )
+    print(saved_query)
+
+    form = EditSavedQuery()
+    form.name.data = saved_query.title
+    form.query_to_save.data = saved_query.query
+    form.run_time.data = saved_query.run_time
+    form.run_day.data = saved_query.run_day
+    form.run_frequency.data = saved_query.run_frequency
+
+    return render_template("edit_query.html", form=form)
 
 
 @app.route("/user/<username>")

@@ -38,8 +38,7 @@ $(document).ready(function () {
                 console.log(data);
 
                 if (!data.length) {
-
-                    sentinel.innerHTML = "No more results";
+                    sentinel.innerHTML = "No results";
                     intersectionObserver.unobserve(sentinel);
                     return;
                 }
@@ -54,6 +53,10 @@ $(document).ready(function () {
                     counter += 1;
                 }
 
+                if (data.length <= 30) {
+                    sentinel.innerHTML = "No more results";
+                    intersectionObserver.unobserve(sentinel);
+                }
 
                 $('.result').click((e) => {
                     collapseResult($(e.currentTarget))

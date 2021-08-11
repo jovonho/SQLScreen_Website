@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField, TimeField
+from wtforms.fields.core import DateField, SelectField
 from wtforms.validators import (
     ValidationError,
     DataRequired,
@@ -11,6 +12,39 @@ from wtforms.validators import (
 )
 from wtforms.widgets.core import HiddenInput
 from app.models import User
+
+
+class RequiredIf(Required):
+    # a validator which makes a field required if
+    # another field is set and has a truthy value
+
+    def __init__(self, other_field_name, *args, **kwargs):
+        self.other_field_name = other_field_name
+        super(RequiredIf, self).__init__(*args, **kwargs)
+
+    def __call__(self, form, field):
+        other_field = form._fields.get(self.other_field_name)
+        if other_field is None:
+            raise Exception('no field named "%s" in form' % self.other_field_name)
+        if other_field.data != "" and other_field is not None:
+            super(RequiredIf, self).__call__(form, field)
+
+
+class RequiredIfValue(Required):
+    # a validator which makes a field required if
+    # another field is set and has a truthy value
+
+    def __init__(self, other_field_name, other_field_value, *args, **kwargs):
+        self.other_field_name = other_field_name
+        self.other_field_value = other_field_value
+        super(RequiredIfValue, self).__init__(*args, **kwargs)
+
+    def __call__(self, form, field):
+        other_field = form._fields.get(self.other_field_name)
+        if other_field is not None and other_field.data == self.other_field_value:
+            super(RequiredIfValue, self).__call__(form, field)
+        else:
+            raise Exception('no field named "%s" in form' % self.other_field_name)
 
 
 class ResetPasswordRequestForm(FlaskForm):
@@ -27,6 +61,31 @@ class ResetPasswordForm(FlaskForm):
 class SaveQueryForm(FlaskForm):
     query_to_save = HiddenField("Query to Save", validators=[InputRequired()])
     submit = SubmitField("Save Query")
+
+
+# TODO: maybe implement this one in JS
+class EditSavedQuery(FlaskForm):
+    name = StringField("Query Name", validators=[InputRequired()])
+    query_to_save = StringField("Query", render_kw={"readonly": True})
+    run_time = TimeField("Run time", format="%H:%M", validators=[InputRequired()])
+    run_day = DateField(
+        "Run Day",
+        format="%d",
+        validators=[
+            RequiredIfValue("run_frequency", "weekly"),
+            RequiredIfValue("run_frequency", "bi-weekly"),
+        ],
+    )
+    run_frequency = SelectField(
+        "Run Frequency",
+        choices=[
+            ("daily", "Daily"),
+            ("weekly", "Weekly"),
+            ("bi-weekly", "Bi-Weekly"),
+            ("monthly", "Monthly"),
+        ],
+    )
+    submit = SubmitField("Edit Query")
 
 
 class LoginForm(FlaskForm):
@@ -63,22 +122,6 @@ class RegistrationForm(FlaskForm):
     # def validate_password(self, password):
     #     if len(password) < 7:
     #         raise ValidationError("Password must be longer than 8 characters.")
-
-
-class RequiredIf(Required):
-    # a validator which makes a field required if
-    # another field is set and has a truthy value
-
-    def __init__(self, other_field_name, *args, **kwargs):
-        self.other_field_name = other_field_name
-        super(RequiredIf, self).__init__(*args, **kwargs)
-
-    def __call__(self, form, field):
-        other_field = form._fields.get(self.other_field_name)
-        if other_field is None:
-            raise Exception('no field named "%s" in form' % self.other_field_name)
-        if other_field.data != "" and other_field is not None:
-            super(RequiredIf, self).__call__(form, field)
 
 
 class EditProfileForm(FlaskForm):

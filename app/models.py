@@ -1,5 +1,6 @@
+from sqlalchemy.sql.sqltypes import Date
 from app import app, db, login
-from datetime import datetime, time
+from datetime import date, datetime, time
 from time import time as time2
 from flask_login import UserMixin
 from sqlalchemy import Time
@@ -68,15 +69,27 @@ class User(UserMixin, db.Model):
 
 class SavedQuery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120), nullable=False, index=True, unique=True)
+    title = db.Column(db.String(120), nullable=False, index=True)
     query = db.Column(db.Text, nullable=False)
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    run_at = db.Column(Time, nullable=False, default=time(8, 0))
-    frequency = db.Column(db.String(30), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    run_time = db.Column(Time, nullable=False, default=time(8, 0))
+    run_day = db.Column(Date, nullable=False, default=date.today)
+    run_frequency = db.Column(db.String(30), nullable=False)
+    username = db.Column(db.String, db.ForeignKey("user.username"), nullable=False)
+    __table_args__ = (
+        db.UniqueConstraint("username", "query", name="key_unique_username_and_query"),
+    )
 
     def __repr__(self):
         return "<SavedQuery {}>".format(self.query)
+
+    @classmethod
+    def get_all_by_username(cls, username):
+        return cls.query.filter_by(username=username).all()
+
+    @classmethod
+    def get_by_username_and_query(cls, username, query):
+        return cls.query.filter_by(username=username, query=query).all()
 
 
 class Quote(db.Model):
