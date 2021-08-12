@@ -33,8 +33,17 @@ html {
     visibility: hidden;
 }
 
+.row {
+    margin-top: 5px;
+}
+
 .row-main {
     margin-top: 50px;
+}
+
+::placeholder {
+    color: black;
+    opacity: 1;
 }
 
 

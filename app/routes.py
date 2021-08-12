@@ -130,16 +130,39 @@ def edit_query(username, query_where_clause):
         .filter(SavedQuery.username == username, SavedQuery.query == query_where_clause)
         .first()
     )
-    print(saved_query)
 
-    form = EditSavedQuery()
-    form.name.data = saved_query.title
-    form.query_to_save.data = saved_query.query
-    form.run_time.data = saved_query.run_time
-    form.run_day.data = saved_query.run_day
-    form.run_frequency.data = saved_query.run_frequency
+    if request.method == "POST":
+        # Form submission case
+        print(request.json)
+        data = request.json
 
-    return render_template("edit_query.html", form=form, query_obj=saved_query)
+        if data["title"] != "":
+            saved_query.title = data["title"]
+
+        saved_query.run_frequency = data["frequency"]
+
+        # Update query runtime
+        if data["frequency"] == "daily":
+            saved_query.run_time = data["runtime"]
+        elif data["frequency"] == "weekly":
+            print(data["runtime"])
+            saved_query.run_time = data["runtime"]
+            print(data["dayOfWeek"])
+        elif data["frequency"] == "monthly":
+            print(data["rundatetime"])
+        else:
+            print(data["customRequest"])
+            # TODO: send email to admin with request
+            pass
+        db.session.commit()
+        flash("Successfully updated query")
+        return redirect("/user/" + current_user.username)
+
+    return render_template(
+        "edit_query.html",
+        query_obj=saved_query,
+        utcnow=datetime.utcnow().strftime("%Y-%m-%dT%H:%M"),
+    )
 
 
 @app.route("/user/<username>")

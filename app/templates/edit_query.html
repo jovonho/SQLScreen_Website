@@ -3,71 +3,143 @@
 
 {% block app_content %}
 <div class="row">
-    <form action="/{{ current_user.username }}/edit_query/{{ query_where_clause }}" method="POST">
+    <form id="edit_query_form">
         <h1>Edit Saved Query</h1>
+        <p>Note: The data is updated daily after market close.</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
 
         <div class="row">
-            <div class="input-group">
-                <label for="query-title">
-                    Title:
-                </label>
-                <input type="text" class="form-control" id="query-title" placeholder="{{ query_obj.title }}"
-                    aria-describedby="title-label">
+            <div class="input-group col-md-12">
+                <div class="col-md-2">
+                    <label for="query-title">
+                        Title:
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="query-title" placeholder="{{ query_obj.title }}"
+                        aria-describedby="title-label">
+                </div>
             </div>
         </div>
-
+        <div class="row"></div>
         <div class="row">
-            <div class="input-group">
-                <label for="query-label">
-                    Query:
-                </label>
-                <input type="text" style="color: black;" class="form-control" id="query-label"
-                    palceholder="{{ query_obj.query }}" aria-describedby="query-label" readonly>
+            <div class="input-group col-md-12">
+                <div class="col-md-2">
+                    <label for="query-label">
+                        Query:
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="query-label" value="{{ query_obj.query }}"
+                        aria-describedby="query-label" readonly>
+                </div>
             </div>
         </div>
-
+        <div class="row"></div>
         <div class="row">
-            <label for="run-freq-chooser">
-                Run Frequency:
-            </label>
-            <div class="form-group">
-                <ul class="nav nav-pills">
-                    <li role="presentation" id="freq-daily" class="active"><a href="#freq-daily-content"
-                            data-toggle="tab">Daily</a></li>
-                    <li role="presentation" id="freq-weekly"><a href="#freq-weekly-content" data-toggle="tab">Weekly</a>
-                    </li>
-                    <li role="presentation" id="freq-biweekly"><a href="#freq-biweekly-content"
-                            data-toggle="tab">Bi-Weekly</a></li>
-                    <li role="presentation" id="freq-monthly"><a href="#freq-monthly-content"
-                            data-toggle="tab">Monthly</a></li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="freq-daily-content">
-                        <div class="form-group col-3">
+            <div class="input-group col-md-12">
+                <div class="col-md-2">
+                    <label for="run-freq-chooser">
+                        Run Frequency:
+                    </label>
+                </div>
+                <div class="form-group col-md-4">
+                    <ul class="nav nav-pills" id="freq-tabs">
+                        <li role="presentation" id="freq-daily-tab" class="active"><a href="#freq-daily-content"
+                                data-toggle="tab">Daily</a></li>
+                        <li role="presentation" id="freq-weekly-tab"><a href="#freq-weekly-content"
+                                data-toggle="tab">Weekly</a>
+                        </li>
+                        <li role="presentation" id="freq-monthly-tab"><a href="#freq-monthly-content"
+                                data-toggle="tab">Monthly</a></li>
+                        <li role="presentation" id="freq-custom-tab"><a href="#freq-custom-content"
+                                data-toggle="tab">Custom</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="freq-daily-content">
+                    <div class="input-group col-md-12">
+                        <div class="col-md-2">
                             <label for="freq-daily-runtime">
                                 Time of Day:
                             </label>
-                            <input class="form-control" type="time" id="freq-daily-runtime">
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control form-value" type="time" id="freq-daily-runtime" value="08:00">
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="freq-weekly-content">...
-
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="freq-biweekly-content">...
-
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="freq-monthly-content">
-                        <div class="form-group col-3">
-                            <label for="freq-monthly-rundatetime">
-                                Day:
+                </div>
+                <div role="tabpanel" class="tab-pane" id="freq-weekly-content">
+                    <div class="input-group col-md-12">
+                        <div class="col-md-2">
+                            <label for="freq-weekly-day-of-week">
+                                Day of Week:
                             </label>
-                            <input class="form-control" type="datetime-local" id="freq-monthly-rundatetime">
+                        </div>
+                        <div class="col-md-4">
+                            <select name="freq-weekly-day-of-week" class="form-control form-value"
+                                id="freq-weekly-day-of-week">
+                                <option value="monday">Monday</option>
+                                <option value="tuesday">Tuesday</option>
+                                <option value="wednesday">Wednesday</option>
+                                <option value="thursday">Thursday</option>
+                                <option value="friday">Friday</option>
+                                <option value="saturday">Saturday</option>
+                                <option value="sunday">Sunday</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group col-md-12">
+                        <div class="col-md-2">
+                            <label for="freq-weekly-runtime">
+                                Time of Day:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control form-value" type="time" id="freq-weekly-runtime" value="08:00">
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="freq-monthly-content">
+                    <div class="input-group col-md-12">
+                        <div class="col-md-2">
+                            <label for="freq-monthly-rundatetime">
+                                Monthly Day and Time:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control form-value" type="datetime-local" id="freq-monthly-rundatetime"
+                                value="{{ utcnow }}">
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="freq-custom-content">
+                    <div class="input-group col-md-12">
+                        <div class="col-md-2">
+                            <label for="freq-custom-desc">
+                                Custom Run Requirements:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <textarea id="freq-custom-desc" placeholder="Tell us about your requirements..."
+                                style="width: 370px; height: 70px"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-primary" id="submit-btn">Submit</button>
+            </div>
+        </div>
+    </form>
 </div>
 <div class="row">
 
