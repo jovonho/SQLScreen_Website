@@ -1,3 +1,4 @@
+from config import Config
 from os import write
 import re
 
@@ -24,6 +25,7 @@ import simplejson as json
 from werkzeug.urls import url_parse
 import csv
 from sqlalchemy.exc import IntegrityError
+import requests
 
 
 @app.route("/")
@@ -93,6 +95,9 @@ def login():
     return render_template("login.html", form=form)
 
 
+import hashlib
+
+
 @app.route("/save_query", methods=["POST"])
 @login_required
 def save_query():
@@ -101,22 +106,54 @@ def save_query():
 
     form = SaveQueryForm()
 
-    # Fills with default values
-    query = SavedQuery(
-        title=form.query_to_save.data,
-        query=form.query_to_save.data,
-        run_frequency="daily",
-        username=current_user.username,
-    )
-    print(f"Query to save: {query}")
-
     if form.validate_on_submit():
-        current_user.saved_queries.append(query)
-        db.session.commit()
+
+        # TODO: Call the scheduler API to register the job, md5 hash username and query
+        job_id = current_user.username + form.query_to_save.data
+        job_id = hashlib.md5(job_id.encode("utf-8")).hexdigest()
+
+        # Fills with default values
+        saved_query = SavedQuery(
+            job_id = job_id,
+            title = form.query_to_save.data,
+            query = form.query_to_save.data,
+            day_of_week = "0-5",
+            hour = 17,
+            minute = 30,
+            username = current_user.username,
+            email = current_user
+        )
+        
+        print(f"Query to save: {saved_query}")
+
+        job_data = {
+            "id": job_id,
+            "func": "app.tasks:perform_saved_query",
+            "args": [saved_query.query, current_user.email],
+            "trigger": "cron",
+            "day_of_week": "mon-fri",
+            "hour": 17,
+        }
+
+        print(job_data)
+
+        url = Config.SCHEDULER_URL + Config.SCHEDULER_JOB_ENDPOINT
+
+        resp = requests.post(url, data=json.dumps(job_data))
+        print(resp.request)
+        print(resp)
+
+        if resp.status_code != 200:
+            pass
+
+        # Save the query in the DB
+        current_user.saved_queries.append(saved_query)
+        # db.session.commit()
+
         flash("Please review the default frequency and run time of your query.")
 
     return redirect(
-        url_for("edit_query", username=current_user.username, query_where_clause=query.query)
+        url_for("edit_query", username=current_user.username, query_where_clause=saved_query.query)
     )
 
 
@@ -154,6 +191,8 @@ def edit_query(username, query_where_clause):
             print(data["customRequest"])
             # TODO: send email to admin with request
             pass
+
+        # Update job
         db.session.commit()
         flash("Successfully updated query")
         return redirect("/user/" + current_user.username)

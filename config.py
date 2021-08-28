@@ -18,3 +18,5 @@ class Config(object):
     MAIL_USERNAME = "loic.hovon@gmail.com"
     MAIL_PASSWORD = "kvbuglsgyprwgchc"
     ADMINS = ["loic.hovon@gmail.com"]
+    SCHEDULER_URL = "http://127.0.0.1:3000"
+    SCHEDULER_JOB_ENDPOINT = "/scheduler/jobs"

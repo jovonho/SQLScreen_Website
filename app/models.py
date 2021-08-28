@@ -1,4 +1,5 @@
-from sqlalchemy.sql.sqltypes import Date
+from app.util import Weekday, RunFrequency
+from sqlalchemy.sql.sqltypes import Date, Enum
 from app import app, db, login
 from datetime import date, datetime, time
 from time import time as time2
@@ -69,15 +70,31 @@ class User(UserMixin, db.Model):
 
 class SavedQuery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    job_id = db.Column(db.String, nullable=False)
     title = db.Column(db.String(120), nullable=False, index=True)
     query = db.Column(db.Text, nullable=False)
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    run_time = db.Column(Time, nullable=False, default=time(8, 0))
-    run_day = db.Column(Date, nullable=False, default=date.today)
-    run_frequency = db.Column(db.String(30), nullable=False)
+    # Used to form the cron config
+    year = db.Column(db.String(30))
+    month = db.Column(db.String(30))
+    day = db.Column(db.String(30))
+    week = db.Column(db.String(30))
+    day_of_week = db.Column(db.String(30))
+    hour = db.Column(db.String(30))
+    minute = db.Column(db.String(30))
+    second = db.Column(db.String(30))
     username = db.Column(db.String, db.ForeignKey("user.username"), nullable=False)
     __table_args__ = (
-        db.UniqueConstraint("username", "query", name="key_unique_username_and_query"),
+        db.UniqueConstraint(
+            "username",
+            "query",
+            "year",
+            "month",
+            "day",
+            "hour",
+            "minute",
+            name="key_unique_user_query_time",
+        ),
     )
 
     def __repr__(self):
