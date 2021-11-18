@@ -1,6 +1,6 @@
 # TMXScreen Web Interface
 
-![SQLScreen main pge](/app/static/resources/pics/sqlscreen.png)
+![SQLScreen main pge](/app/static/resources/pics/sqlscreen.PNG)
 
 ## Installation Instructions
 
