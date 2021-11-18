@@ -37,7 +37,7 @@ if not app.debug:
             mailhost=(app.config["MAIL_SERVER"], app.config["MAIL_PORT"]),
             fromaddr=app.config["MAIL_USERNAME"],
             toaddrs=app.config["ADMINS"],
-            subject="TMXScrape Website Error",
+            subject="SQLScreen Website Error",
             credentials=auth,
             secure=secure,
         )
@@ -47,7 +47,7 @@ if not app.debug:
     # General logging
     if not os.path.exists("logs"):
         os.mkdir("logs")
-    file_handler = RotatingFileHandler("logs/tmxscrape.log", maxBytes=10240, backupCount=10)
+    file_handler = RotatingFileHandler("logs/sqlscreen.log", maxBytes=10240, backupCount=10)
     file_handler.setFormatter(
         logging.Formatter("%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]")
     )
@@ -55,4 +55,4 @@ if not app.debug:
     app.logger.addHandler(file_handler)
 
     app.logger.setLevel(logging.INFO)
-    app.logger.info("TMXScrape startup")
+    app.logger.info("SQLScreen startup")

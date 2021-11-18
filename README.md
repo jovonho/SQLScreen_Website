@@ -1,11 +1,11 @@
-# TMXScreen Web Interface
+# SQLScreen Web Interface
 
 ![SQLScreen main pge](/app/static/resources/pics/sqlscreen.PNG)
 
 ## Installation Instructions
 
 ### Set up repo locally
-`git clone https://github.com/jovonho/TmxScreen_Website.git dest`  
+`git clone https://github.com/jovonho/SQLScreen_Website.git dest`  
 
 `git checkout -b yourbranchname`
 
